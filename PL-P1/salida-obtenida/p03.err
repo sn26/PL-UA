@@ -1,0 +1,6 @@
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 32, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:659)
+	at java.util.ArrayList.remove(ArrayList.java:498)
+	at AnalizadorLexico.errorLexico(AnalizadorLexico.java:189)
+	at AnalizadorLexico.siguienteToken(AnalizadorLexico.java:75)
+	at testLexico.main(testLexico.java:22)
