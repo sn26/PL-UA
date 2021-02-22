@@ -1,0 +1,17 @@
+fn Main (    )
+  fn main ( a:int ) -> int
+
+    /* comentarios maliciosos */
+    /*1*/
+    let/**/b;
+    let/***/c:/****/real/*****/;
+    print 2/*
+
+         */+/*
+             */3;
+
+    print .12  /* Error lexico (13,11): caracter '.' incorrecto */
+  endfn
+    
+endfn  /* si llega aqui hay error sintactico en 'endfn' */
+
