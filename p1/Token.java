@@ -7,7 +7,7 @@ public class Token {
 	public String lexema;
 	public int tipo;		// tipo es: ID, ENTERO, REAL ...
 	
-	//Cadenas que vamos a mostrar como resultad, en la función to string 
+	//Cadenas que vamos a mostrar como resultad, en la funcin to string 
 	private String[] cad_results = {"(" , ")" , 
 			":"  , "->" , "=" , ";" , "+ -" , "* /" , 
 			"'fn'" ,"'endfn'" , "'int'" , "'real'" , "'let'" , "'if'" , "'else'", "'fi'" ,
@@ -49,7 +49,7 @@ public class Token {
 	}
 	
 	/**
-	 * Función que devuelve, para cada Token, la cadena de la tercera columna de la tabla del enunciado
+	 * Funcin que devuelve, para cada Token, la cadena de la tercera columna de la tabla del enunciado
 	 * 
 	 */
 	public String toString(){

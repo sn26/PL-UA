@@ -1,26 +1,6 @@
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-/*
- * Sirvent Navarro, Alvaro
- * 
- */
-/*
- * A TENER EN CUENTA  
- * 	Principio de la subcadena más larga: siempre se intenta obtener
-	el token más largo	
-	Con algunos tokens (números, identificadores) nos tenemos que
-	“pasar” leyendo la entrada (hay que leer uno o más caracteres
-	que no pertenecen al token)
-	El analizador léxico ignora los espacios en blanco, comentarios,
-	saltos de línea,. . . pero sigue contando líneas y columnas
-	Política de elección de palabra reservada sobre identificador: si
-	una cadena puede ser palabra reservada y a la vez identificador,
-	se elige la palabra reservada (p.ej. while)
-	Errores léxicos: caracteres no permitidos en el lenguaje (p.ej. “$”)	
-	o no permitidos en un contexto determinado (p.ej. “12.3” vs “.” o“.23”)
- * 
- */
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,7 +16,7 @@ public class AnalizadorLexico {
 	
 	private Integer[] final_states = {2,3,4,5,6,8,9,10,11,13,19,21,24,25}; //NO SE INCLUYEN LOS ESTADOS FINALES POR ERROR EN LA LECTURA (17, 26) NI EL ESTADO DE FINAL DE COMENTARIO (16) 
 	
-	private int rollback = 0; //Contador de los caracteres que tenemos que ir hacia atrás (En el caso de que haya que hacerlo)
+	private int rollback = 0; //Contador de los caracteres que tenemos que ir hacia atras (En el caso de que haya que hacerlo)
 	//FILA Y COL DEL FICHERO	
 	private int fila = 1; 
 	private int col =1; 
@@ -63,14 +43,14 @@ public class AnalizadorLexico {
 			this.file_position_manager(currentChar); 
 			return currentChar;
 		}catch (EOFException e) {
-			return EOF; // constante estática de la clase
+			return EOF; // constante estatica de la clase
 		}catch (IOException e) {
 			return ' '; // error lectura
 		}
 	}
 	
 	/**
-	 * Función para actualizar la fila y la columna por la que vamos actualmente 
+	 * Funcion para actualizar la fila y la columna por la que vamos actualmente 
 	 * @param currentChar
 	 */
 	private void file_position_manager(char currentChar  ) {
@@ -80,7 +60,7 @@ public class AnalizadorLexico {
 		}else this.col++; 
 	}
 	/**
-	 * Método para devolver el token actual
+	 * Metodo para devolver el token actual
 	 * @return
 	 */
 	public Token siguienteToken() {
@@ -89,10 +69,10 @@ public class AnalizadorLexico {
 		Integer nuevo = 0;
 		do
 		{
-			nuevo = delta(estado,c); // función de transición del DT
+			nuevo = delta(estado,c); // funcin de transicin del DT
 			if (nuevo == 17 || nuevo==26 ) {
-				estado = 1; //Reseteamos el estado, por si ha saltado el error por un salto de línea, o por un espacio
-				errorLexico(nuevo , c); //CUando encontamos un error, salimos de la ejecucición con System.exit(-1) 
+				estado = 1; //Reseteamos el estado, por si ha saltado el error por un salto de lnea, o por un espacio
+				errorLexico(nuevo , c); //CUando encontamos un error, salimos de la ejecucicin con System.exit(-1) 
 				if(c == (char)-1 ) return this.actual_tok; //Devolvemos el token, porque hemos llegado al final del archivo
 			}
 			if (Arrays.asList(this.final_states).contains(nuevo)){ //ESTADO FINAL 
@@ -111,7 +91,7 @@ public class AnalizadorLexico {
 	}
 	
 	/**
-	 * Método para sacar el lexema actual
+	 * Mtodo para sacar el lexema actual
 	 * @param actual_rollback
 	 * @return
 	 */
@@ -185,7 +165,7 @@ public class AnalizadorLexico {
 			this.col = col - actual_rollback; 
 			return; 
 		}
-		//Cuando no es ningún estado final con rollback
+		//Cuando no es ningn estado final con rollback
 		String final_cad = this.get_lexema(0);
 		this.actual_tok.lexema = final_cad; 
 		this.rollback = 0; 
@@ -195,7 +175,7 @@ public class AnalizadorLexico {
 	
 	
 	/**
-	 * Función que utilizamos cunaod tenemos un error en la lectura de la cadena (error de delta)
+	 * Funcin que utilizamos cunaod tenemos un error en la lectura de la cadena (error de delta)
 	 * 
 	 */
 	private void errorLexico(int nuevo , char last_char ) {
@@ -223,7 +203,7 @@ public class AnalizadorLexico {
 	}
 	
 	/**
-	 * Función para sacar el estado en el que nos encontramos 
+	 * Funcin para sacar el estado en el que nos encontramos 
 	 * @param estado 
 	 * @param c
 	 * @return
@@ -282,7 +262,7 @@ public class AnalizadorLexico {
 			case 15: //(/*) 
 				if(c=='*') return 15;
 				if(c=='/') return 1; //Ignoraremos el comentario 
-				if(c==(char)-1 ) return 17; //Error LÉXICO
+				if(c==(char)-1 ) return 17; //Error LXICO
 				return 14;
 			case 18: //id
 				if(Character.isLetter(c) || Character.isDigit(c)) return 18; //Continuamos leyendo el identificador
