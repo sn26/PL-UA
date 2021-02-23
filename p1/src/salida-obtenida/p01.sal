@@ -1,0 +1,204 @@
+Token: 1,1 fn  -> (1,1): fn es de tipo 8
+
+Token: 1,4 main  -> (1,4): main es de tipo 19
+
+Token: 1,8 (  -> (1,8): ( es de tipo 0
+
+Token: 1,9 )  -> (1,9): ) es de tipo 1
+
+Token: 3,3 fn  -> (3,3): fn es de tipo 8
+
+Token: 3,6 f1  -> (3,6): f1 es de tipo 19
+
+Token: 3,8 (  -> (3,8): ( es de tipo 0
+
+Token: 3,9 )  -> (3,9): ) es de tipo 1
+
+Token: 4,5 let  -> (4,5): let es de tipo 12
+
+Token: 4,9 a  -> (4,9): a es de tipo 19
+
+Token: 4,11 =  -> (4,11): = es de tipo 4
+
+Token: 4,13 7  -> (4,13): 7 es de tipo 20
+
+Token: 5,3 endfn  -> (5,3): endfn es de tipo 9
+
+Token: 6,3 fn  -> (6,3): fn es de tipo 8
+
+Token: 6,6 f2  -> (6,6): f2 es de tipo 19
+
+Token: 6,8 (  -> (6,8): ( es de tipo 0
+
+Token: 6,9 a  -> (6,9): a es de tipo 19
+
+Token: 6,10 :  -> (6,10): : es de tipo 2
+
+Token: 6,11 int  -> (6,11): int es de tipo 10
+
+Token: 6,14 )  -> (6,14): ) es de tipo 1
+
+Token: 6,16 ->  -> (6,16): -> es de tipo 3
+
+Token: 6,19 real  -> (6,19): real es de tipo 11
+
+Token: 7,5 fn  -> (7,5): fn es de tipo 8
+
+Token: 7,8 f21  -> (7,8): f21 es de tipo 19
+
+Token: 7,11 (  -> (7,11): ( es de tipo 0
+
+Token: 7,12 b  -> (7,12): b es de tipo 19
+
+Token: 7,13 :  -> (7,13): : es de tipo 2
+
+Token: 7,14 real  -> (7,14): real es de tipo 11
+
+Token: 7,18 )  -> (7,18): ) es de tipo 1
+
+Token: 8,7 let  -> (8,7): let es de tipo 12
+
+Token: 8,11 c  -> (8,11): c es de tipo 19
+
+Token: 8,13 =  -> (8,13): = es de tipo 4
+
+Token: 8,15 3  -> (8,15): 3 es de tipo 20
+
+Token: 8,16 +  -> (8,16): + es de tipo 6
+
+Token: 8,17 b  -> (8,17): b es de tipo 19
+
+Token: 8,18 ;  -> (8,18): ; es de tipo 5
+
+Token: 9,7 blq  -> (9,7): blq es de tipo 17
+
+Token: 10,9 let  -> (10,9): let es de tipo 12
+
+Token: 10,13 d  -> (10,13): d es de tipo 19
+
+Token: 10,14 ;  -> (10,14): ; es de tipo 5
+
+Token: 11,9 let  -> (11,9): let es de tipo 12
+
+Token: 11,13 d  -> (11,13): d es de tipo 19
+
+Token: 11,15 =  -> (11,15): = es de tipo 4
+
+Token: 11,17 d  -> (11,17): d es de tipo 19
+
+Token: 11,18 +  -> (11,18): + es de tipo 6
+
+Token: 11,19 c  -> (11,19): c es de tipo 19
+
+Token: 11,21 if  -> (11,21): if es de tipo 13
+
+Token: 11,24 8  -> (11,24): 8 es de tipo 20
+
+Token: 11,25 -  -> (11,25): - es de tipo 6
+
+Token: 11,26 9  -> (11,26): 9 es de tipo 20
+
+Token: 11,27 +  -> (11,27): + es de tipo 6
+
+Token: 11,28 a  -> (11,28): a es de tipo 19
+
+Token: 12,7 fblq  -> (12,7): fblq es de tipo 18
+
+Token: 13,5 endfn  -> (13,5): endfn es de tipo 9
+
+Token: 15,5 let  -> (15,5): let es de tipo 12
+
+Token: 15,9 c  -> (15,9): c es de tipo 19
+
+Token: 15,11 =  -> (15,11): = es de tipo 4
+
+Token: 15,13 0.5  -> (15,13): 0.5 es de tipo 21
+
+Token: 15,16 ;  -> (15,16): ; es de tipo 5
+
+Token: 16,5 print  -> (16,5): print es de tipo 16
+
+Token: 16,11 345  -> (16,11): 345 es de tipo 20
+
+Token: 16,15 +  -> (16,15): + es de tipo 6
+
+Token: 16,17 c  -> (16,17): c es de tipo 19
+
+Token: 16,18 ;  -> (16,18): ; es de tipo 5
+
+Token: 17,5 if  -> (17,5): if es de tipo 13
+
+Token: 17,8 2  -> (17,8): 2 es de tipo 20
+
+Token: 17,9 *  -> (17,9): * es de tipo 7
+
+Token: 17,10 3  -> (17,10): 3 es de tipo 20
+
+Token: 18,7 print  -> (18,7): print es de tipo 16
+
+Token: 18,13 c  -> (18,13): c es de tipo 19
+
+Token: 18,14 /  -> (18,14): / es de tipo 7
+
+Token: 18,15 123.4  -> (18,15): 123.4 es de tipo 21
+
+Token: 19,5 else  -> (19,5): else es de tipo 14
+
+Token: 20,7 let  -> (20,7): let es de tipo 12
+
+Token: 20,11 f  -> (20,11): f es de tipo 19
+
+Token: 21,5 fi  -> (21,5): fi es de tipo 15
+
+Token: 21,7 ;  -> (21,7): ; es de tipo 5
+
+Token: 22,5 if  -> (22,5): if es de tipo 13
+
+Token: 22,8 3  -> (22,8): 3 es de tipo 20
+
+Token: 22,9 -  -> (22,9): - es de tipo 6
+
+Token: 22,10 3  -> (22,10): 3 es de tipo 20
+
+Token: 23,6 blq  -> (23,6): blq es de tipo 17
+
+Token: 24,8 let  -> (24,8): let es de tipo 12
+
+Token: 24,12 h  -> (24,12): h es de tipo 19
+
+Token: 24,13 ;  -> (24,13): ; es de tipo 5
+
+Token: 25,8 let  -> (25,8): let es de tipo 12
+
+Token: 25,12 k  -> (25,12): k es de tipo 19
+
+Token: 25,14 =  -> (25,14): = es de tipo 4
+
+Token: 25,16 2  -> (25,16): 2 es de tipo 20
+
+Token: 25,17 *  -> (25,17): * es de tipo 7
+
+Token: 25,18 a  -> (25,18): a es de tipo 19
+
+Token: 26,6 fblq  -> (26,6): fblq es de tipo 18
+
+Token: 27,5 else  -> (27,5): else es de tipo 14
+
+Token: 28,6 let  -> (28,6): let es de tipo 12
+
+Token: 28,10 c  -> (28,10): c es de tipo 19
+
+Token: 28,12 =  -> (28,12): = es de tipo 4
+
+Token: 28,14 7.77  -> (28,14): 7.77 es de tipo 21
+
+Token: 29,5 fi  -> (29,5): fi es de tipo 15
+
+Token: 30,3 endfn  -> (30,3): endfn es de tipo 9
+
+Token: 31,3 print  -> (31,3): print es de tipo 16
+
+Token: 31,9 88  -> (31,9): 88 es de tipo 20
+
+Token: 32,1 endfn  -> (32,1): endfn es de tipo 9
+

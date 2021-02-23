@@ -1,0 +1,126 @@
+Token: 1,1 package  -> (1,1): package es de tipo 19
+
+Token: 1,9 Juego  -> (1,9): Juego es de tipo 19
+
+Token: 1,14 ;  -> (1,14): ; es de tipo 5
+
+Token: 10,5 public  -> (10,5): public es de tipo 19
+
+Token: 10,12 int  -> (10,12): int es de tipo 10
+
+Token: 10,16 x  -> (10,16): x es de tipo 19
+
+Token: 10,18 =  -> (10,18): = es de tipo 4
+
+Token: 10,20 0  -> (10,20): 0 es de tipo 20
+
+Token: 10,21 ;  -> (10,21): ; es de tipo 5
+
+Token: 11,5 public  -> (11,5): public es de tipo 19
+
+Token: 11,12 int  -> (11,12): int es de tipo 10
+
+Token: 11,16 y  -> (11,16): y es de tipo 19
+
+Token: 11,18 =  -> (11,18): = es de tipo 4
+
+Token: 11,20 0  -> (11,20): 0 es de tipo 20
+
+Token: 11,21 ;  -> (11,21): ; es de tipo 5
+
+Token: 12,5 public  -> (12,5): public es de tipo 19
+
+Token: 12,12 int  -> (12,12): int es de tipo 10
+
+Token: 12,16 g  -> (12,16): g es de tipo 19
+
+Token: 12,18 =  -> (12,18): = es de tipo 4
+
+Token: 12,20 0  -> (12,20): 0 es de tipo 20
+
+Token: 12,21 ;  -> (12,21): ; es de tipo 5
+
+Token: 13,5 public  -> (13,5): public es de tipo 19
+
+Token: 13,12 int  -> (13,12): int es de tipo 10
+
+Token: 13,16 f  -> (13,16): f es de tipo 19
+
+Token: 13,18 =  -> (13,18): = es de tipo 4
+
+Token: 13,20 0  -> (13,20): 0 es de tipo 20
+
+Token: 13,21 ;  -> (13,21): ; es de tipo 5
+
+Token: 14,5 public  -> (14,5): public es de tipo 19
+
+Token: 14,12 int  -> (14,12): int es de tipo 10
+
+Token: 14,16 nodoExpandido  -> (14,16): nodoExpandido es de tipo 19
+
+Token: 14,30 =  -> (14,30): = es de tipo 4
+
+Token: 14,32 0  -> (14,32): 0 es de tipo 20
+
+Token: 14,33 ;  -> (14,33): ; es de tipo 5
+
+Token: 15,5 public  -> (15,5): public es de tipo 19
+
+Token: 15,12 nodo  -> (15,12): nodo es de tipo 19
+
+Token: 15,17 padre  -> (15,17): padre es de tipo 19
+
+Token: 15,22 ;  -> (15,22): ; es de tipo 5
+
+Token: 15,24 /  -> (15,24): / es de tipo 7
+
+Token: 15,25 /  -> (15,25): / es de tipo 7
+
+Token: 15,26 Para  -> (15,26): Para es de tipo 19
+
+Token: 15,31 pasar  -> (15,31): pasar es de tipo 19
+
+Token: 15,37 de  -> (15,37): de es de tipo 19
+
+Token: 15,40 hijo  -> (15,40): hijo es de tipo 19
+
+Token: 15,45 a  -> (15,45): a es de tipo 19
+
+Token: 15,47 padre  -> (15,47): padre es de tipo 19
+
+Token: 17,5 /  -> (17,5): / es de tipo 7
+
+Token: 17,6 /  -> (17,6): / es de tipo 7
+
+Token: 17,7 Funciￃﾳn  -> (17,7): Funciￃﾳn es de tipo 19
+
+Token: 17,16 para  -> (17,16): para es de tipo 19
+
+Token: 17,21 calcular  -> (17,21): calcular es de tipo 19
+
+Token: 17,30 el  -> (17,30): el es de tipo 19
+
+Token: 17,33 nodo  -> (17,33): nodo es de tipo 19
+
+Token: 17,38 con  -> (17,38): con es de tipo 19
+
+Token: 17,42 menor  -> (17,42): menor es de tipo 19
+
+Token: 17,48 f  -> (17,48): f es de tipo 19
+
+Token: 17,49 (  -> (17,49): ( es de tipo 0
+
+Token: 17,50 n  -> (17,50): n es de tipo 19
+
+Token: 17,51 )  -> (17,51): ) es de tipo 1
+
+Token: 18,5 public  -> (18,5): public es de tipo 19
+
+Token: 18,12 nodo  -> (18,12): nodo es de tipo 19
+
+Token: 18,17 n  -> (18,17): n es de tipo 19
+
+Token: 18,18 (  -> (18,18): ( es de tipo 0
+
+Token: 18,20 ArrayList  -> (18,20): ArrayList es de tipo 19
+
