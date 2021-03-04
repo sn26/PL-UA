@@ -33,7 +33,9 @@ public class AnalizadorLexico {
 		char currentChar;
 		try {
 			if(rollback > 0){
+                                
 				currentChar = this.buffer.get(0);
+                                //System.out.println("Estamos entrando con " + this.buffer.get(0));
 				rollback --;
 				//System.out.println("Mi char es " + currentChar + " Y mi fila es " + this.fila);  
 				//this.file_position_manager(currentChar);
@@ -42,15 +44,19 @@ public class AnalizadorLexico {
 				return currentChar; 
 			}
 			currentChar = (char)fichero.readByte();	
-			//System.out.println("Estamos entrando con " + currentChar ); 		
+			 		
 			buffer.add(currentChar); // Por si tenemos que volver a alguno anterior (Lo iremos limpiando)
 			//this.file_position_manager(currentChar); 
 			this.col ++; 
 			//if(currentChar == '\n') fila--; // (Lo sumaremos más adelante)
 			return currentChar;
 		}catch (EOFException e) {
+			buffer.add(EOF);
+			this.col ++; 
 			return EOF; // constante estatica de la clase
 		}catch (IOException e) {
+			buffer.add(' ');
+			this.col ++; 
 			return ' '; // error lectura
 		}
 	}
@@ -208,7 +214,6 @@ public class AnalizadorLexico {
 			System.exit(-1);
 		}
 		
-		
 		if(last_char == '\n' || last_char == '\t' || last_char ==' ') {
 			//System.out.println("ESTAMOS ENTRANDO CON " + buffer.size() + " Y CON EL CHAR " + last_char );
 			//buffer.remove(buffer.size() - 1 ); 
@@ -311,8 +316,10 @@ public class AnalizadorLexico {
 				
 				return 14;
 			case 18: //id
+				 
 				if(Character.isLetter(c) || Character.isDigit(c)){
-					//System.out.println("Sigo en id con " + c );  
+					//System.out.println("Sigo en id con " + c ); 
+					
 					return 18; //Continuamos leyendo el identificador
 				}
 				this.actual_tok.tipo = this.actual_tok.ID; 
