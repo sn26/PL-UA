@@ -1,1 +1,1 @@
-Error lexico (2,28): caracter '' incorrecto
+Error sintactico (7,5): encontrado 'let', esperaba 'endfn' : ; 'else' 'fi' 'fblq' = 
