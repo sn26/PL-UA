@@ -44,7 +44,7 @@ public class AnalizadorLexico {
                     return currentChar; 
                 }
                 currentChar = (char)fichero.readByte();	
-                System.out.println("CHAR: " + (int)currentChar);
+                
                 buffer.add(currentChar); // Por si tenemos que volver a alguno anterior (Lo iremos limpiando)
                 //this.file_position_manager(currentChar); 
                 this.col ++; 
@@ -215,7 +215,7 @@ public class AnalizadorLexico {
                 System.exit(-1);
             }
 		
-            if(last_char == '\n' || last_char == '\t' || last_char == ' '  || (int)last_char == 13 ) {
+            if(last_char == '\n' || last_char == '\t' || last_char == ' '   ) {
                 //System.out.println("ESTAMOS ENTRANDO CON " + buffer.size() + " Y CON EL CHAR " + last_char );
                 //buffer.remove(buffer.size() - 1 ); 
                 //System.out.println("Estamos entrando con " + last_char ); 
