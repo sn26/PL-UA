@@ -11,7 +11,7 @@ public class Token {
 	private String[] cad_results = {"(" , ")" , 
 			":"  , "->" , "=" , ";" , "+ -" , "* /" , 
 			"'fn'" ,"'endfn'" , "'int'" , "'real'" , "'let'" , "'if'" , "'else'", "'fi'" ,
-			"'print'" , "'blq'" , "'fblq'" , "identificador" , "numero entero" , "numero real" , ""}; 
+			"'print'" , "'blq'" , "'fblq'" , "identificador" , "numero entero" , "numero real" , "fin de fichero"}; 
 	
 	public static final int
 		PARI 		= 0, //(
@@ -36,7 +36,7 @@ public class Token {
 		ID		= 19, //identificador 
 		NUMINT		= 20, //numero entero
 		NUMREAL		= 21, //numero real
-		EOF		= 22; //""
+		EOF		= 22; //"fin de fichero"
 
 	
 	public Token() {
