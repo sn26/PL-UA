@@ -1,0 +1,18 @@
+fn main()  
+  fn f1()
+    let a = 7 
+  endfn
+  fn f2() -> real
+    fn f21()
+      let c = 3+b     /* falta ';' */
+      let             /* Error sintactico (8,7): encontrado 'let', esperaba esperaba ; + - * / 'endfn' */
+        let d;
+        let d = d+c if 8-9+a
+    endfn
+
+    let c = 0.5;
+    print 345 + c;
+    let c = 7.77
+  endfn
+  print 88
+endfn
