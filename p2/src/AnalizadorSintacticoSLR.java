@@ -7,7 +7,6 @@ import java.util.HashMap;
  */
 public class AnalizadorSintacticoSLR {
     private AnalizadorLexico lex; 
-    //private ArrayList<Integer> buffer_rules; //Donde vamos a guardar las reglas por las que vayamos pasando 
     private String buffer_rules;
     private Token actual_tok;
     public boolean print_rules_flag = true ;  
@@ -88,9 +87,7 @@ public class AnalizadorSintacticoSLR {
         ir_a.put(33 , new Integer[] {null, null, null , null, null, null, null, null, null , 37, 25, 26 });
         ir_a.put(34 , new Integer[] {null, null, null , null, null, null, null, null, null , null, 38, 26 });
         ir_a.put(35 , new Integer[] {null, null, null , null, null, null, null, null, null , null, null , 39 });
-    }
-    
-        
+    }        
     /**
      * Función para analizar los tokens de manera ascendente (TABLAS)
      */
@@ -100,14 +97,10 @@ public class AnalizadorSintacticoSLR {
         this.actual_tok = this.lex.siguienteToken();
         boolean finished = false;
         do{
-            //System.out.println("Mi fila es la " + estados.peek() + "Y MI COL ES LA " +this.translator[this.actual_tok.tipo] ); 
-            //System.out.println("Estamos entrando con " + accion[estados.peek()][this.translator[this.actual_tok.tipo]]); 
             if(accion[estados.peek()][this.translator[this.actual_tok.tipo]].contains("d")){
-                //System.out.println("ENTRAMOS GENTE");
                 estados.push(Integer.parseInt((accion[estados.peek()] [this.translator[this.actual_tok.tipo]]).split("d")[1]));
                 this.actual_tok = this.lex.siguienteToken();
             }else if( accion[this.estados.peek()] [this.translator[this.actual_tok.tipo]].contains("r") && !accion[estados.peek()] [this.translator[this.actual_tok.tipo]].equals("aceptar")  ){
-                //System.out.println("Accion" + accion[this.estados.peek()] [this.translator[this.actual_tok.tipo]]); 
                 Integer regla = Integer.parseInt(accion[this.estados.peek()] [this.translator[this.actual_tok.tipo]].split("r")[1]); 
                 //System.out.println("Estamos entrando con la long derecha de " +longitud_parte_derecha[Integer.parseInt((accion[estados.peek()] [this.translator[this.actual_tok.tipo]]).split("r")[1])] );
                 //System.out.println("La regla es la " +Integer.parseInt(accion[estados.peek()] [this.translator[this.actual_tok.tipo]].split("r")[1]) ); 
@@ -134,14 +127,14 @@ public class AnalizadorSintacticoSLR {
         
         }while(finished != true);
        if(this.print_rules_flag) System.out.println(this.buffer_rules);
-       return;
+       
     }
     
     /**
      * Función que recorre la pila de los estados, y los saca en orden
      */
     private void error(){
-        ArrayList<Integer> posibles = new ArrayList<Integer>();
+        ArrayList<Integer> posibles = new ArrayList<>();
         for(int i = 0; i<this.translator.length ; i++ ){ //RECORREMOS EN EL ORDEN DEL TOKEN.TIPO
             if(accion[this.estados.peek()][translator[i]].contains("r") || accion[this.estados.peek()][translator[i]].contains("d") ){
                 posibles.add(translator_inverted[translator[i]]); //Añadimos como TOKEN.TIPO
@@ -170,6 +163,4 @@ public class AnalizadorSintacticoSLR {
         System.err.print(get_errorString("Error sintactico: encontrado fin de fichero, esperaba" , errores_args));
         System.exit(-1);
     }
-    
-
 }

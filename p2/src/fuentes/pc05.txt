@@ -1,0 +1,9 @@
+fn main() -> real  
+
+  fn f1(a:real b:int c:real)
+
+    let d = a+b-c*7.55) /* Error sintactico (5,23): encontrado ')', esperaba 'endfn' ; 'if' 'else' 'fi' 'fblq' */ 
+
+
+  print 88
+endfn
