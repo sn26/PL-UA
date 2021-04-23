@@ -1,32 +1,10 @@
-fn main()  /* funcion 
-             principal */
-  fn f1()
-    let a = 7 
-  endfn
-  fn f2(a:int) -> real
-    fn f21(b:real)
-      let c = 3+b;
-      blq
-        let d;
-        let d = d+c if 8-9+a
-      fblq
-    endfn
-
-    let c = 0.5;
-    print 345 + c;
-    if 2*3 
-      print c/123.4
-    else
-      let f
-    fi;
-    if 3-3 
-     blq
-       let h;
-       let k = 2*a
-     fblq
-    else
-     let c = 7.77
-    fi
+fn main()
+  fn f1() -> int
+    let a;
+    if a+2 print a else let b = 6 fi;
+    let b : real;
+    let b = 3.5 if a+3;
+    print b 
   endfn
   print 88
 endfn

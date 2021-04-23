@@ -1,1 +1,1 @@
-Error sintactico (8,7): encontrado 'blq', esperaba 'endfn' ; 'if' 'else' 'fi' 'fblq' 
+Error semántico (3,13): 'a' , no ha sido declarado

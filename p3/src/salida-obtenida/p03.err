@@ -1,1 +1,1 @@
-Error sintactico (2,12): encontrado ')', esperaba : 
+Error semántico (7,17): 'b' , no ha sido declarado

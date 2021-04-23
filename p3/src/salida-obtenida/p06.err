@@ -1,1 +1,1 @@
-Error sintactico (5,11): encontrado 'integer', esperaba 'int' 'real' 
+Error semántico (3,18): 'a' , no ha sido declarado

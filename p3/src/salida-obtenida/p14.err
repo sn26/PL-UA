@@ -1,1 +1,1 @@
-Error sintactico (5,5): encontrado 'print', esperaba 'else' 'fi' 
+Error semántico (4,11): 'c' , no ha sido declarado

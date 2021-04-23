@@ -1,1 +1,1 @@
-Error sintactico (5,11): encontrado 'integer', esperaba 'int' 'real' 
+Error semantico (3,9): en 'b', debe declararse con tipo entero o real
