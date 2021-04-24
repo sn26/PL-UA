@@ -1,6 +1,6 @@
 int main_f1 ()
 {
-int a_main_f1; 
+int a_main_f1;
 if(a_main_f1  + 2 ){
 printInt(a_main_f1  );
 

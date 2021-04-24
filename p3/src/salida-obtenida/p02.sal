@@ -6,7 +6,7 @@ int a_main_f1; a_main_f1 = 7  ;
 {
 float c_main_f2_f21; c_main_f2_f21 = 3  + b ;
 {
-float d__main_f2_f21; 
+float d__main_f2_f21;
 if(8  - 9 + a )d__main_f2_f21 = d__main_f2_f21  + c_main_f2_f21 ;
 
 }
@@ -21,12 +21,12 @@ printFloat(c_main_f2 / 123.4 );
 
 }
 else{
-float f__main_f2; 
+float f__main_f2;
 
 }
 if(3  - 3 ){
 {
-float h___main_f2; 
+float h___main_f2;
 int k___main_f2; k___main_f2 = 2 * a ;
 
 }

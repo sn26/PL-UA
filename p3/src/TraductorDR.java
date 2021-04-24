@@ -447,6 +447,7 @@ public class TraductorDR {
         }
         if(actual_tok.tipo == Token.ASIG){ //It.trad:= ith2 ||  Ifa.trad ||" = " || E.trad
             buffer_rules.append( " " +24);
+            Token tipotok = new Token(this.actual_tok);
             emparejar(Token.ASIG);
             Atributos etrad = E(); 
 
@@ -454,12 +455,12 @@ public class TraductorDR {
             //Añadimos a la tabla (Si no se había creado anterioremente)
             if(this.tsActual.searchSymb(idlexemah)!= null){//Ya la tenemos declarada en un ámbito (Padre o el actual)
                 //Comprobamos los tipos
-                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 , idtok);
+                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 , tipotok);
                 return new Atributos(new String [] {etrad.getTipo() ,  ifatrad.getAsig() +  this.tsActual.searchSymb(idlexemah).nomtrad + " = " + etrad.getAsig() + ";" });
             }
             if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(etrad.getTipo() , idtok), idlexemah + ith2  ))){
                 //Comprobamos los tipos
-                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 ,idtok);
+                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 ,tipotok);
                 return new Atributos(new String [] {etrad.getTipo() ,  ifatrad.getAsig() +  this.tsActual.searchSymb(idlexemah).nomtrad + " = " + etrad.getAsig() + ";" });
                 
             }else{
@@ -485,7 +486,7 @@ public class TraductorDR {
             //EPSILON
             buffer_rules.append( " " +25);
             if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(ith1 , idtok), idlexemah + ith2  ))) this.errorSemantico(0 , idtok);
-            return new Atributos(new String[] {ith1 , ith1 + " " + idlexemah + ith2 + "; "}); //Devolvemos el heredado
+            return new Atributos(new String[] {ith1 , ith1 + " " + idlexemah + ith2 + ";"}); //Devolvemos el heredado
         }
         
         this.errorSintaxis(Token.ENDFN , Token.DOSP , Token.PYC , Token.ELSE, Token.FI,  Token.FBLQ , Token.ASIG );
