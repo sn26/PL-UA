@@ -231,11 +231,13 @@ public class TraductorDR {
             emparejar(Token.ID);           
             emparejar(Token.DOSP); 
             String ttypetrad = Type(); 
+            //System.out.println("EL SIGUIENTE ES " + this.actual_tok.lexema);
             if( !this.tsActual.newSymb(new Simbolo(idlexema , this.parserTipo(ttypetrad , idtok) , idlexema ))) this.errorSemantico(0, idtok);
             String argtrad = Arg(","); 
-            return coma + ttypetrad + " " + idlexema ; 
+            return coma + ttypetrad + " " + idlexema + argtrad; 
         }
         if(this.actual_tok.tipo == Token.PARD){
+           
             //EPSILON
             buffer_rules.append( " " +8);
             return ""; 
@@ -527,7 +529,7 @@ public class TraductorDR {
             buffer_rules.append( " " +28);
             Atributos ttrad = T();
             Atributos eptrad = Ep(); 
-            return new Atributos( new String[] { this.tiposhake(ttrad.getTipo(), eptrad.getTipo()), ttrad.getAsig() + eptrad.getAsig()}); 
+            return new Atributos( new String[] { this.tiposhake(ttrad.getTipo(), eptrad.getTipo()), ttrad.getAsig() + " " +  eptrad.getAsig()}); 
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[]{});
@@ -581,7 +583,7 @@ public class TraductorDR {
             Atributos ftrad= F(); 
             Atributos tptrad = Tp();
             //Tenemos que comprobar los tipos
-            return new Atributos( new String[]{ this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , ftrad.getAsig() + tptrad.getAsig()}) ;
+            return new Atributos( new String[]{ this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , ftrad.getAsig() + " " +tptrad.getAsig()}) ;
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[] {});
@@ -600,7 +602,7 @@ public class TraductorDR {
             Atributos tptrad  = Tp();
             //TENEMOS QUE COMPROBAR LOS TIPOS
         
-            return new Atributos(new String [] {this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , opmdlexema + ftrad.getAsig() + tptrad.getAsig() }); 
+            return new Atributos(new String [] {this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , opmdlexema +" " +  ftrad.getAsig() + tptrad.getAsig() }); 
         }
         if(actual_tok.tipo == Token.OPAS||
                 actual_tok.tipo == Token.BLQ ||
@@ -664,7 +666,7 @@ public class TraductorDR {
             emparejar(Token.PARI);
             Atributos etrad = E();
             emparejar(Token.PARD);
-            return new Atributos(new String[] {"()" , etrad.getAsig()} ); 
+            return new Atributos(new String[] {etrad.getTipo() , "(" + etrad.getAsig() + ")"} ); 
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[]{}); 
