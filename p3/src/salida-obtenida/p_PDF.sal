@@ -14,10 +14,10 @@ if(8- 9+ a)d__main_f2_f21 = d__main_f2_f21+ c_main_f2_f21;
  }
  float main_f2 (int a)
 {
-float c_main_f2; c_main_f2 = 0.5;
+float c_main_f2; c_main_f2 = 2.5;
 printFloat(345+ c_main_f2);
 if(2*3){
-printFloat(c_main_f2/123.4);
+printFloat(c_main_f2);
 
 }
 else{

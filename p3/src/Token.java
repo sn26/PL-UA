@@ -48,6 +48,13 @@ public class Token {
 		
 	}
 	
+	public Token(Token tok){
+		this.columna = tok.columna; 
+		this.fila = tok.fila; 
+		this.lexema = tok.lexema; 
+		this.tipo = tok.tipo;
+	}
+	
 	/**
 	 * Funcin que devuelve, para cada Token, la cadena de la tercera columna de la tabla del enunciado
 	 * 

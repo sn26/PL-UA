@@ -1,1 +1,1 @@
-Error sintactico (7,1): encontrado 'else', esperaba 'fn' 'let' 'print' 'if' 'blq' fin de fichero 
+Error semantico (3,6): en 'a', no ha sido declarado
