@@ -44,21 +44,15 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 <COMENTARIO><<EOF>>     {msgError(ERRLEXEOF,-1,-1,"");}
 <COMENTARIO>"*/"        {ncol+=strlen(yytext); BEGIN(INITIAL);}
 <COMENTARIO>[*/]        {ncol += strlen(yytext);}
+"("                 {return ret(pari , PARI);}
+")"                 {return ret(pard , PARD);}
+":"                 {return ret(dosp , DOSP); }
+"="                 {return ret(asig ,ASIG); }
+";"                 {return ret(pyc , pyc );}
 ""
+"" 
 
-"print"            {return ret(print);}
-        /* Las palabras reservadas deben aparecer antes de la regla que
-          reconoce los identificadores, para evitar que sean reconocidas
-          como identificadores en lugar de como palabras reservadas */            
-{L}({LD})*         {return ret(id);}
-{D}+               {return ret(numentero);}
-{D}+(\.){D}+       {return ret(numreal);}
-"+"                {return ret(opas);}
-"-"                {return ret(opas);}
-"("                {return ret(pari);}
-")"                {return ret(pard);}
-";"                {return ret(pyc);}
-","                {return ret(coma);}
+
 .                  {msgError(ERRLEXICO,nlin,ncol,yytext);}
 
 %%
