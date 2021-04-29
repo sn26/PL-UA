@@ -1,1 +1,1 @@
-Error sintactico (7,5): encontrado 'let', esperaba 'endfn' : ; 'else' 'fi' 'fblq' =
+Error semantico (4,11): en 'c', no ha sido declarado

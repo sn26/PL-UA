@@ -12,12 +12,16 @@ public class TraductorDR {
     public boolean print_rules_flag = true ; 
     private TablaSimbolos tsActual = null; 
     private String[] erroresSemanticos = {
-        " , ya existe en este ambito" , 
-        " , no ha sido declarado" , 
-        " , la expresión debe ser de tipo entero", 
-        " debe ser de tipo entero o real" , 
-        " debe declararse con tipo entero o real"
+        "ya existe en este ambito" , 
+        "no ha sido declarado" , 
+        "la expresión debe ser de tipo entero", 
+        "debe ser de tipo entero o real" , 
+        "debe declararse con tipo entero o real"
     }; 
+    private String[] trtipo = {
+        "int" , 
+        "float"
+    };
     public TraductorDR(AnalizadorLexico al) {
         this.lex = al;  
         buffer_rules= new StringBuilder(); 
@@ -30,11 +34,11 @@ public class TraductorDR {
      * @param typetrad
      * @return 
      */
-    private int parserTipo(String typetrad){
+    private int parserTipo(String typetrad , Token tok){
         if(typetrad.equals("int")) return 1;
         if ( typetrad.equals("float")) return 2; 
         //SI ES VOID, LANZAMOS ERROR 
-        if(typetrad.equals("void")) this.errorSemantico(4);
+        if(typetrad.equals("void")) this.errorSemantico(4 , tok);
         return -1;
     }
     
@@ -45,7 +49,7 @@ public class TraductorDR {
      * @return 
      */
     private String tiposhake(String type1 , String type2){
-        if(type1.equals("float") || type1.equals("float")) return "float";
+        if(type1.equals("float") || type2.equals("float")) return "float";
         return "int"; 
     }
     /***
@@ -84,16 +88,17 @@ public class TraductorDR {
         System.exit(-1);
     }
     
+   
+
+
     /***
      * Función que vamos a utilizar para sacar los errores semánticos
      * @param errores_args 
      */
-    private final void errorSemantico(int tipoerr){
+    private final void errorSemantico(int tipoerr , Token tok){
         buffer_rules.setLength(0); //LIMPIO EL STRING BUILDER (NO ESTOY SEGURO DE QUE HAGA FALTA)
-        
-        System.err.print("Error semántico (" 
-              + this.actual_tok.fila +"," + this.actual_tok.columna + 
-              "): '" + this.actual_tok.lexema + "'" + this.erroresSemanticos[tipoerr] );
+        //System.err.print();
+        System.err.println("Error semantico ("+tok.fila+","+tok.columna+"): en '"+tok.lexema+"', " + this.erroresSemanticos[tipoerr] );
         System.exit(-1);   
     
     }
@@ -146,9 +151,13 @@ public class TraductorDR {
             buffer_rules.append( " " +5);
             this.emparejar(Token.FN); //Emparejamos, hemos llegado al final de la escalera 
             String idlexema = actual_tok.lexema;
+            Token idtok = new Token(actual_tok); 
+            //System.out.println("IDLEXEMA "+ idlexema);
+            
             this.emparejar(Token.ID);
+            //System.out.println("TOKLEXEMA " + idtok.lexema);
             //Añadimos la func al ámbito actual
-            if( !this.tsActual.newSymb(new Simbolo(idlexema , 3 , funth + idlexema ))) this.errorSemantico(0);  
+            if( !this.tsActual.newSymb(new Simbolo(idlexema , 3 , funth + idlexema ))) this.errorSemantico(0 , idtok );  
             //Añadimos el simbolo de la funcion
             //Cogemos las traducciones 
             this.tsActual = new TablaSimbolos(this.tsActual); //Añadimos un nuevo ámbito
@@ -160,7 +169,7 @@ public class TraductorDR {
             //Una vez que tenemos las traducciones, generamos el string final
             //Cerramos el ámbito
             this.tsActual = tsActual.getPadre();
-            return  spptrad + rttrad + " " + funth + idlexema + " " + attrad + "\n{\n" + codtrad + " } " ; 
+            return  spptrad + rttrad + " " + funth + idlexema + " " + attrad + "\n{\n" + codtrad + " }\n " ; 
         }
         this.errorSintaxis(Token.FN); 
         return "";
@@ -218,14 +227,17 @@ public class TraductorDR {
         if(this.actual_tok.tipo == Token.ID){
             buffer_rules.append( " " +7);
             String idlexema = actual_tok.lexema; 
+            Token idtok = new Token(actual_tok);
             emparejar(Token.ID);           
             emparejar(Token.DOSP); 
-            String ttypetrad = Type();
-            if( !this.tsActual.newSymb(new Simbolo(this.actual_tok.lexema , this.parserTipo(ttypetrad) , idlexema ))) this.errorSemantico(0);
+            String ttypetrad = Type(); 
+            //System.out.println("EL SIGUIENTE ES " + this.actual_tok.lexema);
+            if( !this.tsActual.newSymb(new Simbolo(idlexema , this.parserTipo(ttypetrad , idtok) , idlexema ))) this.errorSemantico(0, idtok);
             String argtrad = Arg(","); 
-            return coma + ttypetrad + " " + idlexema ; 
+            return coma + ttypetrad + " " + idlexema + argtrad; 
         }
         if(this.actual_tok.tipo == Token.PARD){
+           
             //EPSILON
             buffer_rules.append( " " +8);
             return ""; 
@@ -340,11 +352,12 @@ public class TraductorDR {
         if(this.actual_tok.tipo == Token.LET){ //I.trad = I1.th ||" " || id.lexema || I2.th || It.trad ||";\n"  
             buffer_rules.append( " " +17);
             emparejar(Token.LET);
-            String idlexema = this.actual_tok.lexema; 
+            String idlexema = this.actual_tok.lexema;
+            Token idtok = new Token(this.actual_tok); 
             emparejar(Token.ID);
-            Atributos ittrad = It(ith1 , ith2 , idlexema);
+            Atributos ittrad = It(ith1 , ith2 , idtok);
            
-            return ittrad.getTipo() + " " + idlexema + ith2 + "; " + ittrad.getAsig() + "\n"; //Devolvemos la traduccion con el tipo del ret  
+            return ittrad.getAsig() + "\n"; //Devolvemos la traduccion con el tipo del ret  
         }
         if(this.actual_tok.tipo == Token.PRINT){ //I.trad := "print" || tipo_tabla_simb || "(" || e.trad || it2.th ||");\n"  
             buffer_rules.append( " " +18);
@@ -358,7 +371,7 @@ public class TraductorDR {
             Atributos etrad = E();
             //Creamos un nuevo ámbito para lo interno del if 
             this.tsActual = new TablaSimbolos(this.tsActual);
-            String itrad= I(ith1 , ith2 ); 
+            String itrad= I(ith1 , "_" + ith2 ); 
             //Cerramos antes del else 
             this.tsActual = this.tsActual.getPadre();
             String iptrad = Ip(ith1 , ith2 );
@@ -419,30 +432,50 @@ public class TraductorDR {
      * IT -> asig E Ifa
      * IT -> epsilon
      */
-    public Atributos It(String ith1 , String ith2 , String idlexemah){
+    public Atributos It(String ith1 , String ith2 , Token idtok){
+        String idlexemah = idtok.lexema;
         if(actual_tok.tipo == Token.DOSP){ //It.trad := Type.trad
+            
             buffer_rules.append( " " +23);
             emparejar(Token.DOSP);
             String typetrad = Type(); 
             //Añadimos a la tabla 
-            
-            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(typetrad), idlexemah + ith2  ))) this.errorSemantico(0);
-            return new Atributos(new String[] {typetrad , ""}); //Devolvemos la clase atributo con el tipo
+            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(typetrad , idtok), idlexemah + ith2  ))) this.errorSemantico(0 , idtok);
+           
+            return new Atributos(new String[] {typetrad , typetrad +" " + idlexemah + ith2 + "; " }); //Devolvemos la clase atributo con el tipo
            
         }
         if(actual_tok.tipo == Token.ASIG){ //It.trad:= ith2 ||  Ifa.trad ||" = " || E.trad
             buffer_rules.append( " " +24);
+            Token tipotok = new Token(this.actual_tok);
             emparejar(Token.ASIG);
             Atributos etrad = E(); 
-            Atributos ifatrad = Ifa();
+
+            Atributos ifatrad = Ifa(idtok);
             //Añadimos a la tabla (Si no se había creado anterioremente)
-            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(etrad.getTipo()), idlexemah + ith2  ))){
+            if(this.tsActual.searchSymb(idlexemah)!= null){//Ya la tenemos declarada en un ámbito (Padre o el actual)
                 //Comprobamos los tipos
-                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo()) == 2 ) this.errorSemantico(2);
+                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 , tipotok);
+                return new Atributos(new String [] {etrad.getTipo() ,  ifatrad.getAsig() +  this.tsActual.searchSymb(idlexemah).nomtrad + " = " + etrad.getAsig() + ";" });
+            }
+            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(etrad.getTipo() , idtok), idlexemah + ith2  ))){
+                //Comprobamos los tipos
+                if(this.tsActual.searchSymb(idlexemah).tipo == 1 &&  this.parserTipo( etrad.getTipo() , idtok) == 2 ) this.errorSemantico(2 ,tipotok);
+                return new Atributos(new String [] {etrad.getTipo() ,  ifatrad.getAsig() +  this.tsActual.searchSymb(idlexemah).nomtrad + " = " + etrad.getAsig() + ";" });
                 
+            }else{
+                if(ifatrad.getAsig().length() > 1 ) this.errorSemantico(4 , idtok);
             }
             
-            return new Atributos(new String [] {etrad.getTipo() , ifatrad.getAsig() + idlexemah + ith2 + " = " + etrad.getAsig() + ";" });
+            
+
+            if(ifatrad.getAsig().length() > 1){
+                
+                return new Atributos(new String [] {etrad.getTipo() ,ifatrad.getAsig() + idlexemah + ith2 + " = " + etrad.getAsig() + ";" });
+
+            } 
+            
+            return new Atributos(new String [] {etrad.getTipo() ,  etrad.getTipo() + " " + idlexemah + ith2 + "; " +  idlexemah + ith2  + " = " + etrad.getAsig() + ";" });
            
         }
         if(actual_tok.tipo == Token.ELSE ||
@@ -452,8 +485,8 @@ public class TraductorDR {
                 actual_tok.tipo == Token.ENDFN){
             //EPSILON
             buffer_rules.append( " " +25);
-            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(ith1), idlexemah + ith2  ))) this.errorSemantico(0);
-            return new Atributos(new String[] {ith1 , ""}); //Devolvemos el heredado
+            if( !this.tsActual.newSymb(new Simbolo(idlexemah , this.parserTipo(ith1 , idtok), idlexemah + ith2  ))) this.errorSemantico(0 , idtok);
+            return new Atributos(new String[] {ith1 , ith1 + " " + idlexemah + ith2 + ";"}); //Devolvemos el heredado
         }
         
         this.errorSintaxis(Token.ENDFN , Token.DOSP , Token.PYC , Token.ELSE, Token.FI,  Token.FBLQ , Token.ASIG );
@@ -465,10 +498,10 @@ public class TraductorDR {
      * Ifa -> epsilon
      * 
     */
-    public Atributos Ifa(){
+    public Atributos Ifa(Token idtok){
         if(actual_tok.tipo == Token.IF){ //Ifa.trad = "if(" || E.trad || ")"
             buffer_rules.append( " " +26);
-            
+            if(this.tsActual.searchSymb(idtok.lexema)== null) this.errorSemantico(4 , idtok);
             emparejar(Token.IF);
             Atributos etrad = E();
             return new Atributos(new String [] {etrad.getTipo() , "if(" + etrad.getAsig() + ")"}); //NO ESTOY SEGURO 
@@ -493,11 +526,11 @@ public class TraductorDR {
     public Atributos E(){
         if(actual_tok.tipo == Token.ID  ||actual_tok.tipo == Token.NUMINT 
                 ||actual_tok.tipo == Token.NUMREAL ||  
-                actual_tok.tipo == Token.PARI) { //E.trad := " = " || T.trad || Ep.trad
+                actual_tok.tipo == Token.PARI) { //E.trad := T.trad || Ep.trad
             buffer_rules.append( " " +28);
             Atributos ttrad = T();
             Atributos eptrad = Ep(); 
-            return new Atributos( new String[] { this.tiposhake(ttrad.getTipo(), eptrad.getTipo()), ttrad.getAsig() + eptrad.getAsig()}); 
+            return new Atributos( new String[] { this.tiposhake(ttrad.getTipo(), eptrad.getTipo()), ttrad.getAsig() + " " +  eptrad.getAsig()}); 
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[]{});
@@ -551,7 +584,7 @@ public class TraductorDR {
             Atributos ftrad= F(); 
             Atributos tptrad = Tp();
             //Tenemos que comprobar los tipos
-            return new Atributos( new String[]{ this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , ftrad.getAsig() + tptrad.getAsig()}) ;
+            return new Atributos( new String[]{ this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , ftrad.getAsig() + " " +tptrad.getAsig()}) ;
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[] {});
@@ -570,7 +603,7 @@ public class TraductorDR {
             Atributos tptrad  = Tp();
             //TENEMOS QUE COMPROBAR LOS TIPOS
         
-            return new Atributos(new String [] {this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , opmdlexema + ftrad.getAsig() + tptrad.getAsig() }); 
+            return new Atributos(new String [] {this.tiposhake(ftrad.getTipo(), tptrad.getTipo()) , opmdlexema +" " +  ftrad.getAsig() + tptrad.getAsig() }); 
         }
         if(actual_tok.tipo == Token.OPAS||
                 actual_tok.tipo == Token.BLQ ||
@@ -618,12 +651,12 @@ public class TraductorDR {
             //System.out.println("Estamos entrando con " + this.actual_tok.lexema);
             //Comprobamos que exista
             
-            if(this.tsActual.searchSymb(this.actual_tok.lexema) == null ) this.errorSemantico(1); 
+            if(this.tsActual.searchSymb(this.actual_tok.lexema) == null ) this.errorSemantico(1 , this.actual_tok); 
             //System.out.println("ESTAMOS SIGUIENDO");
             //Comprobamos que no sea func
-            if(this.tsActual.searchSymb(this.actual_tok.lexema).tipo >= 3 ) this.errorSemantico(3);
+            if(this.tsActual.searchSymb(this.actual_tok.lexema).tipo >= 3 ) this.errorSemantico(3 , this.actual_tok);
             
-            Atributos cp =new Atributos(new String[] {"id" , this.tsActual.searchSymb(this.actual_tok.lexema).nomtrad}); 
+            Atributos cp =new Atributos(new String[] {this.trtipo[this.tsActual.searchSymb(this.actual_tok.lexema).tipo-1]  , this.tsActual.searchSymb(this.actual_tok.lexema).nomtrad}); 
             emparejar(Token.ID); 
             return cp; 
         }
@@ -634,7 +667,7 @@ public class TraductorDR {
             emparejar(Token.PARI);
             Atributos etrad = E();
             emparejar(Token.PARD);
-            return new Atributos(new String[] {"()" , etrad.getAsig()} ); 
+            return new Atributos(new String[] {etrad.getTipo() , "(" + etrad.getAsig() + ")"} ); 
         }
         errorSintaxis(Token.ID, Token.PARI , Token.NUMINT , Token.NUMREAL );
         return new Atributos(new String[]{}); 
