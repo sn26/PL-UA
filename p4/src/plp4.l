@@ -48,11 +48,26 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 ")"                 {return ret(pard , PARD);}
 ":"                 {return ret(dosp , DOSP); }
 "="                 {return ret(asig ,ASIG); }
-";"                 {return ret(pyc , pyc );}
-""
-"" 
-
-
+";"                 {return ret(pyc , PYC);}
+"->"                {return ret(ret , RET ); }
+"-"                 {return ret(opas , OPAS); }
+"+"                 {return ret(opas , OPAS ); }
+"*"                 {return ret(opmd , OPMD); }
+"/"                 {return ret(opmd , OPMD ); }
+"fn"                {return ret(fn ,FN ); }
+"endfn"             {return ret(endfn , ENDFN); }
+"int"               {return ret(int , INT ); }
+"real"              {return ret(real , REAL ); }
+"blq"               {return ret(blq, BLQ); }
+"fblq"              {return ret(fblq , FBLQ); }
+"let"               {return ret(let , LET); }
+"if"                {return ret(if , IF ); }
+"else"              {return ret(else , ELSE ); }
+"fi"                {return ret(fi, FI); }
+"print"             {return ret(print , PRINT); }
+{AZS}({AZSNUM})*    {return ret(id , ID);}
+{NUM}+              {return ret(numentero , NUMINT); }
+{NUM}+{\.}{NUM}+    {return ret(numreal , NUMREAL); }
 .                  {msgError(ERRLEXICO,nlin,ncol,yytext);}
 
 %%
@@ -67,6 +82,8 @@ int ret(int token , int tipo)
    yylval.fila=nlin;
    yylval.col=ncol;
    yyval.tipo= tipo;
+   yyval.atributos.tipo = ""; 
+   yyval.atributos.asig = ""; 
    ncol+=(strlen(yytext));
    return(token);
 }

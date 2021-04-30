@@ -3,11 +3,16 @@
 /* fichero con definciones comunes para los ficheros .l y .y */
 #include<string.h>
 #include<string>
+struct Atributos{
+	char* tipo; 
+	char* asig; 
+};
 typedef struct {
    char *lexema;
    int fila,col;
    int tipo;
    string trad;
+   Atributos atributos; 
 } MITIPO;
 
 #define YYSTYPE MITIPO
