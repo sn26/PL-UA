@@ -4,7 +4,6 @@ L    [a-zA-Z]
 LD   [0-9a-zA-Z]
 
 %{
-  
 #include <string.h> 
 #include <string>
 #include <iostream>

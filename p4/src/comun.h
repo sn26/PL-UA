@@ -1,11 +1,10 @@
 /*----------------------- comun.h -----------------------------*/
 
 /* fichero con definciones comunes para los ficheros .l y .y */
-#include<string.h>
-#include<string>
+
 struct Atributos{
-	char* tipo; 
-	char* asig; 
+	string tipo; 
+	string asig; 
 };
 typedef struct {
    char *lexema;
@@ -16,7 +15,6 @@ typedef struct {
 } MITIPO;
 
 #define YYSTYPE MITIPO
-
 const int
 		PARI 		= 0,
       PARD		= 1, //) 
@@ -39,8 +37,11 @@ const int
 		FBLQ		= 18, //'fblq'
 		ID		= 19, //identificador 
 		NUMINT		= 20, //numero entero
-		NUMREAL		= 21, //numero real
-		EOF		= 22; //"fin de fichero"
+		NUMREAL		= 21; //numero real
+		
+
+
+//***-------------------- en comun.h -------------------------------
 
 #define ERRLEXICO    1
 #define ERRSINT      2

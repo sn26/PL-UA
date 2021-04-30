@@ -6,12 +6,12 @@
 #include <vector>
 
 using namespace std;
-
+/*
 const int ENTERO=1;
 const int REAL=2;
 const int FUNCION=3;
 const int VOID=4;
-
+*/
 struct Simbolo {
 
   string nombre;
