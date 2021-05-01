@@ -44,7 +44,7 @@ TablaSimbolos *tsActual = new TablaSimbolos(NULL);
 
 string tipoMayus(string tipo);
 int tipoShake(int type1,  int type2);
-int checkTipo(int tipo ); 
+int parserTipo(string tipo , char * lexema, int fila, int columna  );
 %}
 
 %% 
@@ -72,8 +72,8 @@ Spp : Fun Spp {
 Fun : fn id {  
             struct Simbolo simb1; 
             simb1.nombre = $2.lexema; 
-            simb1.tipo =$2.tipo; 
-            simb1.nomtrad = $2.lexema;  
+            simb1.tipo =FUNCIONT; 
+            simb1.nomtrad = $0.atributos.asig + $2.lexema;  
             if(!tsActual->newSymb(simb1)){
                 errorSemantico(ERRYADECL,$2.lexema,$2.fila,$2.col);
             } 
@@ -91,7 +91,7 @@ Fun : fn id {
 A : pari {$$.atributos.asig = ""; } Arg pard {} { $$.trad = "(" + $2.trad + ")";  }; 
 
 Arg : id dosp Type {$$.atributos.asig = ",";} Arg {
-    struct Simbolo simb1; simb1.nombre = $1.lexema; simb1.tipo =$1.tipo; simb1.nomtrad = $1.lexema;  
+    struct Simbolo simb1; simb1.nombre = $1.lexema; simb1.tipo = parserTipo($3.trad , $1.lexema , $1.fila, $1.col ); simb1.nomtrad = $1.lexema;  
     if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,$1.lexema,$1.fila,$1.col);
     $$.trad = $0.trad + $3.trad + " " + $1.lexema + $5.trad;     }
     | {$$.trad = "";  }; 
@@ -103,11 +103,11 @@ Type : inttok { $$.trad = "int"; }
     | real {$$.trad = "float";};
 
 
-Cod : Cod pyc {$$.trad =$0.trad;  } I {$$.trad = $1.trad + $4.trad;  }
-    | {} {} {$$.trad = $0.trad;} I         {$$.trad = $4.trad; }; 
+Cod : Cod pyc {$$.trad =$0.trad; $$.atributos.tipo= $0.atributos.tipo;  } I {$$.trad = $1.trad + $4.trad;  }
+    | {} {} {$$.trad = $0.trad; $$.atributos.tipo= $0.atributos.tipo; } I         {$$.trad = $4.trad; }; 
 
 I : Blq {$$.trad = $1.trad + "\n"; }
-   | let id {$$.trad = $0.trad + "_" + $2.trad;   } It {$$.trad = $4.trad; }
+   | let id {$$.trad = $0.trad + "_" + $2.trad; $$.atributos.tipo = $0.atributos.tipo;    } It {$$.trad = $4.trad; }
    | print E {$$.trad = "print" + tipoMayus($2.atributos.tipo) + "(" + $2.trad + ");\n";   }
    | iftok E { tsActual = new TablaSimbolos(tsActual); } I {tsActual = tsActual->getPadre();} Ip {$$.trad = "if(" + $2.trad + "){\n" + $4.trad + "\n}\n" + $6.trad;   }; 
 
@@ -120,24 +120,23 @@ Ip : elsetok {tsActual = new TablaSimbolos(tsActual);} I {tsActual = tsActual->g
 
 It : dosp Type {  struct Simbolo simb1; 
             simb1.nombre = $-1.lexema; 
-            simb1.tipo = checkTipo($2.tipo);  
+            simb1.tipo = parserTipo($2.trad , $-1.lexema , $-1.fila , $-1.col);  
             simb1.nomtrad = $-1.lexema + $0.trad;  
             if(!tsActual->newSymb(simb1))errorSemantico(ERRYADECL,$-1.lexema,$-1.fila,$-1.col);
             $$.trad = $2.trad + " " + $-1.lexema + $0.trad + "; ";
              }
     | asig E {$$.trad = $-1.lexema; } Ifa {
-        struct Simbolo simb1; 
-        simb1.nombre = $-1.lexema; 
-        simb1.tipo = checkTipo($2.tipo);  
-        simb1.nomtrad = $-1.lexema + $0.trad;  
-       
         if(tsActual->searchSymb($-1.lexema)!= NULL){
-            if(tsActual->searchSymb($-1.lexema)->tipo == INT &&  checkTipo($2.tipo) == REAL ) errorSemantico(ERRNOENTERO,$-1.lexema,$-1.fila,$-1.col);
+            if(tsActual->searchSymb($-1.lexema)->tipo == ENTEROT && parserTipo($2.atributos.tipo , $-1.lexema , $-1.fila , $-1.col) == REAL ) errorSemantico(ERRNOENTERO,$-1.lexema,$-1.fila,$-1.col);
             $$.tipo = $2.tipo;
             $$.trad =  $4.trad +  tsActual->searchSymb($-1.lexema)->nomtrad + " = " + $2.trad + ";" ;
         }
+        struct Simbolo simb1; 
+        simb1.nombre = $-1.lexema; 
+        simb1.tipo = parserTipo($2.atributos.tipo , $-1.lexema , $-1.fila , $-1.col);  
+        simb1.nomtrad = $-1.lexema + $0.trad;  
         if( !tsActual->newSymb(simb1)){
-            if(tsActual->searchSymb($-1.lexema)->tipo == INT &&  checkTipo( $2.tipo) == REAL ) errorSemantico(ERRNOENTERO,$-1.lexema,$-1.fila,$-1.col);
+            if(tsActual->searchSymb($-1.lexema)->tipo == ENTEROT &&  parserTipo($2.atributos.tipo , $-1.lexema , $-1.fila , $-1.col) == REAL ) errorSemantico(ERRNOENTERO,$-1.lexema,$-1.fila,$-1.col);
             $$.tipo = $2.tipo;
             $$.trad =  $4.trad +  tsActual->searchSymb($-1.lexema)->nomtrad + " = " + $2.trad + ";" ;
             
@@ -156,7 +155,7 @@ It : dosp Type {  struct Simbolo simb1;
     | {
         struct Simbolo simb1; 
         simb1.nombre = $-1.lexema; 
-        simb1.tipo = checkTipo($0.tipo);  
+        simb1.tipo = parserTipo($0.atributos.tipo , $-1.lexema , $-1.fila , $-1.col);  
         simb1.nomtrad = $-1.lexema + $0.trad;  
         if( !tsActual->newSymb(simb1) )  errorSemantico(ERRYADECL,$-1.lexema,$-1.fila,$-1.col);
         $$.tipo = $0.tipo;
@@ -178,16 +177,20 @@ T : T opmd F {  $$.tipo = tipoShake($1.tipo , $3.tipo);
         $$.trad = $1.trad; 
         };
 
-F : numint {$$.tipo =INT; 
+F : numint {$$.tipo =ENTEROT; 
+            $$.atributos.tipo = "int";
             $$.trad = $1.lexema; }
-    | numreal {$$.tipo = REAL; 
+    | numreal {
+        $$.atributos.tipo = "float";
+        $$.tipo = REALT; 
                 $$.trad = $1.lexema;}
     | pari E pard {
         $$.tipo = $1.tipo; 
+        $$.atributos.tipo = $1.atributos.tipo;
         $$.trad = "(" + $1.trad + ")"; }
     | id {
         if( tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col);
-        if(tsActual->searchSymb($1.lexema)->tipo != INT && tsActual->searchSymb($1.lexema)->tipo != REAL ) errorSemantico(ERRNOSIMPLE,$1.lexema,$1.fila,$1.col);
+        if(tsActual->searchSymb($1.lexema)->tipo != ENTEROT && tsActual->searchSymb($1.lexema)->tipo != REALT ) errorSemantico(ERRNOSIMPLE,$1.lexema,$1.fila,$1.col);
         $$.tipo = tsActual->searchSymb($1.lexema)->tipo; 
         $$.trad =  tsActual->searchSymb($1.lexema)->nomtrad;
     }
@@ -199,10 +202,10 @@ string tipoMayus(string tipo){
     return "Float"; 
 }
 
-int checkTipo(int tipo ){
-    if (tipo == INT ) return INT; 
-    if (tipo == REAL ) return REAL; 
-    yyerror("");
+int parserTipo(string tipo , char * lexema, int fila, int columna  ){
+    if (tipo =="int"  ) return ENTEROT; 
+    if (tipo == "float"  ) return REALT; 
+    if(tipo == "void" )errorSemantico(ERRVOID,lexema,fila,columna);
     return -1; 
 }
 

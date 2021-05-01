@@ -386,8 +386,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[69] =
     {   0,
-        0,    0,    0,    0,   36,   34,    2,    3,    1,   11,
-       12,   18,   17,   16,   19,   32,   13,   10,   14,   31,
+        0,    0,    0,    0,   36,   34,    2,    3,    1,   10,
+       11,   18,   17,   16,   19,   32,   12,   14,   13,   31,
        31,   31,   31,   31,   31,   31,   31,    6,    7,    9,
         9,   15,    5,    4,    0,   32,   31,   31,   31,   31,
        31,   29,   20,   27,   31,   31,   31,   31,    6,    8,
@@ -867,27 +867,27 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 47 "plp4.l"
-{return ret(pyc , PYC);}
+{return ret(pari , PARI);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 48 "plp4.l"
-{return ret(pari , PARI);}
+{return ret(pard , PARD);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 49 "plp4.l"
-{return ret(pard , PARD);}
+{return ret(dosp , DOSP); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 50 "plp4.l"
-{return ret(dosp , DOSP); }
+{return ret(asig ,ASIG); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 51 "plp4.l"
-{return ret(asig ,ASIG); }
+{return ret(pyc , PYC);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP

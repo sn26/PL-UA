@@ -89,7 +89,7 @@ TablaSimbolos *tsActual = new TablaSimbolos(NULL);
 
 string tipoMayus(string tipo);
 int tipoShake(int type1,  int type2);
-int checkTipo(int tipo ); 
+int parserTipo(string tipo , char * lexema, int fila, int columna  );
 
 #line 95 "plp4.tab.c" /* yacc.c:339  */
 
@@ -472,8 +472,8 @@ static const yytype_uint8 yyrline[] =
       84,    72,    91,    91,    91,    93,    93,    97,    99,   100,
      102,   103,   106,   106,   107,   107,   107,   107,   109,   110,
      110,   111,   112,   112,   112,   114,   114,   114,   116,   116,
-     116,   118,   121,   128,   128,   156,   166,   166,   167,   169,
-     171,   174,   177,   181,   183,   185,   188
+     116,   118,   121,   128,   128,   155,   165,   165,   166,   168,
+     170,   173,   176,   180,   183,   187,   191
 };
 #endif
 
@@ -1345,8 +1345,8 @@ yyreduce:
     {  
             struct Simbolo simb1; 
             simb1.nombre = (yyvsp[0]).lexema; 
-            simb1.tipo =(yyvsp[0]).tipo; 
-            simb1.nomtrad = (yyvsp[0]).lexema;  
+            simb1.tipo =FUNCIONT; 
+            simb1.nomtrad = (yyvsp[-2]).atributos.asig + (yyvsp[0]).lexema;  
             if(!tsActual->newSymb(simb1)){
                 errorSemantico(ERRYADECL,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
             } 
@@ -1403,7 +1403,7 @@ yyreduce:
   case 16:
 #line 93 "plp4.y" /* yacc.c:1646  */
     {
-    struct Simbolo simb1; simb1.nombre = (yyvsp[-4]).lexema; simb1.tipo =(yyvsp[-4]).tipo; simb1.nomtrad = (yyvsp[-4]).lexema;  
+    struct Simbolo simb1; simb1.nombre = (yyvsp[-4]).lexema; simb1.tipo = parserTipo((yyvsp[-2]).trad , (yyvsp[-4]).lexema , (yyvsp[-4]).fila, (yyvsp[-4]).col ); simb1.nomtrad = (yyvsp[-4]).lexema;  
     if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,(yyvsp[-4]).lexema,(yyvsp[-4]).fila,(yyvsp[-4]).col);
     (yyval).trad = (yyvsp[-5]).trad + (yyvsp[-2]).trad + " " + (yyvsp[-4]).lexema + (yyvsp[0]).trad;     }
 #line 1410 "plp4.tab.c" /* yacc.c:1646  */
@@ -1441,7 +1441,7 @@ yyreduce:
 
   case 22:
 #line 106 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad =(yyvsp[-2]).trad;  }
+    {(yyval).trad =(yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo;  }
 #line 1446 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1465,7 +1465,7 @@ yyreduce:
 
   case 26:
 #line 107 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[-2]).trad;}
+    {(yyval).trad = (yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo; }
 #line 1470 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1483,7 +1483,7 @@ yyreduce:
 
   case 29:
 #line 110 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[-2]).trad + "_" + (yyvsp[0]).trad;   }
+    {(yyval).trad = (yyvsp[-2]).trad + "_" + (yyvsp[0]).trad; (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;    }
 #line 1488 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1563,7 +1563,7 @@ yyreduce:
 #line 121 "plp4.y" /* yacc.c:1646  */
     {  struct Simbolo simb1; 
             simb1.nombre = (yyvsp[(-1) - (2)]).lexema; 
-            simb1.tipo = checkTipo((yyvsp[0]).tipo);  
+            simb1.tipo = parserTipo((yyvsp[0]).trad , (yyvsp[(-1) - (2)]).lexema , (yyvsp[(-1) - (2)]).fila , (yyvsp[(-1) - (2)]).col);  
             simb1.nomtrad = (yyvsp[(-1) - (2)]).lexema + (yyvsp[-2]).trad;  
             if(!tsActual->newSymb(simb1))errorSemantico(ERRYADECL,(yyvsp[(-1) - (2)]).lexema,(yyvsp[(-1) - (2)]).fila,(yyvsp[(-1) - (2)]).col);
             (yyval).trad = (yyvsp[0]).trad + " " + (yyvsp[(-1) - (2)]).lexema + (yyvsp[-2]).trad + "; ";
@@ -1580,18 +1580,17 @@ yyreduce:
   case 44:
 #line 128 "plp4.y" /* yacc.c:1646  */
     {
-        struct Simbolo simb1; 
-        simb1.nombre = (yyvsp[(-1) - (4)]).lexema; 
-        simb1.tipo = checkTipo((yyvsp[-2]).tipo);  
-        simb1.nomtrad = (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad;  
-       
         if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)!= NULL){
-            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == INT &&  checkTipo((yyvsp[-2]).tipo) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
+            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == INT && parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
             (yyval).tipo = (yyvsp[-2]).tipo;
             (yyval).trad =  (yyvsp[0]).trad +  tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->nomtrad + " = " + (yyvsp[-2]).trad + ";" ;
         }
+        struct Simbolo simb1; 
+        simb1.nombre = (yyvsp[(-1) - (4)]).lexema; 
+        simb1.tipo = parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col);  
+        simb1.nomtrad = (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad;  
         if( !tsActual->newSymb(simb1)){
-            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == INT &&  checkTipo( (yyvsp[-2]).tipo) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
+            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == INT &&  parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
             (yyval).tipo = (yyvsp[-2]).tipo;
             (yyval).trad =  (yyvsp[0]).trad +  tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->nomtrad + " = " + (yyvsp[-2]).trad + ";" ;
             
@@ -1607,106 +1606,110 @@ yyreduce:
             (yyval).trad =   (yyvsp[-2]).atributos.tipo + " " + (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad + "; " +  (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad  + " = " + (yyvsp[-2]).trad + ";" ;
         }
     }
-#line 1611 "plp4.tab.c" /* yacc.c:1646  */
+#line 1610 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 156 "plp4.y" /* yacc.c:1646  */
+#line 155 "plp4.y" /* yacc.c:1646  */
     {
         struct Simbolo simb1; 
         simb1.nombre = (yyvsp[(-1) - (0)]).lexema; 
-        simb1.tipo = checkTipo((yyvsp[0]).tipo);  
+        simb1.tipo = parserTipo((yyvsp[0]).atributos.tipo , (yyvsp[(-1) - (0)]).lexema , (yyvsp[(-1) - (0)]).fila , (yyvsp[(-1) - (0)]).col);  
         simb1.nomtrad = (yyvsp[(-1) - (0)]).lexema + (yyvsp[0]).trad;  
         if( !tsActual->newSymb(simb1) )  errorSemantico(ERRYADECL,(yyvsp[(-1) - (0)]).lexema,(yyvsp[(-1) - (0)]).fila,(yyvsp[(-1) - (0)]).col);
         (yyval).tipo = (yyvsp[0]).tipo;
         (yyval).trad = (yyvsp[0]).atributos.tipo + " " + (yyvsp[(-1) - (0)]).lexema + (yyvsp[0]).trad + ";";
     }
-#line 1625 "plp4.tab.c" /* yacc.c:1646  */
+#line 1624 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 166 "plp4.y" /* yacc.c:1646  */
+#line 165 "plp4.y" /* yacc.c:1646  */
     {if(tsActual->searchSymb((yyvsp[-1]).trad) == NULL ) errorSemantico(ERRVOID,(yyvsp[-1]).lexema,(yyvsp[-1]).fila,(yyvsp[-1]).col); }
-#line 1631 "plp4.tab.c" /* yacc.c:1646  */
+#line 1630 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 166 "plp4.y" /* yacc.c:1646  */
+#line 165 "plp4.y" /* yacc.c:1646  */
     { (yyval).tipo = (yyvsp[0]).tipo; (yyval).trad = "if(" + (yyvsp[0]).trad + ")";  }
-#line 1637 "plp4.tab.c" /* yacc.c:1646  */
+#line 1636 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 167 "plp4.y" /* yacc.c:1646  */
+#line 166 "plp4.y" /* yacc.c:1646  */
     {(yyval).trad = ""; }
-#line 1643 "plp4.tab.c" /* yacc.c:1646  */
+#line 1642 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 169 "plp4.y" /* yacc.c:1646  */
+#line 168 "plp4.y" /* yacc.c:1646  */
     {  (yyval).tipo = tipoShake((yyvsp[-2]).tipo , (yyvsp[0]).tipo); 
                 (yyval).trad = (yyvsp[-2]).trad + (yyvsp[-1]).lexema + (yyvsp[0]).trad; }
-#line 1650 "plp4.tab.c" /* yacc.c:1646  */
+#line 1649 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 171 "plp4.y" /* yacc.c:1646  */
+#line 170 "plp4.y" /* yacc.c:1646  */
     { (yyval).tipo = (yyvsp[0]).tipo; 
             (yyval).trad = (yyvsp[0]).trad; }
-#line 1657 "plp4.tab.c" /* yacc.c:1646  */
+#line 1656 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 174 "plp4.y" /* yacc.c:1646  */
+#line 173 "plp4.y" /* yacc.c:1646  */
     {  (yyval).tipo = tipoShake((yyvsp[-2]).tipo , (yyvsp[0]).tipo);
                 (yyval).trad = (yyvsp[-2]).trad + " " + (yyvsp[-1]).lexema + " " + (yyvsp[0]).trad; 
     }
-#line 1665 "plp4.tab.c" /* yacc.c:1646  */
+#line 1664 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 177 "plp4.y" /* yacc.c:1646  */
+#line 176 "plp4.y" /* yacc.c:1646  */
     { (yyval).tipo = (yyvsp[0]).tipo; 
         (yyval).trad = (yyvsp[0]).trad; 
         }
-#line 1673 "plp4.tab.c" /* yacc.c:1646  */
+#line 1672 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 181 "plp4.y" /* yacc.c:1646  */
-    {(yyval).tipo =INT; 
+#line 180 "plp4.y" /* yacc.c:1646  */
+    {(yyval).tipo =ENTEROT; 
+            (yyval).atributos.tipo = "int";
             (yyval).trad = (yyvsp[0]).lexema; }
 #line 1680 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 183 "plp4.y" /* yacc.c:1646  */
-    {(yyval).tipo = REAL; 
+    {
+        (yyval).atributos.tipo = "float";
+        (yyval).tipo = REALT; 
                 (yyval).trad = (yyvsp[0]).lexema;}
-#line 1687 "plp4.tab.c" /* yacc.c:1646  */
+#line 1689 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 185 "plp4.y" /* yacc.c:1646  */
+#line 187 "plp4.y" /* yacc.c:1646  */
     {
         (yyval).tipo = (yyvsp[-2]).tipo; 
+        (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;
         (yyval).trad = "(" + (yyvsp[-2]).trad + ")"; }
-#line 1695 "plp4.tab.c" /* yacc.c:1646  */
+#line 1698 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 188 "plp4.y" /* yacc.c:1646  */
+#line 191 "plp4.y" /* yacc.c:1646  */
     {
         if( tsActual->searchSymb((yyvsp[0]).lexema) == NULL) errorSemantico(ERRNODECL,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
-        if(tsActual->searchSymb((yyvsp[0]).lexema)->tipo != INT && tsActual->searchSymb((yyvsp[0]).lexema)->tipo != REAL ) errorSemantico(ERRNOSIMPLE,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
+        if(tsActual->searchSymb((yyvsp[0]).lexema)->tipo != ENTEROT && tsActual->searchSymb((yyvsp[0]).lexema)->tipo != REALT ) errorSemantico(ERRNOSIMPLE,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
         (yyval).tipo = tsActual->searchSymb((yyvsp[0]).lexema)->tipo; 
         (yyval).trad =  tsActual->searchSymb((yyvsp[0]).lexema)->nomtrad;
     }
-#line 1706 "plp4.tab.c" /* yacc.c:1646  */
+#line 1709 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1710 "plp4.tab.c" /* yacc.c:1646  */
+#line 1713 "plp4.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1934,7 +1937,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 195 "plp4.y" /* yacc.c:1906  */
+#line 198 "plp4.y" /* yacc.c:1906  */
 
 
 string tipoMayus(string tipo){
@@ -1942,10 +1945,10 @@ string tipoMayus(string tipo){
     return "Float"; 
 }
 
-int checkTipo(int tipo ){
-    if (tipo == INT ) return INT; 
-    if (tipo == REAL ) return REAL; 
-    yyerror("");
+int parserTipo(string tipo , char * lexema, int fila, int columna  ){
+    if (tipo =="int"  ) return ENTEROT; 
+    if (tipo == "float"  ) return REALT; 
+    if(tipo == "void" )errorSemantico(ERRVOID,lexema,fila,columna);
     return -1; 
 }
 
