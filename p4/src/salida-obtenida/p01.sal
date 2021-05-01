@@ -1,7 +1,18 @@
-int _ 
+EL VALOR DEL ID ES f1
+EL VALOR DEL ID ES main
+int main_f1 ()
 {
-__ }
- void  
+int a_main_f1_;if(a_main_f1_+2){
+printFloat(a_main_f1_);
+
+}
+else{ 
+int b_; b_ = 6;
+}
+float b_main_f1_; float b_main_f1_; b_main_f1_ = 3.5;printFloat(b_main_f1_);
+ }
+ void main ()
 {
-_ }
+printInt(88);
+ }
  

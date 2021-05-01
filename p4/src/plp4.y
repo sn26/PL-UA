@@ -74,17 +74,16 @@ Fun : fn id {
             simb1.nombre = $2.lexema; 
             simb1.tipo =FUNCIONT; 
             simb1.nomtrad = $0.atributos.asig + $2.lexema;  
-            if(!tsActual->newSymb(simb1)){
-                errorSemantico(ERRYADECL,$2.lexema,$2.fila,$2.col);
-            } 
+            if(!tsActual->newSymb(simb1))errorSemantico(ERRYADECL,$2.lexema,$2.fila,$2.col);
             tsActual= new TablaSimbolos(tsActual); 
             } 
             A Rt 
-            {$$.atributos.asig = $0.atributos.asig + $2.trad + "_"; } 
-            Spp {$$.trad = "_" +$0.atributos.asig + $2.trad; 
+            {$$.atributos.asig = $0.atributos.asig + $2.lexema + "_"; } 
+            Spp {$$.trad = "_" +$0.atributos.asig + $2.lexema; 
             $$.atributos.tipo = $5.trad; } Cod endfn 
             {
-                $$.trad = $7.trad + $5.trad + " " + $0.atributos.asig + $2.trad + " "+ "\n{\n" + $8.trad + " }\n " ;
+                cout<<"EL VALOR DEL ID ES "<< $2.lexema<<endl; 
+                $$.trad = $7.trad + $5.trad + " " + $0.atributos.asig + $2.lexema + " "+ $4.trad +  "\n{\n" + $9.trad + " }\n " ;
             }
         ;
 
@@ -193,7 +192,7 @@ F : numint {$$.tipo =ENTEROT;
         if(tsActual->searchSymb($1.lexema)->tipo != ENTEROT && tsActual->searchSymb($1.lexema)->tipo != REALT ) errorSemantico(ERRNOSIMPLE,$1.lexema,$1.fila,$1.col);
         $$.tipo = tsActual->searchSymb($1.lexema)->tipo; 
         $$.trad =  tsActual->searchSymb($1.lexema)->nomtrad;
-    }
+    };
 
 %%
 
