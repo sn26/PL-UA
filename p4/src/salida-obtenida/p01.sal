@@ -1,15 +1,17 @@
-EL VALOR DEL ID ES f1
-EL VALOR DEL ID ES main
 int main_f1 ()
 {
-int a_main_f1_;if(a_main_f1_+2){
-printFloat(a_main_f1_);
+int a_main_f1;
+if(a_main_f1+2){
+printInt(a_main_f1);
 
 }
-else{ 
-int b_; b_ = 6;
+else{
+int b__main_f1; b__main_f1 = 6;
+
 }
-float b_main_f1_; float b_main_f1_; b_main_f1_ = 3.5;printFloat(b_main_f1_);
+float b_main_f1; 
+if(a_main_f1+3)b_main_f1 = 3.5;
+printFloat(b_main_f1);
  }
  void main ()
 {

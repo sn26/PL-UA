@@ -1,1 +1,1 @@
-Error semantico (0,0): en '(null)', debe declararse con tipo entero o real
+Error semantico (3,9): en 'b', debe declararse con tipo entero o real

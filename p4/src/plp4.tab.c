@@ -88,7 +88,7 @@ void errorSemantico(int nerror,char *lexema,int fila,int columna);
 TablaSimbolos *tsActual = new TablaSimbolos(NULL); 
 
 string tipoMayus(string tipo);
-int tipoShake(int type1,  int type2);
+string tipoShake(string  type1,  string type2);
 int parserTipo(string tipo , char * lexema, int fila, int columna  );
 
 #line 95 "plp4.tab.c" /* yacc.c:339  */
@@ -415,11 +415,11 @@ union yyalloc
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  39
+#define YYNNTS  40
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  56
+#define YYNRULES  57
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  86
+#define YYNSTATES  87
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -468,12 +468,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    60,    66,    69,    69,    69,    72,    81,
-      82,    72,    90,    90,    90,    92,    92,    96,    98,    99,
-     101,   102,   105,   105,   106,   106,   106,   106,   108,   109,
-     109,   110,   111,   111,   111,   113,   113,   113,   115,   115,
-     115,   117,   120,   127,   127,   154,   164,   164,   165,   167,
-     169,   172,   175,   179,   182,   186,   190
+       0,    52,    52,    60,    66,    69,    69,    69,    72,    80,
+      81,    82,    72,    94,    94,    94,    96,    96,   100,   102,
+     103,   105,   106,   109,   109,   110,   110,   110,   110,   112,
+     113,   113,   114,   115,   115,   115,   117,   117,   117,   119,
+     119,   119,   121,   124,   131,   131,   155,   166,   166,   168,
+     170,   174,   179,   186,   192,   195,   199,   203
 };
 #endif
 
@@ -486,9 +486,9 @@ static const char *const yytname[] =
   "pyc", "opas", "opmd", "fn", "endfn", "inttok", "real", "let", "iftok",
   "elsetok", "fi", "print", "blq", "fblq", "id", "numint", "numreal",
   "eof", "$accept", "S", "Sp", "Spp", "$@1", "$@2", "Fun", "$@3", "@4",
-  "@5", "A", "@6", "$@7", "Arg", "@8", "Rt", "Type", "Cod", "@9", "$@10",
-  "$@11", "@12", "I", "@13", "$@14", "$@15", "Blq", "$@16", "$@17", "Ip",
-  "$@18", "$@19", "It", "@20", "Ifa", "$@21", "E", "T", "F", YY_NULLPTR
+  "@5", "@6", "A", "@7", "$@8", "Arg", "@9", "Rt", "Type", "Cod", "@10",
+  "$@11", "$@12", "@13", "I", "@14", "@15", "@16", "Blq", "@17", "$@18",
+  "Ip", "@19", "$@20", "It", "@21", "Ifa", "$@22", "E", "T", "F", YY_NULLPTR
 };
 #endif
 
@@ -503,10 +503,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -41
+#define YYPACT_NINF -40
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-41)))
+  (!!((Yystate) == (-40)))
 
 #define YYTABLE_NINF -1
 
@@ -517,15 +517,15 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       0,    -8,    22,   -41,     0,   -41,   -41,   -41,   -41,     0,
-      26,   -41,   -41,   -41,    24,     9,     5,   -41,    27,    29,
-     -41,   -41,   -41,     0,     5,   -41,   -41,   -41,   -41,   -41,
-       9,     8,   -41,   -41,   -41,   -41,   -41,    -7,    -7,    12,
-       2,     2,   -41,   -41,   -41,   -41,   -41,     2,   -41,   -41,
-     -41,    28,    25,   -41,    28,   -41,    -1,     6,     2,    -7,
-       2,    30,     5,     2,   -41,   -41,    25,   -41,   -41,    15,
-     -41,    28,    10,   -41,    23,   -41,   -41,   -41,   -41,   -41,
-      -7,     2,   -41,    28,    31,   -41
+       2,    -4,    25,   -40,     2,   -40,   -40,   -40,   -40,     2,
+      26,   -40,   -40,   -40,   -40,     9,    24,    27,    29,    14,
+     -40,    14,   -40,   -40,   -40,   -40,     2,   -40,   -40,   -40,
+       9,   -40,   -40,     8,   -40,   -40,   -40,   -40,    -8,    -8,
+      12,     0,     0,   -40,   -40,   -40,   -40,   -40,     0,   -40,
+     -40,   -40,    28,    30,   -40,    28,   -40,    10,     5,     0,
+      -8,     0,    31,    14,     0,   -40,   -40,    30,   -40,   -40,
+      15,   -40,    28,   -12,   -40,    19,   -40,   -40,   -40,   -40,
+     -40,    -8,     0,   -40,    28,    20,   -40
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -534,32 +534,32 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        0,     0,     0,     2,     5,     8,     1,     3,     6,     5,
-       0,     7,     4,    12,    19,    17,     0,     9,     0,     0,
-      20,    21,    18,     5,     0,    13,    10,    15,    14,    24,
-      17,     0,    25,    16,    22,    11,    26,     0,     0,     0,
-       0,     0,    35,    23,    28,    27,    29,     0,    56,    53,
-      54,    32,    50,    52,    31,    24,    45,     0,     0,     0,
-       0,    36,     0,     0,    30,    55,    49,    33,    51,     0,
-      42,    43,     0,    37,    48,    38,    41,    34,    46,    44,
-       0,     0,    39,    47,     0,    40
+       0,     7,     4,    13,     9,    18,    20,     0,     0,     0,
+      10,     0,    14,    21,    22,    19,     5,    16,    15,    11,
+      18,    25,    17,     0,    26,    23,    12,    27,     0,     0,
+       0,     0,     0,    36,    24,    29,    28,    30,     0,    57,
+      54,    55,    33,    51,    53,    32,    25,    46,     0,     0,
+       0,     0,    37,     0,     0,    31,    56,    50,    34,    52,
+       0,    43,    44,     0,    38,    49,    39,    42,    35,    47,
+      45,     0,     0,    40,    48,     0,    41
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -41,   -41,   -41,    -6,   -41,   -41,    43,   -41,   -41,   -41,
-     -41,   -41,   -41,    14,   -41,   -41,   -22,   -10,   -41,   -41,
-     -41,   -41,   -38,   -41,   -41,   -41,   -41,   -41,   -41,   -41,
-     -41,   -41,   -41,   -41,   -41,   -41,   -40,   -12,   -13
+     -40,   -40,   -40,    -7,   -40,   -40,    41,   -40,   -40,   -40,
+     -40,   -40,   -40,   -40,    16,   -40,   -40,   -20,   -11,   -40,
+     -40,   -40,   -40,   -39,   -40,   -40,   -40,   -40,   -40,   -40,
+     -40,   -40,   -40,   -40,   -40,   -40,   -40,   -38,   -10,   -14
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     7,     8,    11,     9,    10,    23,    29,
-      14,    15,    28,    19,    30,    17,    22,    31,    37,    32,
-      36,    38,    43,    56,    59,    72,    44,    55,    69,    77,
-      80,    84,    64,    74,    79,    81,    51,    52,    53
+      -1,     2,     3,     7,     8,    11,     9,    10,    16,    26,
+      31,    14,    15,    28,    18,    30,    20,    25,    33,    38,
+      34,    37,    39,    44,    57,    60,    73,    45,    56,    70,
+      78,    81,    85,    65,    75,    80,    82,    52,    53,    54
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -567,20 +567,20 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      45,    54,    27,    12,    62,    47,    63,    57,    39,    40,
-      65,     1,    41,    42,     5,    58,    34,    26,    20,    21,
-      35,    67,     6,    71,    48,    49,    50,    75,    76,    13,
-      16,    18,    24,    25,    46,    60,    73,    58,    34,    78,
-      70,    83,    82,     4,    33,    61,    66,    68,     0,    85
+      46,    27,    12,    48,    55,    76,    77,    40,    41,    66,
+      58,    42,    43,     1,    59,    63,    35,    64,     5,    29,
+      36,    68,    49,    50,    51,     6,    72,    23,    24,    13,
+      19,    17,    21,    22,    47,    79,    74,    59,    86,    35,
+      61,     4,    83,    71,    84,    62,    32,    69,     0,    67
 };
 
 static const yytype_int8 yycheck[] =
 {
-      38,    41,    24,     9,     5,     3,     7,    47,    15,    16,
-       4,    11,    19,    20,    22,     9,     8,    23,    13,    14,
-      12,    59,     0,    63,    22,    23,    24,    17,    18,     3,
-       6,    22,     5,     4,    22,    10,    21,     9,     8,    16,
-      62,    81,    80,     0,    30,    55,    58,    60,    -1,    18
+      39,    21,     9,     3,    42,    17,    18,    15,    16,     4,
+      48,    19,    20,    11,     9,     5,     8,     7,    22,    26,
+      12,    60,    22,    23,    24,     0,    64,    13,    14,     3,
+       6,    22,     5,     4,    22,    16,    21,     9,    18,     8,
+      10,     0,    81,    63,    82,    56,    30,    61,    -1,    59
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -588,36 +588,36 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,    11,    27,    28,    32,    22,     0,    29,    30,    32,
-      33,    31,    29,     3,    36,    37,     6,    41,    22,    39,
-      13,    14,    42,    34,     5,     4,    29,    42,    38,    35,
-      40,    43,    45,    39,     8,    12,    46,    44,    47,    15,
-      16,    19,    20,    48,    52,    48,    22,     3,    22,    23,
-      24,    62,    63,    64,    62,    53,    49,    62,     9,    50,
-      10,    43,     5,     7,    58,     4,    63,    48,    64,    54,
-      42,    62,    51,    21,    59,    17,    18,    55,    16,    60,
-      56,    61,    48,    62,    57,    18
+      33,    31,    29,     3,    37,    38,    34,    22,    40,     6,
+      42,     5,     4,    13,    14,    43,    35,    43,    39,    29,
+      41,    36,    40,    44,    46,     8,    12,    47,    45,    48,
+      15,    16,    19,    20,    49,    53,    49,    22,     3,    22,
+      23,    24,    63,    64,    65,    63,    54,    50,    63,     9,
+      51,    10,    44,     5,     7,    59,     4,    64,    49,    65,
+      55,    43,    63,    52,    21,    60,    17,    18,    56,    16,
+      61,    57,    62,    49,    63,    58,    18
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
        0,    26,    27,    28,    29,    30,    31,    29,    33,    34,
-      35,    32,    37,    38,    36,    40,    39,    39,    41,    41,
-      42,    42,    44,    43,    45,    46,    47,    43,    48,    49,
-      48,    48,    50,    51,    48,    53,    54,    52,    56,    57,
-      55,    55,    58,    59,    58,    58,    61,    60,    60,    62,
-      62,    63,    63,    64,    64,    64,    64
+      35,    36,    32,    38,    39,    37,    41,    40,    40,    42,
+      42,    43,    43,    45,    44,    46,    47,    48,    44,    49,
+      50,    49,    49,    51,    52,    49,    54,    55,    53,    57,
+      58,    56,    56,    59,    60,    59,    59,    62,    61,    61,
+      63,    63,    64,    64,    65,    65,    65,    65
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     1,     2,     2,     0,     0,     2,     0,     0,
-       0,    10,     0,     0,     5,     0,     5,     0,     2,     0,
-       1,     1,     0,     4,     0,     0,     0,     4,     1,     0,
-       4,     2,     0,     0,     6,     0,     0,     5,     0,     0,
-       5,     1,     2,     0,     4,     0,     0,     3,     0,     3,
-       1,     3,     1,     1,     1,     3,     1
+       0,     0,    11,     0,     0,     5,     0,     5,     0,     2,
+       0,     1,     1,     0,     4,     0,     0,     0,     4,     1,
+       0,     4,     2,     0,     0,     6,     0,     0,     5,     0,
+       0,     5,     1,     2,     0,     4,     0,     0,     3,     0,
+       3,     1,     3,     1,     1,     1,     3,     1
 };
 
 
@@ -1318,7 +1318,7 @@ yyreduce:
 #line 66 "plp4.y" /* yacc.c:1646  */
     { 
                 (yyval).trad = (yyvsp[-1]).trad + (yyvsp[0]).trad; 
-                (yyval).atributos.asig = (yyvsp[-1]).atributos.asig; }
+                (yyval).atributos.asig = (yyvsp[-2]).atributos.asig; }
 #line 1323 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1354,212 +1354,222 @@ yyreduce:
     break;
 
   case 9:
-#line 81 "plp4.y" /* yacc.c:1646  */
-    {(yyval).atributos.asig = (yyvsp[-5]).atributos.asig + (yyvsp[-3]).lexema + "_"; }
+#line 80 "plp4.y" /* yacc.c:1646  */
+    {if((yyvsp[-4]).trad== "") { (yyval).trad = "void"; } else{ (yyval).trad = (yyvsp[-4]).trad; }}
 #line 1360 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 82 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "_" +(yyvsp[-7]).atributos.asig + (yyvsp[-5]).lexema; 
-            (yyval).atributos.tipo = (yyvsp[-2]).trad; }
-#line 1367 "plp4.tab.c" /* yacc.c:1646  */
+#line 81 "plp4.y" /* yacc.c:1646  */
+    {(yyval).atributos.asig = (yyvsp[-6]).atributos.asig + (yyvsp[-4]).lexema + "_"; }
+#line 1366 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 84 "plp4.y" /* yacc.c:1646  */
-    {
-                cout<<"EL VALOR DEL ID ES "<< (yyvsp[-8]).lexema<<endl; 
-                (yyval).trad = (yyvsp[-3]).trad + (yyvsp[-5]).trad + " " + (yyvsp[-10]).atributos.asig + (yyvsp[-8]).lexema + " "+ (yyvsp[-6]).trad +  "\n{\n" + (yyvsp[-1]).trad + " }\n " ;
-            }
-#line 1376 "plp4.tab.c" /* yacc.c:1646  */
+#line 82 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = "_" +(yyvsp[-8]).atributos.asig + (yyvsp[-6]).lexema; 
+            (yyval).atributos.asig = (yyval).trad;
+            (yyval).atributos.tipo = (yyvsp[-2]).trad; }
+#line 1374 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 90 "plp4.y" /* yacc.c:1646  */
-    {(yyval).atributos.asig = ""; }
-#line 1382 "plp4.tab.c" /* yacc.c:1646  */
+#line 85 "plp4.y" /* yacc.c:1646  */
+    {
+                tsActual = tsActual->getPadre();
+                
+                (yyval).atributos.asig = (yyvsp[-11]).atributos.asig;
+                (yyval).atributos.tipo= (yyvsp[-11]).atributos.tipo;
+                (yyval).trad = (yyvsp[-3]).trad + (yyvsp[-5]).trad + " " + (yyvsp[-11]).atributos.asig + (yyvsp[-9]).lexema + " "+ (yyvsp[-7]).trad +  "\n{\n" + (yyvsp[-1]).trad + " }\n " ;
+            }
+#line 1386 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 90 "plp4.y" /* yacc.c:1646  */
-    {}
-#line 1388 "plp4.tab.c" /* yacc.c:1646  */
+#line 94 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = ""; (yyval).atributos.asig = ""; }
+#line 1392 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 90 "plp4.y" /* yacc.c:1646  */
-    { (yyval).trad = "(" + (yyvsp[-3]).trad + ")";  }
-#line 1394 "plp4.tab.c" /* yacc.c:1646  */
+#line 94 "plp4.y" /* yacc.c:1646  */
+    {}
+#line 1398 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 92 "plp4.y" /* yacc.c:1646  */
-    {(yyval).atributos.asig = ",";}
-#line 1400 "plp4.tab.c" /* yacc.c:1646  */
+#line 94 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = "(" + (yyvsp[-2]).trad + ")";  }
+#line 1404 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 92 "plp4.y" /* yacc.c:1646  */
-    {
-    struct Simbolo simb1; simb1.nombre = (yyvsp[-4]).lexema; simb1.tipo = parserTipo((yyvsp[-2]).trad , (yyvsp[-4]).lexema , (yyvsp[-4]).fila, (yyvsp[-4]).col ); simb1.nomtrad = (yyvsp[-4]).lexema;  
-    if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,(yyvsp[-4]).lexema,(yyvsp[-4]).fila,(yyvsp[-4]).col);
-    (yyval).trad = (yyvsp[-5]).trad + (yyvsp[-2]).trad + " " + (yyvsp[-4]).lexema + (yyvsp[0]).trad;     }
-#line 1409 "plp4.tab.c" /* yacc.c:1646  */
+#line 96 "plp4.y" /* yacc.c:1646  */
+    {if((yyvsp[-3]).trad==""){(yyval).trad= ",";} else {(yyval).trad = (yyvsp[-3]).trad;} (yyval).atributos.asig = ",";}
+#line 1410 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 96 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "";  }
-#line 1415 "plp4.tab.c" /* yacc.c:1646  */
+    {
+    struct Simbolo simb1; simb1.nombre = (yyvsp[-4]).lexema; simb1.tipo = parserTipo((yyvsp[-2]).trad , (yyvsp[-4]).lexema , (yyvsp[-4]).fila, (yyvsp[-4]).col ); simb1.nomtrad = (yyvsp[-4]).lexema;  
+    if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,(yyvsp[-4]).lexema,(yyvsp[-4]).fila,(yyvsp[-4]).col);
+    (yyval).trad = (yyvsp[-5]).trad + (yyvsp[-2]).trad + " " + (yyvsp[-4]).lexema + (yyvsp[0]).trad;     }
+#line 1419 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 98 "plp4.y" /* yacc.c:1646  */
-    { (yyval).trad = (yyvsp[0]).trad;}
-#line 1421 "plp4.tab.c" /* yacc.c:1646  */
+#line 100 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "";  }
+#line 1425 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 99 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "void"; }
-#line 1427 "plp4.tab.c" /* yacc.c:1646  */
+#line 102 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = (yyvsp[0]).trad;}
+#line 1431 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 101 "plp4.y" /* yacc.c:1646  */
-    { (yyval).trad = "int"; }
-#line 1433 "plp4.tab.c" /* yacc.c:1646  */
+#line 103 "plp4.y" /* yacc.c:1646  */
+    {if((yyvsp[0]).trad =="" ){(yyval).trad = "void";}else{ (yyval).trad=(yyvsp[0]).trad;}  }
+#line 1437 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 102 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "float";}
-#line 1439 "plp4.tab.c" /* yacc.c:1646  */
+#line 105 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = "int"; }
+#line 1443 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 105 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad =(yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo;  }
-#line 1445 "plp4.tab.c" /* yacc.c:1646  */
+#line 106 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "float";}
+#line 1449 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 105 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[-3]).trad + (yyvsp[0]).trad;  }
-#line 1451 "plp4.tab.c" /* yacc.c:1646  */
+#line 109 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad =(yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo;  }
+#line 1455 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 106 "plp4.y" /* yacc.c:1646  */
-    {}
-#line 1457 "plp4.tab.c" /* yacc.c:1646  */
+#line 109 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[-3]).trad + (yyvsp[0]).trad;  }
+#line 1461 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 106 "plp4.y" /* yacc.c:1646  */
+#line 110 "plp4.y" /* yacc.c:1646  */
     {}
-#line 1463 "plp4.tab.c" /* yacc.c:1646  */
+#line 1467 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 106 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo; }
-#line 1469 "plp4.tab.c" /* yacc.c:1646  */
+#line 110 "plp4.y" /* yacc.c:1646  */
+    {}
+#line 1473 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 106 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[0]).trad; }
-#line 1475 "plp4.tab.c" /* yacc.c:1646  */
+#line 110 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[-2]).trad; (yyval).atributos.tipo= (yyvsp[-2]).atributos.tipo; }
+#line 1479 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 108 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[0]).trad + "\n"; }
-#line 1481 "plp4.tab.c" /* yacc.c:1646  */
+#line 110 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[0]).trad; }
+#line 1485 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 109 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[-2]).trad + "_" + (yyvsp[0]).trad; (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;    }
-#line 1487 "plp4.tab.c" /* yacc.c:1646  */
+#line 112 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[0]).trad + "\n"; }
+#line 1491 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 109 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[0]).trad; }
-#line 1493 "plp4.tab.c" /* yacc.c:1646  */
+#line 113 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[-2]).trad; (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;    }
+#line 1497 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 110 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "print" + tipoMayus((yyvsp[0]).atributos.tipo) + "(" + (yyvsp[0]).trad + ");\n";   }
-#line 1499 "plp4.tab.c" /* yacc.c:1646  */
+#line 113 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[0]).trad + "\n";  }
+#line 1503 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 111 "plp4.y" /* yacc.c:1646  */
-    { tsActual = new TablaSimbolos(tsActual); }
-#line 1505 "plp4.tab.c" /* yacc.c:1646  */
+#line 114 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "print" + tipoMayus((yyvsp[0]).atributos.tipo) + "(" + (yyvsp[0]).trad + ");\n";   }
+#line 1509 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 111 "plp4.y" /* yacc.c:1646  */
-    {tsActual = tsActual->getPadre();}
-#line 1511 "plp4.tab.c" /* yacc.c:1646  */
+#line 115 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = "_" + (yyvsp[-2]).trad;   (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;   tsActual = new TablaSimbolos(tsActual); }
+#line 1515 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 111 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "if(" + (yyvsp[-4]).trad + "){\n" + (yyvsp[-2]).trad + "\n}\n" + (yyvsp[0]).trad;   }
-#line 1517 "plp4.tab.c" /* yacc.c:1646  */
+#line 115 "plp4.y" /* yacc.c:1646  */
+    {tsActual = tsActual->getPadre();  (yyval).trad = "_" + (yyvsp[-4]).trad; (yyval).atributos.tipo = (yyvsp[-4]).atributos.tipo; }
+#line 1521 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 113 "plp4.y" /* yacc.c:1646  */
-    {tsActual = new TablaSimbolos(tsActual); }
-#line 1523 "plp4.tab.c" /* yacc.c:1646  */
+#line 115 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "if(" + (yyvsp[-4]).trad + "){\n" + (yyvsp[-2]).trad + "\n}\n" + (yyvsp[0]).trad;   }
+#line 1527 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 113 "plp4.y" /* yacc.c:1646  */
-    {tsActual = tsActual->getPadre();}
-#line 1529 "plp4.tab.c" /* yacc.c:1646  */
+#line 117 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "_" + (yyvsp[-1]).trad; (yyval).atributos.tipo = (yyvsp[-1]).atributos.tipo; tsActual = new TablaSimbolos(tsActual); }
+#line 1533 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 113 "plp4.y" /* yacc.c:1646  */
-    { (yyval).trad = "{\n" + (yyvsp[-2]).trad + "\n}\n"; }
-#line 1535 "plp4.tab.c" /* yacc.c:1646  */
+#line 117 "plp4.y" /* yacc.c:1646  */
+    {tsActual = tsActual->getPadre();}
+#line 1539 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 115 "plp4.y" /* yacc.c:1646  */
-    {tsActual = new TablaSimbolos(tsActual);}
-#line 1541 "plp4.tab.c" /* yacc.c:1646  */
+#line 117 "plp4.y" /* yacc.c:1646  */
+    { (yyval).trad = "{\n" + (yyvsp[-2]).trad + "\n}\n"; }
+#line 1545 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 115 "plp4.y" /* yacc.c:1646  */
-    {tsActual = tsActual->getPadre(); }
-#line 1547 "plp4.tab.c" /* yacc.c:1646  */
+#line 119 "plp4.y" /* yacc.c:1646  */
+    {(yyval).atributos.tipo = (yyvsp[-1]).atributos.tipo; (yyval).trad = (yyvsp[-1]).trad; tsActual = new TablaSimbolos(tsActual);}
+#line 1551 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 115 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = "else{ \n" + (yyvsp[-2]).trad + "\n}\n"; }
-#line 1553 "plp4.tab.c" /* yacc.c:1646  */
+#line 119 "plp4.y" /* yacc.c:1646  */
+    {tsActual = tsActual->getPadre(); }
+#line 1557 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 117 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = ""; }
-#line 1559 "plp4.tab.c" /* yacc.c:1646  */
+#line 119 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = "else{\n" + (yyvsp[-2]).trad + "\n}\n"; }
+#line 1563 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 120 "plp4.y" /* yacc.c:1646  */
+#line 121 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = ""; }
+#line 1569 "plp4.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 43:
+#line 124 "plp4.y" /* yacc.c:1646  */
     {  struct Simbolo simb1; 
             simb1.nombre = (yyvsp[(-1) - (2)]).lexema; 
             simb1.tipo = parserTipo((yyvsp[0]).trad , (yyvsp[(-1) - (2)]).lexema , (yyvsp[(-1) - (2)]).fila , (yyvsp[(-1) - (2)]).col);  
@@ -1567,148 +1577,160 @@ yyreduce:
             if(!tsActual->newSymb(simb1))errorSemantico(ERRYADECL,(yyvsp[(-1) - (2)]).lexema,(yyvsp[(-1) - (2)]).fila,(yyvsp[(-1) - (2)]).col);
             (yyval).trad = (yyvsp[0]).trad + " " + (yyvsp[(-1) - (2)]).lexema + (yyvsp[-2]).trad + "; ";
              }
-#line 1571 "plp4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 43:
-#line 127 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = (yyvsp[(-1) - (2)]).lexema; }
-#line 1577 "plp4.tab.c" /* yacc.c:1646  */
+#line 1581 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 127 "plp4.y" /* yacc.c:1646  */
+#line 131 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = (yyvsp[(-1) - (2)]).lexema; (yyval).lexema = (yyvsp[(-1) - (2)]).lexema; (yyval).fila = (yyvsp[(-1) - (2)]).fila; (yyval).col = (yyvsp[(-1) - (2)]).col;  }
+#line 1587 "plp4.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 45:
+#line 131 "plp4.y" /* yacc.c:1646  */
     {
+        (yyval).tipo = (yyvsp[-2]).tipo;
+        (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;
+        bool entrado = false;
         if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)!= NULL){
-            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == ENTEROT && parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
-            (yyval).tipo = (yyvsp[-2]).tipo;
+            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == ENTEROT && parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REALT ) errorSemantico(ERRNOENTERO,(yyvsp[-3]).lexema,(yyvsp[-3]).fila,(yyvsp[-3]).col);
             (yyval).trad =  (yyvsp[0]).trad +  tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->nomtrad + " = " + (yyvsp[-2]).trad + ";" ;
+            entrado = true;
         }
         struct Simbolo simb1; 
         simb1.nombre = (yyvsp[(-1) - (4)]).lexema; 
         simb1.tipo = parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col);  
-        simb1.nomtrad = (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad;  
-        if( !tsActual->newSymb(simb1)){
-            if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == ENTEROT &&  parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REAL ) errorSemantico(ERRNOENTERO,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
-            (yyval).tipo = (yyvsp[-2]).tipo;
-            (yyval).trad =  (yyvsp[0]).trad +  tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->nomtrad + " = " + (yyvsp[-2]).trad + ";" ;
-            
-        }else{
-            if((yyvsp[-1]).trad.length() > 1 ) errorSemantico(ERRVOID,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col);
+        simb1.nomtrad = (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad; 
+        if(entrado == false){
+            if( !tsActual->newSymb(simb1) ){    
+                if(tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->tipo == ENTEROT &&  parserTipo((yyvsp[-2]).atributos.tipo , (yyvsp[(-1) - (4)]).lexema , (yyvsp[(-1) - (4)]).fila , (yyvsp[(-1) - (4)]).col) == REALT ) errorSemantico(ERRNOENTERO,(yyvsp[-3]).lexema,(yyvsp[-3]).fila,(yyvsp[-3]).col);
+                (yyval).trad =  (yyvsp[0]).trad +  tsActual->searchSymb((yyvsp[(-1) - (4)]).lexema)->nomtrad + " = " + (yyvsp[-2]).trad + ";" ;  
+            }else{      
+                if((yyvsp[0]).trad.length() > 1 ) errorSemantico(ERRVOID,(yyvsp[(-1) - (4)]).lexema,(yyvsp[(-1) - (4)]).fila,(yyvsp[(-1) - (4)]).col); 
+                (yyval).trad =   (yyvsp[-2]).atributos.tipo + " " + (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad + "; " +  (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad  + " = " + (yyvsp[-2]).trad + ";" ;
+            }
         }
-        if((yyvsp[-1]).trad.length() > 1){
-            (yyval).tipo = (yyvsp[-2]).tipo; 
-            (yyval).trad = (yyvsp[0]).trad + (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad + " = " + (yyvsp[-2]).trad + ";" ;
-
-        }else{ 
-            (yyval).tipo = (yyvsp[-2]).tipo; 
-            (yyval).trad =   (yyvsp[-2]).atributos.tipo + " " + (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad + "; " +  (yyvsp[(-1) - (4)]).lexema + (yyvsp[-4]).trad  + " = " + (yyvsp[-2]).trad + ";" ;
-        }
+        
     }
-#line 1609 "plp4.tab.c" /* yacc.c:1646  */
+#line 1616 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
-  case 45:
-#line 154 "plp4.y" /* yacc.c:1646  */
+  case 46:
+#line 155 "plp4.y" /* yacc.c:1646  */
     {
         struct Simbolo simb1; 
         simb1.nombre = (yyvsp[(-1) - (0)]).lexema; 
+        
         simb1.tipo = parserTipo((yyvsp[0]).atributos.tipo , (yyvsp[(-1) - (0)]).lexema , (yyvsp[(-1) - (0)]).fila , (yyvsp[(-1) - (0)]).col);  
         simb1.nomtrad = (yyvsp[(-1) - (0)]).lexema + (yyvsp[0]).trad;  
         if( !tsActual->newSymb(simb1) )  errorSemantico(ERRYADECL,(yyvsp[(-1) - (0)]).lexema,(yyvsp[(-1) - (0)]).fila,(yyvsp[(-1) - (0)]).col);
         (yyval).tipo = (yyvsp[0]).tipo;
         (yyval).trad = (yyvsp[0]).atributos.tipo + " " + (yyvsp[(-1) - (0)]).lexema + (yyvsp[0]).trad + ";";
     }
-#line 1623 "plp4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 46:
-#line 164 "plp4.y" /* yacc.c:1646  */
-    {if(tsActual->searchSymb((yyvsp[-1]).trad) == NULL ) errorSemantico(ERRVOID,(yyvsp[-1]).lexema,(yyvsp[-1]).fila,(yyvsp[-1]).col); }
-#line 1629 "plp4.tab.c" /* yacc.c:1646  */
+#line 1631 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 164 "plp4.y" /* yacc.c:1646  */
-    { (yyval).tipo = (yyvsp[0]).tipo; (yyval).trad = "if(" + (yyvsp[0]).trad + ")";  }
-#line 1635 "plp4.tab.c" /* yacc.c:1646  */
+#line 166 "plp4.y" /* yacc.c:1646  */
+    {if(tsActual->searchSymb((yyvsp[-1]).trad) == NULL ){
+        errorSemantico(ERRVOID,(yyvsp[-1]).lexema,(yyvsp[-1]).fila,(yyvsp[-1]).col); } }
+#line 1638 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 165 "plp4.y" /* yacc.c:1646  */
-    {(yyval).trad = ""; }
-#line 1641 "plp4.tab.c" /* yacc.c:1646  */
+#line 167 "plp4.y" /* yacc.c:1646  */
+    { (yyval).tipo = (yyvsp[0]).tipo; (yyval).trad = "if(" + (yyvsp[0]).trad + ")";  }
+#line 1644 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 167 "plp4.y" /* yacc.c:1646  */
-    {  (yyval).tipo = tipoShake((yyvsp[-2]).tipo , (yyvsp[0]).tipo); 
-                (yyval).trad = (yyvsp[-2]).trad + (yyvsp[-1]).lexema + (yyvsp[0]).trad; }
-#line 1648 "plp4.tab.c" /* yacc.c:1646  */
+#line 168 "plp4.y" /* yacc.c:1646  */
+    {(yyval).trad = ""; }
+#line 1650 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 169 "plp4.y" /* yacc.c:1646  */
-    { (yyval).tipo = (yyvsp[0]).tipo; 
-            (yyval).trad = (yyvsp[0]).trad; }
-#line 1655 "plp4.tab.c" /* yacc.c:1646  */
+#line 170 "plp4.y" /* yacc.c:1646  */
+    {  
+                (yyval).tipo = parserTipo(tipoShake((yyvsp[-2]).atributos.tipo , (yyvsp[0]).atributos.tipo) , (yyvsp[-2]).lexema , (yyvsp[-2]).col , (yyvsp[-2]).fila);
+                (yyval).atributos.tipo = tipoShake((yyvsp[-2]).atributos.tipo , (yyvsp[0]).atributos.tipo); 
+                (yyval).trad = (yyvsp[-2]).trad + (yyvsp[-1]).lexema + (yyvsp[0]).trad; }
+#line 1659 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 172 "plp4.y" /* yacc.c:1646  */
-    {  (yyval).tipo = tipoShake((yyvsp[-2]).tipo , (yyvsp[0]).tipo);
-                (yyval).trad = (yyvsp[-2]).trad + " " + (yyvsp[-1]).lexema + " " + (yyvsp[0]).trad; 
-    }
-#line 1663 "plp4.tab.c" /* yacc.c:1646  */
+#line 174 "plp4.y" /* yacc.c:1646  */
+    { 
+        (yyval).atributos.tipo = (yyvsp[0]).atributos.tipo; 
+        (yyval).tipo = (yyvsp[0]).tipo; 
+        (yyval).trad = (yyvsp[0]).trad; }
+#line 1668 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 175 "plp4.y" /* yacc.c:1646  */
-    { (yyval).tipo = (yyvsp[0]).tipo; 
-        (yyval).trad = (yyvsp[0]).trad; 
-        }
-#line 1671 "plp4.tab.c" /* yacc.c:1646  */
+#line 179 "plp4.y" /* yacc.c:1646  */
+    { 
+                (yyval).atributos.tipo =   tipoShake((yyvsp[-2]).atributos.tipo , (yyvsp[-2]).atributos.tipo); 
+                (yyval).tipo = parserTipo( tipoShake((yyvsp[-2]).atributos.tipo , (yyvsp[0]).atributos.tipo) , (yyvsp[-2]).lexema , (yyvsp[-2]).col , (yyvsp[-2]).fila);
+                
+                (yyval).trad = (yyvsp[-2]).trad + " " + (yyvsp[-1]).lexema + " " + (yyvsp[0]).trad; 
+                
+    }
+#line 1680 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 179 "plp4.y" /* yacc.c:1646  */
-    {(yyval).tipo =ENTEROT; 
-            (yyval).atributos.tipo = "int";
-            (yyval).trad = (yyvsp[0]).lexema; }
-#line 1679 "plp4.tab.c" /* yacc.c:1646  */
+#line 186 "plp4.y" /* yacc.c:1646  */
+    { 
+        (yyval).atributos.tipo = (yyvsp[0]).atributos.tipo;
+        (yyval).tipo = (yyvsp[0]).tipo; 
+        (yyval).trad = (yyvsp[0]).trad; 
+        }
+#line 1690 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 182 "plp4.y" /* yacc.c:1646  */
-    {
-        (yyval).atributos.tipo = "float";
-        (yyval).tipo = REALT; 
-                (yyval).trad = (yyvsp[0]).lexema;}
-#line 1688 "plp4.tab.c" /* yacc.c:1646  */
+#line 192 "plp4.y" /* yacc.c:1646  */
+    {(yyval).tipo =ENTEROT; 
+            (yyval).atributos.tipo = "int";
+            (yyval).trad = (yyvsp[0]).lexema; }
+#line 1698 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 186 "plp4.y" /* yacc.c:1646  */
+#line 195 "plp4.y" /* yacc.c:1646  */
     {
-        (yyval).tipo = (yyvsp[-2]).tipo; 
-        (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;
-        (yyval).trad = "(" + (yyvsp[-2]).trad + ")"; }
-#line 1697 "plp4.tab.c" /* yacc.c:1646  */
+        (yyval).atributos.tipo = "float";
+        (yyval).tipo = REALT; 
+        (yyval).trad = (yyvsp[0]).lexema;}
+#line 1707 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 190 "plp4.y" /* yacc.c:1646  */
+#line 199 "plp4.y" /* yacc.c:1646  */
+    {
+        (yyval).tipo = (yyvsp[-2]).tipo; 
+        (yyval).atributos.tipo = (yyvsp[-2]).atributos.tipo;
+        (yyval).trad = "(" + (yyvsp[-1]).trad + ")"; }
+#line 1716 "plp4.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 57:
+#line 203 "plp4.y" /* yacc.c:1646  */
     {
         if( tsActual->searchSymb((yyvsp[0]).lexema) == NULL) errorSemantico(ERRNODECL,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
+        
         if(tsActual->searchSymb((yyvsp[0]).lexema)->tipo != ENTEROT && tsActual->searchSymb((yyvsp[0]).lexema)->tipo != REALT ) errorSemantico(ERRNOSIMPLE,(yyvsp[0]).lexema,(yyvsp[0]).fila,(yyvsp[0]).col);
-        (yyval).tipo = tsActual->searchSymb((yyvsp[0]).lexema)->tipo; 
+        (yyval).tipo = tsActual->searchSymb((yyvsp[0]).lexema)->tipo;
+        if((yyval).tipo == ENTEROT) (yyval).atributos.tipo = "int";
+        if((yyval).tipo == REALT) (yyval).atributos.tipo = "float"; 
         (yyval).trad =  tsActual->searchSymb((yyvsp[0]).lexema)->nomtrad;
     }
-#line 1708 "plp4.tab.c" /* yacc.c:1646  */
+#line 1730 "plp4.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1712 "plp4.tab.c" /* yacc.c:1646  */
+#line 1734 "plp4.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1936,10 +1958,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 197 "plp4.y" /* yacc.c:1906  */
+#line 213 "plp4.y" /* yacc.c:1906  */
 
 
 string tipoMayus(string tipo){
+    
     if(tipo == "int") return "Int"; 
     return "Float"; 
 }
@@ -1947,13 +1970,14 @@ string tipoMayus(string tipo){
 int parserTipo(string tipo , char * lexema, int fila, int columna  ){
     if (tipo =="int"  ) return ENTEROT; 
     if (tipo == "float"  ) return REALT; 
+    
     if(tipo == "void" )errorSemantico(ERRVOID,lexema,fila,columna);
     return -1; 
 }
 
-int tipoShake(int type1,  int type2){
-    if(type1 == REAL || type2 == REAL ) return REAL; 
-    return INT;
+string tipoShake(string type1,  string type2){
+    if(type1 == "float" || type2 == "float" ) return "float"; 
+    return "int";
 }
 
 /// ---------- Errores semánticos ---------------------------------
