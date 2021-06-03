@@ -1,0 +1,10 @@
+fn main() -> real  
+
+  fn f1(a:real b:int c:real)
+
+    let d = a+b-c
+  fblq       /* Error sintactico (6,3): encontrado 'fblq', esperaba 'endfn' */ 
+
+
+  print 88
+endfn

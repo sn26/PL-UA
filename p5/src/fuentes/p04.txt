@@ -1,0 +1,18 @@
+fn main()
+  fn f1()
+    let a = a * 7   /* 'a' no declarado (en a * 7) */
+  endfn
+  fn f2(a:int) -> real
+    fn f21(b:real)
+      let c = 3+b;
+      blq
+        let d;
+        let d = d+c
+      fblq
+    endfn
+
+    let c = 2.5;
+    print 345 + c
+  endfn
+  print 88
+endfn
