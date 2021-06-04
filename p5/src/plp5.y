@@ -58,7 +58,7 @@ int parserTipo(string tipo , char * lexema, int fila, int columna  );
 int ctemp = 16000;
 int cvar = 0;  
 int nuevaTemp(char *lexema, int fila, int columna);
-
+int nuevaVar(char *lexema, int fila, int columna);
 
 %}
 
@@ -110,21 +110,90 @@ I: Blq {
     $$.tipo = $1.tipo;
     }
     | let Ref asig E Ifa {
-
-
+        temp = nuevaTemp($1.lexema , $1.fila, $1.columna); 
+        $$.trad = 
+        $5.trad +   
+        "mov " + E.dir + " " + temp + "\n" +
+        "mov" + temp + " " + $1.dir + "\n" +  
+        $5.atributos.etiqueta;
+        
+    }
+    | var id It {
+        struct simbolo simb1; 
+        simb1.nombre = $2.lexema;
+        simb1.tipo = $3.tipo;
+        simb1.dir = $2.dir;
+        simb1.tam = $3.tam;
+        if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,$2.lexema,$2.fila,$2.col);
+        $$.trad = ""; 
+        $$.tipo = $3.tipo; 
+        $$.dir = $2.dir; 
+        $$.tam = $$.tam;
+    }
+    | print E {if($2.tipo == REAL ) $$.trad = "wri "; 
+                if($2.tipo == ENTERO ) $$.trad = "wrr ";   } {
+        $$.trad = $3.trad  + $2.dir + " wrl\n";   
+    }
+    | read Ref {if($2.tipo == ENTERO ) $$.trad = "rdi "; 
+                if($2.tipo == REAL) $$.trad = "rdr ";  } {
+        $$.trad = $3.trad + $2.dir; 
+    }
+    | while E I {
+        int etiqact1 = nuevaEtiqueta();
+        int etiqact2 = nuevaEtiqueta(); 
+        $$.trad = "L" + etiqact+ ":\n"+
+        $2.trad + "mov " + $2.dir + " A\n" 
+        + "jz " + "L" + etiqact2 + "\n" + 
+        $3.trad + "jmp L" + etiqact1 + "\n" + 
+        "L" + etiqact2 + ":\n";   
+    }
+    | for {tsActual = new TablaSimbolos(tsActual); } id asig numint dosp numint {
+         if($4.numint > $6.numint) $$.trad = "subi "; 
+        if($4.numint < $6.numint) $$.trad = "addi "; } 
+        I {  
+            int etiqact1 = nuevaEtiqueta(); 
+            int var1 = nuevaVar($3.lexema , $3.fila , $3.columna ); 
+            $$.trad = "L" + etiqact1 + ":\n mov " + $5.lexema + " " + var1 + "\n" + 
+            "mov " + var1 + " A\n" + $8.trad + " #1\n" + "mov A" + var1 + "\n subi" + " #"+$7.lexema + "\n"+ 
+            "jmpz L" + etiqact1 + "\n"; 
     }
     | if E I Ip {
-        int etiqact = nuevaEtiqueta(); 
-        $$.trad = "mov " + $2.trad + " A\n" + "jz L" + etiqact + "\n" + $4.trad + "L" + etiqact+":\n"+$3.trad ; 
+        int etiqact1 = nuevaEtiqueta(); 
+        int etiqact2 = nuevaEtiqueta();
+        $$.trad = $2.trad + 
+        "mov " + $2.dir + " A\n" +
+         "jz L" + etiqact1 + "\n" 
+         + $3.trad 
+         + "jmpL" + etiqact2 + "\n" +
+         + 
+         "L" + etiqact1+":\n"
+         +$4.trad +
+         "L" + etiqact2 + ":\n";
+    }
+
+It: dosp Type {
+    $$.tipo = $2.tipo; 
+    $$.trad = ""; 
+    $$.tam  = $2.tipo; 
+    }
+    | {
+        $$.trad =""; 
+        $$.tipo = ENTERO;
+        $$tam = 1;
 
     }
 
 Ifa: if E{
-    $$.trad = "mov " + $2.trad + " A\n" + "jz" + "L" + nuevaEtiqueta() + "\n";
+    int etiq = nuevaEtiqueta();
+    $$.trad = "mov " + $2.dir + " A\n" + "jz" + "L" + etiq + "\n";
     $$.dir = $2.dir;
+    $$.atributos.etiqueta = "L" + etiq + ":\n";
+
     }
     | {
         $$.trad ="";
+        $$.atributos.etiqueta = ""; 
+
     }
 
 
@@ -204,7 +273,7 @@ Ref: id{
         if($$.tipo == REAL) $$.atributos.tipo = "float"; 
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.columna );
         $$.dir = tmp;
-        $$.trad = "mov " + tsActual->searchSymb($1.lexema)->dir + " " + tmp;
+        $$.trad = "mov " + tsActual->searchSymb($1.lexema)->dir + " " + tmp + "\n";
         
     }
 
@@ -256,7 +325,7 @@ int nuevaTemp(char *lexema, int fila, int columna ){
 int nuevaVar(char *lexema, int fila, int columna ){
     cvar +=1; 
     if(cvar > 16000) errorSemantico(ERR_NOCABE, lexema, fila, columna ); 
-    return ctemp; 
+    return cvar; 
 }
 //Manejar etiquetas 
 int nuevaEtiqueta(){

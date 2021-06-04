@@ -5,7 +5,7 @@
 struct Atributos{
 	string tipo; 
 	string asig;
-	
+	string etiqueta; //Etiqueta heredada  
 };
 typedef struct {
    char *lexema;
