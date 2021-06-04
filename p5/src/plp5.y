@@ -73,7 +73,9 @@ S: Fun {
 }; 
 
 Fun: fn id pari pard Cod endfn{
-    
+    etiqact = nuevaEtiqueta(); 
+    $$.trad = "L" + etiqact + ":\n"
+    + $5.trad; 
 }; 
 Stype: int {
         $$.tipo = ENTERO; 
@@ -103,8 +105,14 @@ Dim: numint coma Dim {
 
     }; 
 
+Cod: Cod pyc I {
+    $$.trad = $1.trad + $3.trad;
+    }
+    | I {
+        $$.trad = $1.trad;
+    };
+
 I: Blq {
-    tsActual = new TablaSimbolos(tsActual); 
     $$.trad = $1.trad; 
     $$.atributos.trad = $1.atributos.trad; 
     $$.tipo = $1.tipo;
@@ -156,6 +164,7 @@ I: Blq {
             $$.trad = "L" + etiqact1 + ":\n mov " + $5.lexema + " " + var1 + "\n" + 
             "mov " + var1 + " A\n" + $8.trad + " #1\n" + "mov A" + var1 + "\n subi" + " #"+$7.lexema + "\n"+ 
             "jmpz L" + etiqact1 + "\n"; 
+            tsActual = tsActual->padre;
     }
     | if E I Ip {
         int etiqact1 = nuevaEtiqueta(); 
@@ -169,7 +178,21 @@ I: Blq {
          "L" + etiqact1+":\n"
          +$4.trad +
          "L" + etiqact2 + ":\n";
+}; 
+
+Ip: else I fi {
+    $$.trad = $2.trad; 
     }
+    | fi {
+        $$.trad = ""; 
+    }; 
+
+Blq: blq Cod fblq {
+    tsActual = new TablaSimbolos(tsActual); 
+    $$.trad = $2.trad;
+    tsActual = tsActual->padre;
+}; 
+
 
 It: dosp Type {
     $$.tipo = $2.tipo; 
@@ -238,6 +261,33 @@ E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
         $$.trad = $1.trad; 
     };
 
+T: T opmd {if($2.lexema=="*"){$$.trad = "mul"; }
+           if($2.lexema == "/"){$$.trad = "div";}} F 
+            {
+        tmp = nuevaTemp($1.lexema, $1.fila, $1.columna);
+        $$.dir = tmp; 
+        if($1.tipo == ENTERO && $4.tipo == ENTERO ){
+            $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A" + $3.trad +"i " + $4.dir + "mov A " + tmp; 
+            $$.tipo = ENTERO;
+            $$.atributos.tipo = "int"; 
+        }
+        else if($1.tipo == REAL && &4.tipo == ENTERO){
+            tmpcp = nuevaTemp($1.lexema, $1.fila, $1.columna);
+            $$.trad = $1.trad + $4.trad + "mov " + $4.dir + " A\n"+"itor\n" + "mov A " + tmpcp + "\n" 
+            + "mov " + $1.dir + " A" + "\n" + $3.trad + "r " + tmpcp + "\nmov A " + tmp; 
+            $$.tipo = REAL; 
+            $$.atributos.tipo = "float"; 
+        }else if ($1.tipo == REAL && &4.tipo == REAL){
+            $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A\n" + $3.trad + "r " + $4.dir + "\nmov A " + tmp; 
+            $$.tipo = REAL; 
+            $$.atributos.tipo = "float";  
+        }
+    }
+    | F {
+        $$.tipo = $1.tipo;
+        $$.trad = $1.trad;
+    }
+
 
 F: numint {$$.tipo = ENTERO; 
         $$.atributos.tipo = "int"; 
@@ -279,14 +329,22 @@ Ref: id{
 
     | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col); 
         if(tsActual->searchSymb($1.lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col); 
-     } cori LExpr cord{
+     } cori {$$.tipo == } LExpr {if($2.tipo != ENTERO )errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);} cord{
+
+
 
     }; 
 
 LExpr: LExpr coma E{
-
+        if($3.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$3.lexema,$3.fila,$3.col);
+        $$.tipo =     
     }
     | E {
+        if($1.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$1.lexema,$1.fila,$1.col);
+        $$.trad = $1.trad; 
+        $$.tipo = $1.tipo; 
+        $$.dir = $1.dir; 
+    }
 
     }
 
