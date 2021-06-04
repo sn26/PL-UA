@@ -50,7 +50,7 @@ const int ERRYADECL=1,ERRNODECL=2,ERRVOID=3,ERRNOSIMPLE=4,ERRNOENTERO=5;
 void errorSemantico(int nerror,char *lexema,int fila,int columna);
 
 TablaSimbolos *tsActual = new TablaSimbolos(NULL); 
-
+TablaTipos *ttactual = new TablaTipos(); 
 string tipoMayus(string tipo);
 string tipoShake(string  type1,  string type2);
 int parserTipo(string tipo , char * lexema, int fila, int columna  );
@@ -67,7 +67,6 @@ S: Fun {
     /* Primero, comprobaremos que después del programa no hay ningún token más*/
     int tk = yylex(); 
     if(tk!= 0) yyerror(""); 
-    tsActual = new TablaSimbolos(null); 
     $$.trad = $1.trad; 
     cout<<$$.trad; 
 }; 
@@ -75,28 +74,75 @@ S: Fun {
 Fun: fn id pari pard Cod endfn{
     
 }; 
+Stype: int {
+        $$.tipo = ENTERO; 
+        $$.atributos.tipo= "int"; 
+        $$.tam = 1; 
+    } 
+    | real {
+        $$.tipo = REAL; 
+        $$.atributos.tipo = "float"; 
+        $$.tam = 1; 
+    }; 
 
-E: E opas T {
+Type: Stype {
+    $$.tipo = $1.tipo; 
+    $$.atributos.tipo = $1.atributos.tipo; 
+    $$.tam = $1.tam; 
+    }
+    | array Stype Dim {
+        $$.tipo = ttactual->nuevoTipoArray($3.tam , $3.tipo);
+        $$.tam = $3.tam; 
+    };
+
+Dim: numint coma Dim {
+
+    }
+    | numint{
+
+    }; 
+
+
+E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
+            if($2.lexema == "-") {$$.trad == "sub";}} T {
     tmp = nuevaTemp($1.lexema, $1.fila, $1.columna);
     $$.dir = tmp; 
-    if($1.tipo == ENTERO && $3.tipo == ENTERO ){
-        $$.trad = $1.trad + $3.trad + "mov " + $1.dir + " A" + $2.trad +"i " + $3.dir + "mov A " + tmp; 
+    if($1.tipo == ENTERO && $4.tipo == ENTERO ){
+        $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A" + $3.trad +"i " + $4.dir + "mov A " + tmp; 
         $$.tipo = ENTERO;
         $$.atributos.tipo = "int"; 
     }
-    else if($1.tipo == REAL && &3.tipo == ENTERO){
+    else if($1.tipo == REAL && &4.tipo == ENTERO){
         tmpcp = nuevaTemp($1.lexema, $1.fila, $1.columna);
-        $$.trad = $1.trad + $3.trad + "mov " + $3.dir + " A\n"+"itor\n" + "mov A " + tmpcp + "\n" 
-        + "mov " + $1.dir + " A" + "\n" + $2.trad + "r " + tmpcp + "\nmov A " + tmp; 
+        $$.trad = $1.trad + $4.trad + "mov " + $4.dir + " A\n"+"itor\n" + "mov A " + tmpcp + "\n" 
+        + "mov " + $1.dir + " A" + "\n" + $3.trad + "r " + tmpcp + "\nmov A " + tmp; 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float"; 
-    }else if ($1.tipo == REAL && &3.tipo == REAL){
-        $$.trad = $1.trad + $3.trad + "mov " + $1.dir + " A\n" + $2.trad + "r " + $3.dir + "\nmov A " + tmp; 
+    }else if ($1.tipo == REAL && &4.tipo == REAL){
+        $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A\n" + $3.trad + "r " + $4.dir + "\nmov A " + tmp; 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float";  
     }
     }
-    | 
+    | opas {if($2.lexema == "+" ){$$.trad = "add"; }
+            if($2.lexema == "-") {$$.trad == "sub";}} T {
+
+        tmp = nuevaTemp($1.lexema, $1.fila, $1.columna); 
+        if($3.tipo == ENTERO){
+            $$.trad = $2.trad + "i " + $3.dir+ "mov A "  + tmp; 
+            $$.tipo = ENTERO; 
+            $$.atributos.tipo == "int";  
+        }else if($3.tipo == REAL ){
+            $$.trad = $2.trad + "r " + $3.dir+ "mov A "  + tmp;  
+            $$.tipo = REAL; 
+            $$.atributos.tipo = "float"; 
+        }
+    }
+    | T {
+        $$.atributos.tipo = $1.atributos.tipo; 
+        $$.tipo = $1.tipo; 
+        $$.trad = $1.trad; 
+    };
 
 
 F: numint {$$.tipo = ENTEROT; 

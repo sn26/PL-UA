@@ -14,7 +14,8 @@ typedef struct {
    string trad;
    int numint; 
    Atributos atributos; 
-   int dir; 
+   unsigned dir; 
+   unsigned tam; 
 } MITIPO;
 
 #define YYSTYPE MITIPO
