@@ -48,7 +48,8 @@ extern FILE *yyin;
 int yyerror(char *s);
 const int ERRYADECL=1,ERRNODECL=2,ERRVOID=3,ERRNOSIMPLE=4,ERRNOENTERO=5;
 void errorSemantico(int nerror,char *lexema,int fila,int columna);
-
+etiquetaact = 0;
+int nuevaEtiqueta();
 TablaSimbolos *tsActual = new TablaSimbolos(NULL); 
 TablaTipos *ttactual = new TablaTipos(); 
 string tipoMayus(string tipo);
@@ -56,7 +57,7 @@ string tipoShake(string  type1,  string type2);
 int parserTipo(string tipo , char * lexema, int fila, int columna  );
 int ctemp = 16000;
 int cvar = 0;  
-int nuevaTemp();
+int nuevaTemp(char *lexema, int fila, int columna);
 
 
 %}
@@ -102,6 +103,30 @@ Dim: numint coma Dim {
 
     }; 
 
+I: Blq {
+    tsActual = new TablaSimbolos(tsActual); 
+    $$.trad = $1.trad; 
+    $$.atributos.trad = $1.atributos.trad; 
+    $$.tipo = $1.tipo;
+    }
+    | let Ref asig E Ifa {
+
+
+    }
+    | if E I Ip {
+        int etiqact = nuevaEtiqueta(); 
+        $$.trad = "mov " + $2.trad + " A\n" + "jz L" + etiqact + "\n" + $4.trad + "L" + etiqact+":\n"+$3.trad ; 
+
+    }
+
+Ifa: if E{
+    $$.trad = "mov " + $2.trad + " A\n" + "jz" + "L" + nuevaEtiqueta() + "\n";
+    $$.dir = $2.dir;
+    }
+    | {
+        $$.trad ="";
+    }
+
 
 E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
             if($2.lexema == "-") {$$.trad == "sub";}} T {
@@ -145,23 +170,31 @@ E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
     };
 
 
-F: numint {$$.tipo = ENTEROT; 
+F: numint {$$.tipo = ENTERO; 
         $$.atributos.tipo = "int"; 
-        $$.trad = $1.lexema; }
+        temp = nuevaTemp($1.lexema , $1.fila, $1.columna); 
+        $$.trad = "mov #" + $1.lexema +  temp + "\n"; 
+        $$.dir = temp; 
+        }
+
     | numreal {
-        $$.tipo = REALT; 
+        $$.tipo = REAL; 
         $$.atributos.tipo = "real"; 
-        $$.trad = $1.lexema; 
+        $$.trad = "mov $" + $1.lexema +  temp + "\n";
+        $$.dir = temp; 
+
     }
     | pari E pard {
         $$.tipo = $2.tipo; 
         $$.atributos.tipo = $2.atributos.tipo; 
         $$.trad = $2.trad; 
+        $$.dir = $2.dir; 
     }
     | Ref {
         $$.tipo = $1.tipo; 
         $$.atributos = $1.atributos; 
         $$.trad = $1.trad;
+        $$.dir = $1.dir; 
     }; 
 
 Ref: id{ 
@@ -225,7 +258,11 @@ int nuevaVar(char *lexema, int fila, int columna ){
     if(cvar > 16000) errorSemantico(ERR_NOCABE, lexema, fila, columna ); 
     return ctemp; 
 }
-
+//Manejar etiquetas 
+int nuevaEtiqueta(){
+    etiquetaact += 1;
+    return etiquetaact; 
+}
 
 
 /// ---------- Errores semánticos ---------------------------------

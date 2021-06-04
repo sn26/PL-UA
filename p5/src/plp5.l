@@ -93,7 +93,7 @@ int ret(int token , int tipo)
    yylval.atributos.asig = ""; 
    
    if(tipo == NUMINT){
-       yylval.numint = (int) yylval.lexema;
+       yylval.numint =  atoi(yylval.lexema);
    }else{
        yylval.numint = 0; 
    }
