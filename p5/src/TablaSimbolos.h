@@ -1,4 +1,5 @@
 
+
 #ifndef _TablaSimbolos_
 #define _TablaSimbolos_
 
@@ -7,25 +8,24 @@
 
 using namespace std;
 
-const int ENTEROT=1;
-const int REALT=2;
-const int FUNCIONT=3;
-const int VOIDT=4;
+const unsigned ENTERO=0;
+const unsigned REAL=1;
 
 struct Simbolo {
 
   string nombre;
-  int tipo;
-  string nomtrad;
+  unsigned tipo;
+  unsigned dir;
+  unsigned tam;
 };
 
 
 class TablaSimbolos {
 
    private:
-
-      bool buscarAmbito(Simbolo s); // ver si está en el ámbito actual
    
+      bool buscarAmbito(Simbolo s); // ver si está en el ámbito actual
+
    public:
    
       TablaSimbolos *padre;
@@ -33,10 +33,9 @@ class TablaSimbolos {
    
       TablaSimbolos(TablaSimbolos *padre);
       TablaSimbolos *getPadre() { return padre; }
-   
+
       bool newSymb(Simbolo s);
       Simbolo* searchSymb(string nombre);
 };
-
-
+   
 #endif

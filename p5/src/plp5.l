@@ -12,7 +12,7 @@ AZSNUM   [a-zA-Z0-9]
 using namespace std;
 
 #include "comun.h"
-#include "plp4.tab.h"
+#include "plp5.tab.h"
 
 int col = 1,
     fila = 1;
@@ -53,7 +53,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "+"                 {return ret(opas , OPAS ); }
 "*"                 {return ret(opmd , OPMD); }
 "/"                 {return ret(opmd , OPMD ); }
-"array"             {return ret(array, ARRAY);}
+"array"             {return ret(array, ARRAYT);}
 "var"               {return ret(var, VAR); }
 "read"              {return ret(read, READ ); }
 "while"             {return ret(while, WHILE); }
@@ -64,7 +64,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "fn"                {return ret(fn ,FN ); }
 "endfn"             {return ret(endfn , ENDFN); }
 "int"               {return ret(inttok , INT ); }
-"real"              {return ret(real , REAL ); }
+"real"              {return ret(real , REALT ); }
 "blq"               {return ret(blq, BLQ); }
 "fblq"              {return ret(fblq , FBLQ); }
 "let"               {return ret(let , LET); }

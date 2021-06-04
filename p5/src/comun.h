@@ -14,6 +14,7 @@ typedef struct {
    string trad;
    int numint; 
    Atributos atributos; 
+   int dir; 
 } MITIPO;
 
 #define YYSTYPE MITIPO
@@ -30,7 +31,7 @@ const int
 		FN		= 8, //'fn'
 		ENDFN		= 9, //'endfn'
 		INT		= 10, //'int'
-		REAL		= 11, //'real'
+		REALT		= 11, //'real'
 		LET		= 12, // 'let'
 		IF              = 13, //'if'
 		ELSE            = 14, //'else'
@@ -42,7 +43,7 @@ const int
 		NUMINT		= 20, //numero entero
 		NUMREAL		= 21, //numero real
 		//NUEVOS
-		ARRAY 		= 3, 
+		ARRAYT 		= 3, 
 		VAR = 22, 
 		READ = 23,
 		WHILE = 24,
@@ -54,10 +55,33 @@ const int
 
 
 //***-------------------- en comun.h -------------------------------
+const int ERRLEXICO=1,
+          ERRSINT=2,
+          ERREOF=3,
+          ERRLEXEOF=4,
+          
+          ERR_YADECL=5,
+          ERR_NODECL=6,
+          ERR_NOCABE=7,
 
+          ERR_IFWHILE=8,
+          
+          ERR_DIM=9,
+          ERR_FALTAN=10,
+          ERR_SOBRAN=11,
+          ERR_INDICE_ENTERO=12,
+          
+          ERR_ASIG=13,
+          ERR_MAXTEMP=14;
+
+
+void errorSemantico(int nerror,int fila,int columna,const char *s);
+void msgError(int nerror,int nlin,int ncol,const char *s);
+
+/*
 #define ERRLEXICO    1
 #define ERRSINT      2
 #define ERREOF       3
 #define ERRLEXEOF    4
-
+*/
 void msgError(int nerror,int nlin,int ncol,const char *s);
