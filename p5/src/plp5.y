@@ -70,7 +70,11 @@ S: Fun {
     tsActual = new TablaSimbolos(null); 
     $$.trad = $1.trad; 
     cout<<$$.trad; 
-}
+}; 
+
+Fun: fn id pari pard Cod endfn{
+    
+}; 
 
 
 
@@ -104,9 +108,11 @@ Ref: id{
         
     }
 
-    | id cori LExpr cord{
+    | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col); 
+        if(tsActual->searchSymb($1.lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col); 
+     } cori LExpr cord{
 
-    }: 
+    }; 
 
 LExpr: LExpr coma E{
 
