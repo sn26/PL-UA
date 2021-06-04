@@ -76,6 +76,27 @@ Fun: fn id pari pard Cod endfn{
     
 }; 
 
+E: E opas T {
+    tmp = nuevaTemp($1.lexema, $1.fila, $1.columna);
+    $$.dir = tmp; 
+    if($1.tipo == ENTERO && $3.tipo == ENTERO ){
+        $$.trad = $1.trad + $3.trad + "mov " + $1.dir + " A" + $2.trad +"i " + $3.dir + "mov A " + tmp; 
+        $$.tipo = ENTERO;
+        $$.atributos.tipo = "int"; 
+    }
+    else if($1.tipo == REAL && &3.tipo == ENTERO){
+        tmpcp = nuevaTemp($1.lexema, $1.fila, $1.columna);
+        $$.trad = $1.trad + $3.trad + "mov " + $3.dir + " A\n"+"itor\n" + "mov A " + tmpcp + "\n" 
+        + "mov " + $1.dir + " A" + "\n" + $2.trad + "r " + tmpcp + "\nmov A " + tmp; 
+        $$.tipo = REAL; 
+        $$.atributos.tipo = "float"; 
+    }else if ($1.tipo == REAL && &3.tipo == REAL){
+        $$.trad = $1.trad + $3.trad + "mov " + $1.dir + " A\n" + $2.trad + "r " + $3.dir + "\nmov A " + tmp; 
+        $$.tipo = REAL; 
+        $$.atributos.tipo = "float";  
+    }
+    }
+    | 
 
 
 F: numint {$$.tipo = ENTEROT; 
@@ -89,7 +110,7 @@ F: numint {$$.tipo = ENTEROT;
     | pari E pard {
         $$.tipo = $2.tipo; 
         $$.atributos.tipo = $2.atributos.tipo; 
-        $$.trad =  "(" + $2.trad + ")"; 
+        $$.trad = $2.trad; 
     }
     | Ref {
         $$.tipo = $1.tipo; 
@@ -100,8 +121,8 @@ F: numint {$$.tipo = ENTEROT;
 Ref: id{ 
         if( tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col);
         $$.tipo = tsActual->searchSymb($1.lexema)->tipo;
-        if($$.tipo == ENTEROT) $$.atributos.tipo = "int";
-        if($$.tipo == REALT) $$.atributos.tipo = "float"; 
+        if($$.tipo == ENTERO) $$.atributos.tipo = "int";
+        if($$.tipo == REAL) $$.atributos.tipo = "float"; 
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.columna );
         $$.dir = tmp;
         $$.trad = "mov " + tsActual->searchSymb($1.lexema)->dir + " " + tmp;

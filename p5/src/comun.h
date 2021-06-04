@@ -19,8 +19,11 @@ typedef struct {
 
 #define YYSTYPE MITIPO
 const int
-		PARI 		= 0,
-      	PARD		= 1, //) 
+		INT		= 0, //'int'
+		REALT		= 1, //'real'
+		
+		PARI 		= 10,
+      	PARD		= 11, //) 
 		DOSP            = 2, //:
 		
 		//RET             = 3, //->
@@ -30,8 +33,7 @@ const int
 		OPMD		= 7, // * /
 		FN		= 8, //'fn'
 		ENDFN		= 9, //'endfn'
-		INT		= 10, //'int'
-		REALT		= 11, //'real'
+		
 		LET		= 12, // 'let'
 		IF              = 13, //'if'
 		ELSE            = 14, //'else'
