@@ -57,7 +57,7 @@ string tipoShake(string  type1,  string type2);
 int ctemp = 16000;
 int cvar = 0;  
 int nuevaTemp(char *lexema, int fila, int columna);
-int nuevaVar(char *lexema, int fila, int columna);
+int nuevaVar(unsigned tam ,char *lexema, int fila, int columna);
 
 %}
 
@@ -91,19 +91,24 @@ Type: Stype {
     $$.tipo = $1.tipo; 
     $$.atributos.tipo = $1.atributos.tipo; 
     $$.tam = $1.tam; 
+    
     }
     | arraytok Stype Dim {
-        $$.tipo = ttActual->nuevoTipoArray($3.tam , $3.tipo);
-        $$.tam = $3.tam; 
+        $$.tam = $2.tam * $4.tam; 
+        $$.tipo = ttActual->nuevoTipoArray($4.tam , $4.tipo);
+        
+        cout<<$$.tam<<endl;
     };
 
-Dim: numint coma Dim {
-        $$.tipo = ttActual->nuevoTipoArray($3.tam , $3.tipo); 
-        $$.tam= $3.tam;
+Dim: numint coma {$$.tipo = $0.tipo; } Dim {
+        $$.tam= $1.tam * $4.tam;
+        $$.tipo = ttActual->nuevoTipoArray($$.tam , $4.tipo); 
+        
+        cout<<$$.tam<<endl;
     }
     | numint{
-        $$.tipo = ENTERO;
-        $$.tam = 1;
+        $$.tam = $1.tam;
+        $$.tipo = ttActual->nuevoTipoArray($$.tam , $1.tipo); 
     }; 
 
 Cod: Cod pyc I {
@@ -135,6 +140,7 @@ I: Blq {
         simb1.dir = $2.dir;
         simb1.tam = $3.tam;
         if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,$2.lexema,$2.fila,$2.col);
+        $$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
         $$.trad = ""; 
         $$.tipo = $3.tipo; 
         $$.dir = $2.dir; 
@@ -162,7 +168,7 @@ I: Blq {
         if($4.numint < $6.numint) $$.trad = "addi "; } 
         I {  
             int etiqact1 = nuevaEtiqueta(); 
-            int var1 = nuevaVar($3.lexema , $3.fila , $3.col ); 
+            int var1 = nuevaVar(1,$3.lexema , $3.fila , $3.col ); 
             $$.trad = "L" + to_string(etiqact1) + ":\n mov " + $5.lexema + " " + to_string(var1) + "\n" +  "mov " + to_string(var1) + " A\n" + $8.trad + " #1\n" + "mov A" + to_string(var1) + "\n subi" + " #"+$7.lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
             tsActual = tsActual->padre;
     }
@@ -198,7 +204,7 @@ Blq: blq {tsActual = new TablaSimbolos(tsActual); } Cod {tsActual = tsActual->ge
 It: dosp Type {
     $$.tipo = $2.tipo; 
     $$.trad = ""; 
-    $$.tam  = $2.tipo; 
+    $$.tam  = $2.tam; 
     }
     | {
         $$.trad =""; 
@@ -392,8 +398,8 @@ int nuevaTemp(char *lexema, int fila, int columna ){
     return ctemp; 
 }
 ///Manejar variables 
-int nuevaVar(char *lexema, int fila, int columna ){
-    cvar +=1; 
+int nuevaVar(unsigned tam , char *lexema, int fila, int columna ){
+    cvar +=tam; 
     if(cvar > 16000) errorSemantico(ERR_NOCABE, lexema, fila, columna ); 
     return cvar; 
 }

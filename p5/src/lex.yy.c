@@ -2048,7 +2048,9 @@ int ret(int token , int tipo)
    yylval.tipo= tipo;
    yylval.atributos.tipo = ""; 
    yylval.atributos.asig = ""; 
-   
+   if(tipo == NUMINT ||tipo ==NUMREAL){
+       yylval.tam = 1;
+   }
    if(tipo == NUMINT){
        yylval.numint =  atoi(yylval.lexema);
    }else{
