@@ -36,7 +36,7 @@
 using namespace std;
 #include "comun.h"
 #include "TablaSimbolos.h"
-
+#include "TablaTipos.h"
 
 extern int col, fila, findefichero;
 
@@ -47,11 +47,11 @@ extern FILE *yyin;
 
 int yyerror(char *s);
 const int ERRYADECL=1,ERRNODECL=2,ERRVOID=3,ERRNOSIMPLE=4,ERRNOENTERO=5;
-void errorSemantico(int nerror,char *lexema,int fila,int columna);
+void errorSemantico(int nerror,const char *lexema,int fila,int columna);
 int mietiquetaact = 0;
 int nuevaEtiqueta();
 TablaSimbolos *tsActual = new TablaSimbolos(NULL); 
-TablaTipos *ttactual = new TablaTipos(); 
+TablaTipos *ttActual = new TablaTipos(); 
 string tipoMayus(string tipo);
 string tipoShake(string  type1,  string type2);
 int parserTipo(string tipo , char * lexema, int fila, int columna  );
@@ -73,8 +73,8 @@ S: Fun {
 }; 
 
 Fun: fn id pari pard Cod endfn{
-    etiqact = nuevaEtiqueta(); 
-    $$.trad = "L" + etiqact + ":\n"
+    int etiqact = nuevaEtiqueta(); 
+    $$.trad = "L" + to_string(etiqact) + ":\n"
     + $5.trad; 
 }; 
 Stype: inttok {
@@ -94,12 +94,12 @@ Type: Stype {
     $$.tam = $1.tam; 
     }
     | arraytok Stype Dim {
-        $$.tipo = ttactual->nuevoTipoArray($3.tam , $3.tipo);
+        $$.tipo = ttActual->nuevoTipoArray($3.tam , $3.tipo);
         $$.tam = $3.tam; 
     };
 
 Dim: numint coma Dim {
-        $$.tipo = ttactual->nuevoTipoArray($3.tam , $3.tipo); 
+        $$.tipo = ttActual->nuevoTipoArray($3.tam , $3.tipo); 
         $$.tam= $3.tam;
     }
     | numint{
@@ -116,21 +116,21 @@ Cod: Cod pyc I {
 
 I: Blq {
     $$.trad = $1.trad; 
-    $$.atributos.trad = $1.atributos.trad; 
+    $$.atributos.tipo = $1.atributos.tipo; 
     $$.tipo = $1.tipo;
     }
-    | let Ref asig {if($2.tipo == ARRAY) errorSemantico(ERR_FALTAN,$2.lexema,$2.fila,$2.col) } E Ifa {
+    | let Ref asig {if($2.tipo == ARRAY) errorSemantico(ERR_FALTAN,$2.lexema,$2.fila,$2.col); } E Ifa {
 
-        temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+        int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.trad = 
         $5.trad +   
-        "mov " + E.dir + " " + temp + "\n" +
-        "mov" + temp + " " + $1.dir + "\n" +  
+        "mov " + to_string($5.dir) + " " + to_string(temp) + "\n" +
+        "mov" + to_string(temp) + " " + to_string($1.dir) + "\n" +  
         $5.atributos.etiqueta;
         
     }
     | var id It {
-        struct simbolo simb1; 
+        struct Simbolo simb1; 
         simb1.nombre = $2.lexema;
         simb1.tipo = $3.tipo;
         simb1.dir = $2.dir;
@@ -143,20 +143,20 @@ I: Blq {
     }
     | print E {if($2.tipo == REAL ) $$.trad = "wri "; 
                 if($2.tipo == ENTERO ) $$.trad = "wrr ";   } {
-        $$.trad = $3.trad  + $2.dir + " wrl\n";   
+        $$.trad = $3.trad  + to_string( $2.dir) + " wrl\n";   
     }
     | readtok Ref {if($2.tipo == ENTERO ) $$.trad = "rdi "; 
                 if($2.tipo == REAL) $$.trad = "rdr ";  } {
-        $$.trad = $3.trad + $2.dir; 
+        $$.trad = $3.trad + to_string($2.dir); 
     }
     | whiletok E I {
         int etiqact1 = nuevaEtiqueta();
         int etiqact2 = nuevaEtiqueta(); 
-        $$.trad = "L" + etiqact+ ":\n"+
-        $2.trad + "mov " + $2.dir + " A\n" 
-        + "jz " + "L" + etiqact2 + "\n" + 
-        $3.trad + "jmp L" + etiqact1 + "\n" + 
-        "L" + etiqact2 + ":\n";   
+        $$.trad = "L" + to_string(etiqact1)+ ":\n"+
+        $2.trad + "mov " + to_string($2.dir) + " A\n" 
+        + "jz " + "L" + to_string(etiqact2) + "\n" + 
+        $3.trad + "jmp L" + to_string(etiqact1) + "\n" + 
+        "L" + to_string(etiqact2) + ":\n";   
     }
     | fortok {tsActual = new TablaSimbolos(tsActual); } id asig numint dosp numint {
          if($4.numint > $6.numint) $$.trad = "subi "; 
@@ -164,23 +164,21 @@ I: Blq {
         I {  
             int etiqact1 = nuevaEtiqueta(); 
             int var1 = nuevaVar($3.lexema , $3.fila , $3.col ); 
-            $$.trad = "L" + etiqact1 + ":\n mov " + $5.lexema + " " + var1 + "\n" + 
-            "mov " + var1 + " A\n" + $8.trad + " #1\n" + "mov A" + var1 + "\n subi" + " #"+$7.lexema + "\n"+ 
-            "jmpz L" + etiqact1 + "\n"; 
+            $$.trad = "L" + to_string(etiqact1) + ":\n mov " + $5.lexema + " " + to_string(var1) + "\n" +  "mov " + to_string(var1) + " A\n" + $8.trad + " #1\n" + "mov A" + to_string(var1) + "\n subi" + " #"+$7.lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
             tsActual = tsActual->padre;
     }
     | iftok E I Ip {
         int etiqact1 = nuevaEtiqueta(); 
         int etiqact2 = nuevaEtiqueta();
         $$.trad = $2.trad + 
-        "mov " + $2.dir + " A\n" +
-         "jz L" + etiqact1 + "\n" 
+        "mov " + to_string($2.dir) + " A\n" +
+         "jz L" + to_string(etiqact1) + "\n" 
          + $3.trad 
-         + "jmpL" + etiqact2 + "\n" +
+         + "jmpL" + to_string(etiqact2) + "\n" +
          + 
-         "L" + etiqact1+":\n"
+         "L" + to_string(etiqact1)+":\n"
          +$4.trad +
-         "L" + etiqact2 + ":\n";
+         "L" + to_string(etiqact2) + ":\n";
 }; 
 
 Ip: elsetok I fi {
@@ -205,15 +203,15 @@ It: dosp Type {
     | {
         $$.trad =""; 
         $$.tipo = ENTERO;
-        $$tam = 1;
+        $$.tam = 1;
 
     }
 
 Ifa: iftok E{
     int etiq = nuevaEtiqueta();
-    $$.trad = "mov " + $2.dir + " A\n" + "jz" + "L" + etiq + "\n";
+    $$.trad = "mov " + to_string($2.dir) + " A\n" + "jz" + "L" + to_string(etiq) + "\n";
     $$.dir = $2.dir;
-    $$.atributos.etiqueta = "L" + etiq + ":\n";
+    $$.atributos.etiqueta = "L" + to_string(etiq) + ":\n";
 
     }
     | {
@@ -223,37 +221,39 @@ Ifa: iftok E{
     }
 
 
-E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
-            if($2.lexema == "-") {$$.trad == "sub";}} T {
+E: E opas {if(strcmp($2.lexema, "+") ){$$.trad = "add"; }
+            if(strcmp($2.lexema ,"-")) {$$.trad == "sub";}} T {
+    int tmp;
     tmp = nuevaTemp($1.lexema, $1.fila, $1.col);
     $$.dir = tmp; 
     if($1.tipo == ENTERO && $4.tipo == ENTERO ){
-        $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A" + $3.trad +"i " + $4.dir + "mov A " + tmp; 
+        $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A" + $3.trad +"i " + to_string($4.dir) + "mov A " + to_string(tmp); 
         $$.tipo = ENTERO;
         $$.atributos.tipo = "int"; 
     }
-    else if($1.tipo == REAL && &4.tipo == ENTERO){
+    else if($1.tipo == REAL && $4.tipo == ENTERO){
+        int tmpcp; 
         tmpcp = nuevaTemp($1.lexema, $1.fila, $1.col);
-        $$.trad = $1.trad + $4.trad + "mov " + $4.dir + " A\n"+"itor\n" + "mov A " + tmpcp + "\n" 
-        + "mov " + $1.dir + " A" + "\n" + $3.trad + "r " + tmpcp + "\nmov A " + tmp; 
+        $$.trad = $1.trad + $4.trad + "mov " + to_string($4.dir) + " A\n"+"itor\n" + "mov A " + to_string(tmpcp) + "\n" 
+        + "mov " + to_string($1.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp); 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float"; 
-    }else if ($1.tipo == REAL && &4.tipo == REAL){
-        $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A\n" + $3.trad + "r " + $4.dir + "\nmov A " + tmp; 
+    }else if ($1.tipo == REAL && $4.tipo == REAL){
+        $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n" + $3.trad + "r " + to_string($4.dir) + "\nmov A " + to_string(tmp); 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float";  
     }
     }
-    | opas {if($1.lexema == "+" ){$$.trad = "add"; }
-            if($1.lexema == "-") {$$.trad == "sub";}} T {
+    | opas {if( strcmp($1.lexema,"+") ){$$.trad = "add"; }
+            if(strcmp( $1.lexema ,"-")) {$$.trad == "sub";}} T {
 
-        tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
+        int tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
         if($3.tipo == ENTERO){
-            $$.trad = $2.trad + "i " + $3.dir+ "mov A "  + tmp; 
+            $$.trad = $2.trad + "i " + to_string($3.dir)+ "mov A "  + to_string(tmp); 
             $$.tipo = ENTERO; 
             $$.atributos.tipo == "int";  
         }else if($3.tipo == REAL ){
-            $$.trad = $2.trad + "r " + $3.dir+ "mov A "  + tmp;  
+            $$.trad = $2.trad + "r " + to_string($3.dir)+ "mov A "  + to_string(tmp);  
             $$.tipo = REAL; 
             $$.atributos.tipo = "float"; 
         }
@@ -264,25 +264,25 @@ E: E opas {if($2.lexema == "+" ){$$.trad = "add"; }
         $$.trad = $1.trad; 
     };
 
-T: T opmd {if($2.lexema=="*"){$$.trad = "mul"; }
-           if($2.lexema == "/"){$$.trad = "div";}} F 
+T: T opmd {if(strcmp($2.lexema,"*")){$$.trad = "mul"; }
+           if(strcmp($2.lexema ,"/")){$$.trad = "div";}} F 
             {
-        tmp = nuevaTemp($1.lexema, $1.fila, $1.col);
+        int tmp = nuevaTemp($1.lexema, $1.fila, $1.col);
         $$.dir = tmp; 
         if($1.tipo == ENTERO && $4.tipo == ENTERO ){
-            $$.trad = $1.trad + $4.trad + "mov " + $1.dir + " A" + $3.trad +"i " + $4.dir + "mov A " + tmp; 
+            $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A" + $3.trad +"i " + to_string($4.dir) + "mov A " + to_string(tmp); 
             $$.tipo = ENTERO;
             $$.atributos.tipo = "int"; 
         }
         else if($1.tipo == REAL && $4.tipo == ENTERO){
             
             int tmpcp = nuevaTemp($1.lexema, $1.fila, $1.col);
-            $$.trad = $1.trad + $4.trad + "mov " + to_string($4.dir) + " A\n"+"itor\n" + "mov A " +- to_string(tmpcp) + "\n" 
+            $$.trad = $1.trad + $4.trad + "mov " + to_string($4.dir) + " A\n"+"itor\n" + "mov A " + to_string(tmpcp) + "\n" 
             + "mov " + to_string($1.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp); 
             $$.tipo = REAL; 
             $$.atributos.tipo = "float"; 
         }else if ($1.tipo == REAL && $4.tipo == REAL){
-            $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n" + $3.trad + "r " + $4.dir + "\nmov A " + tmp; 
+            $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n" + $3.trad + "r " + to_string($4.dir) + "\nmov A " + to_string(tmp); 
             $$.tipo = REAL; 
             $$.atributos.tipo = "float";  
         }
@@ -296,14 +296,15 @@ T: T opmd {if($2.lexema=="*"){$$.trad = "mul"; }
 F: numint {$$.tipo = ENTERO; 
         $$.atributos.tipo = "int"; 
         int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
-        $$.trad = "mov #" + $1.lexema +  temp + "\n"; 
+        $$.trad = "mov #" + string($1.lexema) +  to_string(temp) + "\n"; 
         $$.dir = temp; 
         }
 
     | numreal {
         $$.tipo = REAL; 
         $$.atributos.tipo = "real"; 
-        $$.trad = "mov $" + $1.lexema +  temp + "\n";
+        int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+        $$.trad = "mov $" + string($1.lexema) +  to_string(temp) + "\n";
         $$.dir = temp; 
 
     }
@@ -327,16 +328,16 @@ Ref: id{
         if($$.tipo == REAL) $$.atributos.tipo = "float"; 
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col );
         $$.dir = tmp;
-        $$.trad = "mov " + tsActual->searchSymb($1.lexema)->dir + " " + tmp + "\n";
+        $$.trad = "mov " + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
         
     }
 
     | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col); 
         if(tsActual->searchSymb($1.lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col); 
-     } cori {$$.tam = ttactual->tipos[$1.tipo].tam; $$.tipo == ttactual->tipos[$1.tipo].tipobase;  $$.atributos.dbase = $1.atributos.dir; tmp= nuevaTemp($1.lexema, $1.fila, $1.columna); $$.trad= "mov #0 " + tmp + "\n"; $$.dir= tmp;} LExpr {if($2.tipo != ENTERO )errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);} cord{
+     } cori {$$.tam = ttActual->tipos[$1.tipo].tamano; $$.tipo == ttActual->tipos[$1.tipo].tipoBase;  $$.atributos.dbase = $1.dir; int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); $$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;} LExpr {if($2.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);} cord{
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
         $$.dir = tmp; 
-        $$.trad = $5.trad + "mov" + $5.dir + " A\n" + "muli" + "#" + $5.tam + "\naddi #" + $5.dbase + "\n" + "mov @A" + tmp; 
+        $$.trad = $5.trad + "mov" + to_string($5.dir) + " A\n" + "muli" + "#" + to_string($5.tam) + "\naddi #" + to_string($5.atributos.dbase) + "\n" + "mov @A" + to_string(tmp); 
         $$.tipo = $5.tipo; 
    }; 
 
@@ -346,7 +347,7 @@ LExpr: LExpr coma E{
         $$.atributos.dbase = $0.atributos.dbase; 
         int tmp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.dir = tmp;
-        $$.trad = $0.trad + $3.trad + "mov " + $0.dir + " A\n" + "muli" + "#" + $0.tam + "\naddi " + $3.dir  + "\n" + "mov A " + tmp; 
+        $$.trad = $0.trad + $3.trad + "mov " + to_string($0.dir) + " A\n" + "muli" + "#" + to_string($0.tam) + "\naddi " + to_string( $3.dir)  + "\n" + "mov A " + to_string(tmp); 
     }
     | E {
         if($1.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$1.lexema,$1.fila,$1.col);
@@ -398,9 +399,8 @@ int nuevaEtiqueta(){
     return mietiquetaact; 
 }
 
-
 /// ---------- Errores semánticos ---------------------------------
-void errorSemantico(int nerror,int fila,int columna,const char *s)
+void errorSemantico(int nerror,const char *s,int fila,int columna)
 {
     fprintf(stderr,"Error semantico (%d,%d): ",fila,columna);
     switch (nerror) {

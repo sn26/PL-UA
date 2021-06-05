@@ -1,0 +1,24 @@
+fn mat2()
+
+  var a:array int 3,3,4;
+  var n;
+
+  let n = 0;
+  for i= 0:2
+    for j=0:2
+      for k=000:00003
+       blq
+        let a[i,j,k] = n;
+        let n = n+1
+       fblq;
+
+  let n = 0;
+  for i=100:102
+    for j=0:2
+      for k=100000:100003
+        let n = n+a[i-100,j,k-100000];
+
+  print n /* Salida: 630 */
+
+endfn
+

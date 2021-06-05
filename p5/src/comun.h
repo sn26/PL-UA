@@ -79,7 +79,7 @@ const int ERRLEXICO=1,
           ERR_MAXTEMP=14;
 
 
-void errorSemantico(int nerror,int fila,int columna,const char *s);
+void errorSemantico(int nerror,const char *lexema,int fila,int columna);
 void msgError(int nerror,int nlin,int ncol,const char *s);
 
 /*
