@@ -94,21 +94,21 @@ Type: Stype {
     
     }
     | arraytok Stype Dim {
-        $$.tam = $2.tam * $4.tam; 
-        $$.tipo = ttActual->nuevoTipoArray($4.tam , $4.tipo);
+        $$.tam = $2.tam * $3.tam; 
+        $$.tipo = ttActual->nuevoTipoArray($$.tam , $3.tipo);
         
         cout<<$$.tam<<endl;
     };
 
-Dim: numint coma {$$.tipo = $0.tipo; } Dim {
+Dim: numint coma {$$.tipo = $-2.tipo; } Dim {
         $$.tam= $1.tam * $4.tam;
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $4.tipo); 
         
         cout<<$$.tam<<endl;
     }
     | numint{
-        $$.tam = $1.tam;
-        $$.tipo = ttActual->nuevoTipoArray($$.tam , $1.tipo); 
+        $$.tam = $0.tam;
+        $$.tipo = ttActual->nuevoTipoArray($$.tam , $0.tipo); 
     }; 
 
 Cod: Cod pyc I {
