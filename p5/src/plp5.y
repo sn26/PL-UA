@@ -94,20 +94,17 @@ Type: Stype {
     
     }
     | arraytok Stype Dim {
-        $$.tam = $2.tam * $3.tam; 
-        $$.tipo = ttActual->nuevoTipoArray($$.tam , $3.tipo);
-        
-        cout<<$$.tam<<endl;
+        $$.tam =  $3.tam; 
+        $$.tipo = $3.tipo;
     };
 
-Dim: numint coma {$$.tipo = $-2.tipo; } Dim {
-        $$.tam= $1.tam * $4.tam;
+Dim: numint coma {if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col ); $$.tipo = $0.tipo; } Dim {
+        $$.tam= $1.numint * $4.tam;
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $4.tipo); 
-        
-        cout<<$$.tam<<endl;
     }
     | numint{
-        $$.tam = $0.tam;
+        if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col); 
+        $$.tam = $1.numint;
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $0.tipo); 
     }; 
 
@@ -172,7 +169,7 @@ I: Blq {
             $$.trad = "L" + to_string(etiqact1) + ":\n mov " + $5.lexema + " " + to_string(var1) + "\n" +  "mov " + to_string(var1) + " A\n" + $8.trad + " #1\n" + "mov A" + to_string(var1) + "\n subi" + " #"+$7.lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
             tsActual = tsActual->padre;
     }
-    | iftok E I Ip {
+    | iftok E {if($2.tipo!=ENTERO) errorSemantico(ERR_IFWHILE, $1.lexema, $1.fila, $1.col);} I Ip {
         int etiqact1 = nuevaEtiqueta(); 
         int etiqact2 = nuevaEtiqueta();
         $$.trad = $2.trad + 

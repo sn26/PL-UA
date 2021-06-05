@@ -1,1 +1,1 @@
-Error sintactico (15,1): en 'endfn'
+Error semantico (12,3): la expresion del 'if' debe ser de tipo entero

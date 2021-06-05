@@ -1,1 +1,1 @@
-Error sintactico (11,1): en 'endfn'
+Error semantico (6,7): la variable 'c' ya no cabe en memoria
