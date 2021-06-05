@@ -49,6 +49,7 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 ":"                 {return ret(dosp , DOSP); }
 "="                 {return ret(asig ,ASIG); }
 ";"                 {return ret(pyc , PYC);}
+","                 {return ret(coma, COMA);}
 "-"                 {return ret(opas , OPAS); }
 "+"                 {return ret(opas , OPAS ); }
 "*"                 {return ret(opmd , OPMD); }

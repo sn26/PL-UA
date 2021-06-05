@@ -1,9 +1,0 @@
-void main_f1 ()
-{
-int a_main_f1; a_main_f1 = 7  ;
- }
- void main ()
-{
-printInt(88  );
- }
- 

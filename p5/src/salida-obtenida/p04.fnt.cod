@@ -1,0 +1,13 @@
+L8:
+mov 0 16003
+mov16003 0
+rdi 16004mov 0 16007
+mov16007 0
+L6:
+mov 0 16008
+mov 0 16009
+mov 16008 Aaddi 16009mov A 16010mov 16010 A
+jz L7
+addjmp L6
+L7:
+wrr 16059 wrl

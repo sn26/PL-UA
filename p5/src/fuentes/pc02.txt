@@ -1,8 +1,0 @@
-fn main()  /* funcion 
-             principal * /
-
-  print 88
-endfn
-
-
-// Error lexico: fin de fichero inesperado

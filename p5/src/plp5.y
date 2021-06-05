@@ -46,15 +46,14 @@ extern FILE *yyin;
 
 
 int yyerror(char *s);
-const int ERRYADECL=1,ERRNODECL=2,ERRVOID=3,ERRNOSIMPLE=4,ERRNOENTERO=5;
-void errorSemantico(int nerror,const char *lexema,int fila,int columna);
+void errorSemantico(int nerror,char *lexema,int fila,int columna);
 int mietiquetaact = 0;
 int nuevaEtiqueta();
 TablaSimbolos *tsActual = new TablaSimbolos(NULL); 
 TablaTipos *ttActual = new TablaTipos(); 
 string tipoMayus(string tipo);
 string tipoShake(string  type1,  string type2);
-int parserTipo(string tipo , char * lexema, int fila, int columna  );
+//  int parserTipo(string tipo , char * lexema, int fila, int columna  );
 int ctemp = 16000;
 int cvar = 0;  
 int nuevaTemp(char *lexema, int fila, int columna);
@@ -119,8 +118,8 @@ I: Blq {
     $$.atributos.tipo = $1.atributos.tipo; 
     $$.tipo = $1.tipo;
     }
-    | let Ref asig {if($2.tipo == ARRAY) errorSemantico(ERR_FALTAN,$2.lexema,$2.fila,$2.col); } E Ifa {
-
+    | let Ref asig E Ifa {
+        
         int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.trad = 
         $5.trad +   
@@ -135,7 +134,7 @@ I: Blq {
         simb1.tipo = $3.tipo;
         simb1.dir = $2.dir;
         simb1.tam = $3.tam;
-        if(!tsActual->newSymb(simb1))  errorSemantico(ERRYADECL,$2.lexema,$2.fila,$2.col);
+        if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,$2.lexema,$2.fila,$2.col);
         $$.trad = ""; 
         $$.tipo = $3.tipo; 
         $$.dir = $2.dir; 
@@ -188,10 +187,11 @@ Ip: elsetok I fi {
         $$.trad = ""; 
     }; 
 
-Blq: blq Cod fblq {
-    tsActual = new TablaSimbolos(tsActual); 
+Blq: blq {tsActual = new TablaSimbolos(tsActual); } Cod {tsActual = tsActual->getPadre();}fblq {
+    
     $$.trad = $2.trad;
-    tsActual = tsActual->padre;
+
+    
 }; 
 
 
@@ -322,7 +322,11 @@ F: numint {$$.tipo = ENTERO;
     }; 
 
 Ref: id{ 
-        if( tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col);
+       
+        if( tsActual->searchSymb($1.lexema) == NULL) {
+            //cout<<$1.lexema<<endl;
+            errorSemantico(ERR_NODECL,$1.lexema,$1.fila,$1.col);
+        }
         $$.tipo = tsActual->searchSymb($1.lexema)->tipo;
         if($$.tipo == ENTERO) $$.atributos.tipo = "int";
         if($$.tipo == REAL) $$.atributos.tipo = "float"; 
@@ -332,7 +336,7 @@ Ref: id{
         
     }
 
-    | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERRNODECL,$1.lexema,$1.fila,$1.col); 
+    | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERR_NODECL,$1.lexema,$1.fila,$1.col); 
         if(tsActual->searchSymb($1.lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col); 
      } cori {$$.tam = ttActual->tipos[$1.tipo].tamano; $$.tipo == ttActual->tipos[$1.tipo].tipoBase;  $$.atributos.dbase = $1.dir; int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); $$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;} LExpr {if($2.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);} cord{
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
@@ -367,14 +371,14 @@ string tipoMayus(string tipo){
     if(tipo == "int") return "Int"; 
     return "Float"; 
 }
-
+/*
 int parserTipo(string tipo , char * lexema, int fila, int columna  ){
     if (tipo =="int"  ) return ENTERO; 
     if (tipo == "float"  ) return REAL; 
     
     if(tipo == "void" )errorSemantico(ERRVOID,lexema,fila,columna);
     return -1; 
-}
+}*/
 
 string tipoShake(string type1,  string type2){
     if(type1 == "float" || type2 == "float" ) return "float"; 
@@ -400,9 +404,11 @@ int nuevaEtiqueta(){
 }
 
 /// ---------- Errores semánticos ---------------------------------
-void errorSemantico(int nerror,const char *s,int fila,int columna)
+void errorSemantico(int nerror,char *s,int fila,int columna)
 {
     fprintf(stderr,"Error semantico (%d,%d): ",fila,columna);
+    //cout<<ERR_NODECL<<endl;
+    //cout<<nerror<<endl;
     switch (nerror) {
         case ERR_YADECL: fprintf(stderr,"variable '%s' ya declarada\n",s);
                // fila,columna de la variable

@@ -1,4 +1,0 @@
-fn main()  -/* funcion principal */>     /* Error sintactico (1,12): encontrado '-', esperaba 'fn' -> 'let' 'print' 'if' 'blq' */
-
-  print 88
-endfn
