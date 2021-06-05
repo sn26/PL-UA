@@ -53,11 +53,11 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "+"                 {return ret(opas , OPAS ); }
 "*"                 {return ret(opmd , OPMD); }
 "/"                 {return ret(opmd , OPMD ); }
-"array"             {return ret(array, ARRAYT);}
+"array"             {return ret(arraytok, ARRAYT);}
 "var"               {return ret(var, VAR); }
-"read"              {return ret(read, READ ); }
-"while"             {return ret(while, WHILE); }
-"for"               {return ret(for,FOR);}
+"read"              {return ret(readtok, READ ); }
+"while"             {return ret(whiletok, WHILE); }
+"for"               {return ret(fortok,FOR);}
 "coma"              {return ret(coma, COMA); }
 "cori"              {return ret(cori, CORI); }
 "cord"              {return ret(cord, CORD);}

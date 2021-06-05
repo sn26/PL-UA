@@ -6,11 +6,12 @@ struct Atributos{
 	string tipo; 
 	string asig;
 	string etiqueta; //Etiqueta heredada  
+	unsigned dbase; //Base heredada
 };
 typedef struct {
    char *lexema;
    int fila,col;
-   int tipo;
+   unsigned tipo;
    string trad;
    int numint; 
    Atributos atributos; 
