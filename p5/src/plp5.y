@@ -58,7 +58,9 @@ int ctemp = 16000;
 int cvar = 0;  
 int nuevaTemp(char *lexema, int fila, int columna);
 int nuevaVar(unsigned tam ,char *lexema, int fila, int columna);
+bool esArray(unsigned tipo); 
 
+//int devuelveDim(unsigned tipo);
 %}
 
 %% 
@@ -96,6 +98,7 @@ Type: Stype {
     | arraytok Stype Dim {
         $$.tam =  $3.tam; 
         $$.tipo = $3.tipo;
+        
     };
 
 Dim: numint coma {if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col ); $$.tipo = $0.tipo; } Dim {
@@ -340,17 +343,23 @@ Ref: id{
     }
 
     | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERR_NODECL,$1.lexema,$1.fila,$1.col); 
-        if(tsActual->searchSymb($1.lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col); 
-     } cori {$$.tam = ttActual->tipos[$1.tipo].tamano; $$.tipo == ttActual->tipos[$1.tipo].tipoBase;  $$.atributos.dbase = $1.dir; int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); $$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;} LExpr {if($2.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);} cord{
+        if(!esArray(tsActual->searchSymb($1.lexema)->tipo)) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col);
+        $$.tipo = tsActual->searchSymb($1.lexema)->tipo; 
+     } cori {$$.tam = ttActual->tipos[$2.tipo].tamano; 
+    $$.tipo = ttActual->tipos[$2.tipo].tipoBase;
+      $$.atributos.dbase = $1.dir; int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); $$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;} LExpr  cord {if(esArray($6.tipo)) errorSemantico(ERR_FALTAN, $6.lexema, $6.fila, $6.col); }{
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
         $$.dir = tmp; 
         $$.trad = $5.trad + "mov" + to_string($5.dir) + " A\n" + "muli" + "#" + to_string($5.tam) + "\naddi #" + to_string($5.atributos.dbase) + "\n" + "mov @A" + to_string(tmp); 
         $$.tipo = $5.tipo; 
    }; 
 
-LExpr: LExpr coma E{
-        if($3.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$3.lexema,$3.fila,$3.col);
-        $$.tipo = $0.tipo; 
+LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo))errorSemantico(ERR_SOBRAN, $2.lexema, $2.fila, $2.col );} E{
+        
+        if($4.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$3.lexema,$3.fila,$3.col);
+        
+        $$.tipo = ttActual->tipos[$1.tipo].tipoBase;
+        
         $$.atributos.dbase = $0.atributos.dbase; 
         int tmp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.dir = tmp;
@@ -359,12 +368,25 @@ LExpr: LExpr coma E{
     | E {
         if($1.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$1.lexema,$1.fila,$1.col);
         $$.trad = $1.trad; 
-        $$.tipo = $1.tipo; 
+        $$.tipo = $0.tipo; 
+         
         $$.dir = $1.dir; 
     };
 
 %%
 
+bool esArray(unsigned tipo ){
+    if(tipo != ENTERO  && tipo != REAL ) return true; 
+    return false;
+}
+
+/*
+//Funcion para ir bajando en la tabla de tipos hasta conseguir el total de dimensiones
+int devuelveDim(unsigned tipo){
+    int contador =0;
+    //int tipo == ttActual->tipos[tipo].tipoBase; 
+    return 0; 
+}*/
 
 
 

@@ -59,9 +59,8 @@ void msgError(int nerror, int nlin,int ncol,const char *s);
 "read"              {return ret(readtok, READ ); }
 "while"             {return ret(whiletok, WHILE); }
 "for"               {return ret(fortok,FOR);}
-"coma"              {return ret(coma, COMA); }
-"cori"              {return ret(cori, CORI); }
-"cord"              {return ret(cord, CORD);}
+"["              {return ret(cori, CORI); }
+"]"              {return ret(cord, CORD);}
 "fn"                {return ret(fn ,FN ); }
 "endfn"             {return ret(endfn , ENDFN); }
 "int"               {return ret(inttok , INT ); }

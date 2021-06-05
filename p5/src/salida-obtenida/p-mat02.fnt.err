@@ -1,1 +1,1 @@
-Error lexico (11,14): caracter '[' incorrecto
+Error semantico (11,15): variable 'i' no declarada

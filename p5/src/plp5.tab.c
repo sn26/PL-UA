@@ -98,9 +98,11 @@ int ctemp = 16000;
 int cvar = 0;  
 int nuevaTemp(char *lexema, int fila, int columna);
 int nuevaVar(unsigned tam ,char *lexema, int fila, int columna);
+bool esArray(unsigned tipo); 
 
+//int devuelveDim(unsigned tipo);
 
-#line 104 "plp5.tab.c"
+#line 106 "plp5.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -499,16 +501,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   84
+#define YYLAST   86
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  33
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  31
+#define YYNNTS  32
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  53
+#define YYNRULES  54
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  95
+#define YYNSTATES  96
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   287
@@ -558,12 +560,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    66,    66,    74,    79,    84,    90,    96,   101,   101,
-     105,   111,   114,   118,   123,   133,   146,   146,   150,   150,
-     154,   163,   163,   163,   172,   172,   186,   189,   193,   193,
-     193,   201,   206,   213,   220,   227,   227,   250,   250,   264,
-     270,   270,   293,   299,   306,   314,   320,   327,   342,   344,
-     344,   342,   351,   359
+       0,    68,    68,    76,    81,    86,    92,    98,   104,   104,
+     108,   114,   117,   121,   126,   136,   149,   149,   153,   153,
+     157,   166,   166,   166,   175,   175,   189,   192,   196,   196,
+     196,   204,   209,   216,   223,   230,   230,   253,   253,   267,
+     273,   273,   296,   302,   309,   317,   323,   330,   345,   348,
+     350,   345,   357,   357,   368
 };
 #endif
 
@@ -578,7 +580,8 @@ static const char *const yytname[] =
   "elsetok", "fi", "print", "blq", "fblq", "id", "numint", "numreal",
   "eof", "$accept", "S", "Fun", "Stype", "Type", "Dim", "@1", "Cod", "I",
   "@2", "@3", "$@4", "@5", "@6", "Ip", "Blq", "@7", "$@8", "It", "Ifa",
-  "E", "@9", "@10", "T", "@11", "F", "Ref", "@12", "@13", "$@14", "LExpr", YY_NULLPTR
+  "E", "@9", "@10", "T", "@11", "F", "Ref", "@12", "@13", "$@14", "LExpr",
+  "@15", YY_NULLPTR
 };
 #endif
 
@@ -608,16 +611,16 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -5,    -8,    40,   -37,    42,   -37,    36,     9,   -37,     8,
+      -5,    -8,    40,   -37,    46,   -37,    47,     9,   -37,     8,
       33,    34,    33,     8,     8,   -37,    26,   -37,   -37,    35,
-       8,   -37,    52,   -37,   -37,     0,    43,   -37,   -37,   -37,
-      46,    47,    49,    49,     9,     9,   -37,    53,    30,    -1,
+       8,   -37,    57,   -37,   -37,     0,    48,   -37,   -37,   -37,
+      54,    55,    45,    45,     9,     9,   -37,    56,    30,    -1,
       65,   -37,   -37,   -37,   -37,    23,   -37,     8,     9,   -37,
-      54,   -37,    41,   -37,    43,   -37,    -1,    -1,    31,   -37,
-     -37,   -37,   -37,   -12,    32,    45,    57,     8,    43,   -37,
-      44,     8,   -37,     9,   -37,   -37,   -37,    48,    49,    68,
-      69,   -37,    49,    55,   -37,     8,    73,   -37,   -37,     9,
-      49,   -37,    44,   -37,   -37
+      58,   -37,    41,   -37,    48,   -37,    -1,    -1,    32,   -37,
+     -37,   -37,   -37,   -12,    31,    49,    59,     8,    48,   -37,
+      50,     8,   -37,     9,   -37,   -37,   -37,    51,    45,    44,
+      67,   -37,    45,    60,   -37,   -37,   -37,   -37,   -37,     9,
+     -37,     8,    50,   -37,    45,   -37
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -632,18 +635,18 @@ static const yytype_int8 yydefact[] =
        0,    35,    20,    40,    19,     0,    15,     0,     0,    17,
       29,    11,     0,    45,    38,    49,     0,     0,     0,     4,
        5,     6,    31,    34,     0,     0,     0,     0,    36,    41,
-       0,     0,    14,     0,    27,    25,    30,     0,    53,    50,
-      10,     7,    33,     0,    22,     0,     0,     8,    26,     0,
-      52,    51,     0,    23,     9
+       0,     0,    14,     0,    27,    25,    30,     0,    54,     0,
+      10,     7,    33,     0,    22,    50,    52,     8,    26,     0,
+      51,     0,     0,    23,    53,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -37,   -37,   -37,    21,   -37,   -11,   -37,    50,   -23,   -37,
+     -37,   -37,   -37,    17,   -37,   -16,   -37,    52,   -23,   -37,
      -37,   -37,   -37,   -37,   -37,   -37,   -37,   -37,   -37,   -37,
-     -13,   -37,   -37,   -36,   -37,    25,    37,   -37,   -37,   -37,
-     -37
+     -13,   -37,   -37,   -36,   -37,    22,    37,   -37,   -37,   -37,
+     -37,   -37
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -651,8 +654,8 @@ static const yytype_int8 yydefgoto[] =
 {
       -1,     2,     3,    61,    62,    81,    92,    16,    17,    49,
       44,    19,    89,    48,    75,    18,    34,    65,    46,    72,
-      25,    56,    39,    26,    57,    27,    28,    40,    67,    86,
-      79
+      25,    56,    39,    26,    57,    27,    28,    40,    67,    90,
+      79,    91
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -664,11 +667,11 @@ static const yytype_int8 yytable[] =
       20,    71,    51,     1,     8,     9,    41,    10,    11,    20,
       68,     4,    12,    13,    21,    64,    14,    15,    22,    23,
       24,    12,    13,    58,    63,    14,    15,    22,    23,    24,
-       5,    35,    53,    59,    60,    36,    41,    29,     7,    31,
-      83,    59,    60,     6,    78,   -48,    73,    74,    82,    45,
-      43,    47,    22,    30,    37,    41,    93,    52,    55,    35,
-      77,    66,    90,    76,    80,    85,    87,    91,    84,    70,
-      88,    94,    69,     0,    50
+       5,    35,    53,    59,    60,    36,    41,    29,    85,    31,
+      83,    86,    59,    60,    78,    73,    74,     6,    82,     7,
+     -48,    41,    22,    30,    37,    43,    93,    45,    55,    47,
+      52,    66,    77,    35,    87,    70,    95,    76,    94,    69,
+      80,    84,     0,     0,     0,    88,    50
 };
 
 static const yytype_int8 yycheck[] =
@@ -677,11 +680,11 @@ static const yytype_int8 yycheck[] =
       11,    23,    35,    18,     5,     6,    16,     8,     9,    11,
       56,    29,    22,    23,    16,    48,    26,    27,    29,    30,
       31,    22,    23,    10,    47,    26,    27,    29,    30,    31,
-       0,    15,    12,    20,    21,    19,    16,    10,    12,    12,
-      73,    20,    21,    11,    67,     3,    24,    25,    71,    13,
-      17,    14,    29,    29,    29,    16,    89,    14,     3,    15,
-      13,    30,    85,    28,    30,     7,     7,     4,    30,    58,
-      25,    92,    57,    -1,    34
+       0,    15,    12,    20,    21,    19,    16,    10,     4,    12,
+      73,     7,    20,    21,    67,    24,    25,    11,    71,    12,
+       3,    16,    29,    29,    29,    17,    89,    13,     3,    14,
+      14,    30,    13,    15,     7,    58,    92,    28,    91,    57,
+      30,    30,    -1,    -1,    -1,    25,    34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -696,8 +699,8 @@ static const yytype_int8 yystos[] =
       40,    41,    14,    12,    56,     3,    54,    57,    10,    20,
       21,    36,    37,    53,    41,    50,    30,    61,    56,    58,
       36,    23,    52,    24,    25,    47,    28,    13,    53,    63,
-      30,    38,    53,    41,    30,     7,    62,     7,    25,    45,
-      53,     4,    39,    41,    38
+      30,    38,    53,    41,    30,     4,     7,     7,    25,    45,
+      62,    64,    39,    41,    53,    38
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -708,7 +711,7 @@ static const yytype_int8 yyr1[] =
       41,    44,    45,    41,    46,    41,    47,    47,    49,    50,
       48,    51,    51,    52,    52,    54,    53,    55,    53,    53,
       57,    56,    56,    58,    58,    58,    58,    59,    60,    61,
-      62,    59,    63,    63
+      62,    59,    64,    63,    63
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -719,7 +722,7 @@ static const yytype_int8 yyr2[] =
        3,     0,     0,     9,     0,     5,     3,     1,     0,     0,
        5,     2,     0,     2,     0,     0,     4,     0,     3,     1,
        0,     4,     1,     1,     1,     3,     1,     1,     0,     0,
-       0,     7,     3,     1
+       0,     7,     0,     4,     1
 };
 
 
@@ -1415,7 +1418,7 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 66 "plp5.y"
+#line 68 "plp5.y"
        { 
     /* Primero, comprobaremos que después del programa no hay ningún token más*/
     int tk = yylex(); 
@@ -1423,112 +1426,113 @@ yyreduce:
     yyval.trad = yyvsp[0].trad; 
     cout<<yyval.trad; 
 }
-#line 1427 "plp5.tab.c"
+#line 1430 "plp5.tab.c"
     break;
 
   case 3:
-#line 74 "plp5.y"
+#line 76 "plp5.y"
                               {
     int etiqact = nuevaEtiqueta(); 
     yyval.trad = "L" + to_string(etiqact) + ":\n"
     + yyvsp[-1].trad; 
 }
-#line 1437 "plp5.tab.c"
+#line 1440 "plp5.tab.c"
     break;
 
   case 4:
-#line 79 "plp5.y"
+#line 81 "plp5.y"
               {
         yyval.tipo = ENTERO; 
         yyval.atributos.tipo= "int"; 
         yyval.tam = 1; 
     }
-#line 1447 "plp5.tab.c"
+#line 1450 "plp5.tab.c"
     break;
 
   case 5:
-#line 84 "plp5.y"
+#line 86 "plp5.y"
            {
         yyval.tipo = REAL; 
         yyval.atributos.tipo = "float"; 
         yyval.tam = 1; 
     }
-#line 1457 "plp5.tab.c"
+#line 1460 "plp5.tab.c"
     break;
 
   case 6:
-#line 90 "plp5.y"
+#line 92 "plp5.y"
             {
     yyval.tipo = yyvsp[0].tipo; 
     yyval.atributos.tipo = yyvsp[0].atributos.tipo; 
     yyval.tam = yyvsp[0].tam; 
     
     }
-#line 1468 "plp5.tab.c"
+#line 1471 "plp5.tab.c"
     break;
 
   case 7:
-#line 96 "plp5.y"
+#line 98 "plp5.y"
                          {
         yyval.tam =  yyvsp[0].tam; 
         yyval.tipo = yyvsp[0].tipo;
+        
     }
-#line 1477 "plp5.tab.c"
+#line 1481 "plp5.tab.c"
     break;
 
   case 8:
-#line 101 "plp5.y"
+#line 104 "plp5.y"
                  {if(yyvsp[-1].numint == 0 ) errorSemantico(ERR_DIM, yyvsp[-1].lexema, yyvsp[-1].fila, yyvsp[-1].col ); yyval.tipo = yyvsp[-2].tipo; }
-#line 1483 "plp5.tab.c"
+#line 1487 "plp5.tab.c"
     break;
 
   case 9:
-#line 101 "plp5.y"
+#line 104 "plp5.y"
                                                                                                                      {
         yyval.tam= yyvsp[-3].numint * yyvsp[0].tam;
         yyval.tipo = ttActual->nuevoTipoArray(yyval.tam , yyvsp[0].tipo); 
     }
-#line 1492 "plp5.tab.c"
+#line 1496 "plp5.tab.c"
     break;
 
   case 10:
-#line 105 "plp5.y"
+#line 108 "plp5.y"
             {
         if(yyvsp[0].numint == 0 ) errorSemantico(ERR_DIM, yyvsp[0].lexema, yyvsp[0].fila, yyvsp[0].col); 
         yyval.tam = yyvsp[0].numint;
         yyval.tipo = ttActual->nuevoTipoArray(yyval.tam , yyvsp[-1].tipo); 
     }
-#line 1502 "plp5.tab.c"
+#line 1506 "plp5.tab.c"
     break;
 
   case 11:
-#line 111 "plp5.y"
+#line 114 "plp5.y"
                {
     yyval.trad = yyvsp[-2].trad + yyvsp[0].trad;
     }
-#line 1510 "plp5.tab.c"
+#line 1514 "plp5.tab.c"
     break;
 
   case 12:
-#line 114 "plp5.y"
+#line 117 "plp5.y"
         {
         yyval.trad = yyvsp[0].trad;
     }
-#line 1518 "plp5.tab.c"
+#line 1522 "plp5.tab.c"
     break;
 
   case 13:
-#line 118 "plp5.y"
+#line 121 "plp5.y"
        {
     yyval.trad = yyvsp[0].trad; 
     yyval.atributos.tipo = yyvsp[0].atributos.tipo; 
     yyval.tipo = yyvsp[0].tipo;
     }
-#line 1528 "plp5.tab.c"
+#line 1532 "plp5.tab.c"
     break;
 
   case 14:
-#line 123 "plp5.y"
+#line 126 "plp5.y"
                          {
         
         int temp = nuevaTemp(yyvsp[-4].lexema , yyvsp[-4].fila, yyvsp[-4].col); 
@@ -1539,11 +1543,11 @@ yyreduce:
         yyvsp[0].atributos.etiqueta;
         
     }
-#line 1543 "plp5.tab.c"
+#line 1547 "plp5.tab.c"
     break;
 
   case 15:
-#line 133 "plp5.y"
+#line 136 "plp5.y"
                 {
         struct Simbolo simb1; 
         simb1.nombre = yyvsp[-1].lexema;
@@ -1557,41 +1561,41 @@ yyreduce:
         yyval.dir = yyvsp[-1].dir; 
         yyval.tam = yyval.tam;
     }
-#line 1561 "plp5.tab.c"
+#line 1565 "plp5.tab.c"
     break;
 
   case 16:
-#line 146 "plp5.y"
+#line 149 "plp5.y"
               {if(yyvsp[0].tipo == REAL ) yyval.trad = "wri "; 
                 if(yyvsp[0].tipo == ENTERO ) yyval.trad = "wrr ";   }
-#line 1568 "plp5.tab.c"
+#line 1572 "plp5.tab.c"
     break;
 
   case 17:
-#line 147 "plp5.y"
+#line 150 "plp5.y"
                                                              {
         yyval.trad = yyvsp[0].trad  + to_string( yyvsp[-1].dir) + " wrl\n";   
     }
-#line 1576 "plp5.tab.c"
+#line 1580 "plp5.tab.c"
     break;
 
   case 18:
-#line 150 "plp5.y"
+#line 153 "plp5.y"
                   {if(yyvsp[0].tipo == ENTERO ) yyval.trad = "rdi "; 
                 if(yyvsp[0].tipo == REAL) yyval.trad = "rdr ";  }
-#line 1583 "plp5.tab.c"
+#line 1587 "plp5.tab.c"
     break;
 
   case 19:
-#line 151 "plp5.y"
+#line 154 "plp5.y"
                                                          {
         yyval.trad = yyvsp[0].trad + to_string(yyvsp[-1].dir); 
     }
-#line 1591 "plp5.tab.c"
+#line 1595 "plp5.tab.c"
     break;
 
   case 20:
-#line 154 "plp5.y"
+#line 157 "plp5.y"
                    {
         int etiqact1 = nuevaEtiqueta();
         int etiqact2 = nuevaEtiqueta(); 
@@ -1601,42 +1605,42 @@ yyreduce:
         yyvsp[0].trad + "jmp L" + to_string(etiqact1) + "\n" + 
         "L" + to_string(etiqact2) + ":\n";   
     }
-#line 1605 "plp5.tab.c"
+#line 1609 "plp5.tab.c"
     break;
 
   case 21:
-#line 163 "plp5.y"
+#line 166 "plp5.y"
              {tsActual = new TablaSimbolos(tsActual); }
-#line 1611 "plp5.tab.c"
+#line 1615 "plp5.tab.c"
     break;
 
   case 22:
-#line 163 "plp5.y"
+#line 166 "plp5.y"
                                                                                    {
          if(yyvsp[-3].numint > yyvsp[-1].numint) yyval.trad = "subi "; 
         if(yyvsp[-3].numint < yyvsp[-1].numint) yyval.trad = "addi "; }
-#line 1619 "plp5.tab.c"
+#line 1623 "plp5.tab.c"
     break;
 
   case 23:
-#line 166 "plp5.y"
+#line 169 "plp5.y"
           {  
             int etiqact1 = nuevaEtiqueta(); 
             int var1 = nuevaVar(1,yyvsp[-6].lexema , yyvsp[-6].fila , yyvsp[-6].col ); 
             yyval.trad = "L" + to_string(etiqact1) + ":\n mov " + yyvsp[-4].lexema + " " + to_string(var1) + "\n" +  "mov " + to_string(var1) + " A\n" + yyvsp[-1].trad + " #1\n" + "mov A" + to_string(var1) + "\n subi" + " #"+yyvsp[-2].lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
             tsActual = tsActual->padre;
     }
-#line 1630 "plp5.tab.c"
+#line 1634 "plp5.tab.c"
     break;
 
   case 24:
-#line 172 "plp5.y"
+#line 175 "plp5.y"
               {if(yyvsp[0].tipo!=ENTERO) errorSemantico(ERR_IFWHILE, yyvsp[-1].lexema, yyvsp[-1].fila, yyvsp[-1].col);}
-#line 1636 "plp5.tab.c"
+#line 1640 "plp5.tab.c"
     break;
 
   case 25:
-#line 172 "plp5.y"
+#line 175 "plp5.y"
                                                                                                   {
         int etiqact1 = nuevaEtiqueta(); 
         int etiqact2 = nuevaEtiqueta();
@@ -1650,71 +1654,71 @@ yyreduce:
          +yyvsp[-1].trad +
          "L" + to_string(etiqact2) + ":\n";
 }
-#line 1654 "plp5.tab.c"
+#line 1658 "plp5.tab.c"
     break;
 
   case 26:
-#line 186 "plp5.y"
+#line 189 "plp5.y"
                  {
     yyval.trad = yyvsp[-1].trad; 
     }
-#line 1662 "plp5.tab.c"
+#line 1666 "plp5.tab.c"
     break;
 
   case 27:
-#line 189 "plp5.y"
+#line 192 "plp5.y"
          {
         yyval.trad = ""; 
     }
-#line 1670 "plp5.tab.c"
+#line 1674 "plp5.tab.c"
     break;
 
   case 28:
-#line 193 "plp5.y"
+#line 196 "plp5.y"
          {tsActual = new TablaSimbolos(tsActual); }
-#line 1676 "plp5.tab.c"
+#line 1680 "plp5.tab.c"
     break;
 
   case 29:
-#line 193 "plp5.y"
+#line 196 "plp5.y"
                                                         {tsActual = tsActual->getPadre();}
-#line 1682 "plp5.tab.c"
+#line 1686 "plp5.tab.c"
     break;
 
   case 30:
-#line 193 "plp5.y"
+#line 196 "plp5.y"
                                                                                                {
     
     yyval.trad = yyvsp[-3].trad;
 
     
 }
-#line 1693 "plp5.tab.c"
+#line 1697 "plp5.tab.c"
     break;
 
   case 31:
-#line 201 "plp5.y"
+#line 204 "plp5.y"
               {
     yyval.tipo = yyvsp[0].tipo; 
     yyval.trad = ""; 
     yyval.tam  = yyvsp[0].tam; 
     }
-#line 1703 "plp5.tab.c"
+#line 1707 "plp5.tab.c"
     break;
 
   case 32:
-#line 206 "plp5.y"
+#line 209 "plp5.y"
       {
         yyval.trad =""; 
         yyval.tipo = ENTERO;
         yyval.tam = 1;
 
     }
-#line 1714 "plp5.tab.c"
+#line 1718 "plp5.tab.c"
     break;
 
   case 33:
-#line 213 "plp5.y"
+#line 216 "plp5.y"
             {
     int etiq = nuevaEtiqueta();
     yyval.trad = "mov " + to_string(yyvsp[0].dir) + " A\n" + "jz" + "L" + to_string(etiq) + "\n";
@@ -1722,28 +1726,28 @@ yyreduce:
     yyval.atributos.etiqueta = "L" + to_string(etiq) + ":\n";
 
     }
-#line 1726 "plp5.tab.c"
+#line 1730 "plp5.tab.c"
     break;
 
   case 34:
-#line 220 "plp5.y"
+#line 223 "plp5.y"
       {
         yyval.trad ="";
         yyval.atributos.etiqueta = ""; 
 
     }
-#line 1736 "plp5.tab.c"
+#line 1740 "plp5.tab.c"
     break;
 
   case 35:
-#line 227 "plp5.y"
+#line 230 "plp5.y"
           {if(strcmp(yyvsp[0].lexema, "+") ){yyval.trad = "add"; }
             if(strcmp(yyvsp[0].lexema ,"-")) {yyval.trad == "sub";}}
-#line 1743 "plp5.tab.c"
+#line 1747 "plp5.tab.c"
     break;
 
   case 36:
-#line 228 "plp5.y"
+#line 231 "plp5.y"
                                                               {
     int tmp;
     tmp = nuevaTemp(yyvsp[-3].lexema, yyvsp[-3].fila, yyvsp[-3].col);
@@ -1766,18 +1770,18 @@ yyreduce:
         yyval.atributos.tipo = "float";  
     }
     }
-#line 1770 "plp5.tab.c"
+#line 1774 "plp5.tab.c"
     break;
 
   case 37:
-#line 250 "plp5.y"
+#line 253 "plp5.y"
            {if( strcmp(yyvsp[0].lexema,"+") ){yyval.trad = "add"; }
             if(strcmp( yyvsp[0].lexema ,"-")) {yyval.trad == "sub";}}
-#line 1777 "plp5.tab.c"
+#line 1781 "plp5.tab.c"
     break;
 
   case 38:
-#line 251 "plp5.y"
+#line 254 "plp5.y"
                                                                {
 
         int tmp = nuevaTemp(yyvsp[-2].lexema, yyvsp[-2].fila, yyvsp[-2].col); 
@@ -1791,28 +1795,28 @@ yyreduce:
             yyval.atributos.tipo = "float"; 
         }
     }
-#line 1795 "plp5.tab.c"
+#line 1799 "plp5.tab.c"
     break;
 
   case 39:
-#line 264 "plp5.y"
+#line 267 "plp5.y"
         {
         yyval.atributos.tipo = yyvsp[0].atributos.tipo; 
         yyval.tipo = yyvsp[0].tipo; 
         yyval.trad = yyvsp[0].trad; 
     }
-#line 1805 "plp5.tab.c"
+#line 1809 "plp5.tab.c"
     break;
 
   case 40:
-#line 270 "plp5.y"
+#line 273 "plp5.y"
           {if(strcmp(yyvsp[0].lexema,"*")){yyval.trad = "mul"; }
            if(strcmp(yyvsp[0].lexema ,"/")){yyval.trad = "div";}}
-#line 1812 "plp5.tab.c"
+#line 1816 "plp5.tab.c"
     break;
 
   case 41:
-#line 272 "plp5.y"
+#line 275 "plp5.y"
             {
         int tmp = nuevaTemp(yyvsp[-3].lexema, yyvsp[-3].fila, yyvsp[-3].col);
         yyval.dir = tmp; 
@@ -1834,31 +1838,31 @@ yyreduce:
             yyval.atributos.tipo = "float";  
         }
     }
-#line 1838 "plp5.tab.c"
+#line 1842 "plp5.tab.c"
     break;
 
   case 42:
-#line 293 "plp5.y"
+#line 296 "plp5.y"
         {
         yyval.tipo = yyvsp[0].tipo;
         yyval.trad = yyvsp[0].trad;
     }
-#line 1847 "plp5.tab.c"
+#line 1851 "plp5.tab.c"
     break;
 
   case 43:
-#line 299 "plp5.y"
+#line 302 "plp5.y"
           {yyval.tipo = ENTERO; 
         yyval.atributos.tipo = "int"; 
         int temp = nuevaTemp(yyvsp[0].lexema , yyvsp[0].fila, yyvsp[0].col); 
         yyval.trad = "mov #" + string(yyvsp[0].lexema) +  to_string(temp) + "\n"; 
         yyval.dir = temp; 
         }
-#line 1858 "plp5.tab.c"
+#line 1862 "plp5.tab.c"
     break;
 
   case 44:
-#line 306 "plp5.y"
+#line 309 "plp5.y"
               {
         yyval.tipo = REAL; 
         yyval.atributos.tipo = "real"; 
@@ -1867,33 +1871,33 @@ yyreduce:
         yyval.dir = temp; 
 
     }
-#line 1871 "plp5.tab.c"
+#line 1875 "plp5.tab.c"
     break;
 
   case 45:
-#line 314 "plp5.y"
+#line 317 "plp5.y"
                   {
         yyval.tipo = yyvsp[-1].tipo; 
         yyval.atributos.tipo = yyvsp[-1].atributos.tipo; 
         yyval.trad = yyvsp[-1].trad; 
         yyval.dir = yyvsp[-1].dir; 
     }
-#line 1882 "plp5.tab.c"
+#line 1886 "plp5.tab.c"
     break;
 
   case 46:
-#line 320 "plp5.y"
+#line 323 "plp5.y"
           {
         yyval.tipo = yyvsp[0].tipo; 
         yyval.atributos = yyvsp[0].atributos; 
         yyval.trad = yyvsp[0].trad;
         yyval.dir = yyvsp[0].dir; 
     }
-#line 1893 "plp5.tab.c"
+#line 1897 "plp5.tab.c"
     break;
 
   case 47:
-#line 327 "plp5.y"
+#line 330 "plp5.y"
        { 
        
         if( tsActual->searchSymb(yyvsp[0].lexema) == NULL) {
@@ -1908,66 +1912,79 @@ yyreduce:
         yyval.trad = "mov " + to_string(tsActual->searchSymb(yyvsp[0].lexema)->dir) + " " + to_string(tmp) + "\n";
         
     }
-#line 1912 "plp5.tab.c"
+#line 1916 "plp5.tab.c"
     break;
 
   case 48:
-#line 342 "plp5.y"
+#line 345 "plp5.y"
          {if(tsActual->searchSymb(yyvsp[0].lexema) == NULL) errorSemantico(ERR_NODECL,yyvsp[0].lexema,yyvsp[0].fila,yyvsp[0].col); 
-        if(tsActual->searchSymb(yyvsp[0].lexema)->tipo != ARRAY) errorSemantico(ERR_SOBRAN,yyvsp[0].lexema,yyvsp[0].fila,yyvsp[0].col); 
+        if(!esArray(tsActual->searchSymb(yyvsp[0].lexema)->tipo)) errorSemantico(ERR_SOBRAN,yyvsp[0].lexema,yyvsp[0].fila,yyvsp[0].col);
+        yyval.tipo = tsActual->searchSymb(yyvsp[0].lexema)->tipo; 
      }
-#line 1920 "plp5.tab.c"
+#line 1925 "plp5.tab.c"
     break;
 
   case 49:
-#line 344 "plp5.y"
-            {yyval.tam = ttActual->tipos[yyvsp[-2].tipo].tamano; yyval.tipo == ttActual->tipos[yyvsp[-2].tipo].tipoBase;  yyval.atributos.dbase = yyvsp[-2].dir; int tmp= nuevaTemp(yyvsp[-2].lexema, yyvsp[-2].fila, yyvsp[-2].col); yyval.trad= "mov #0 " + to_string(tmp) + "\n"; yyval.dir= tmp;}
-#line 1926 "plp5.tab.c"
+#line 348 "plp5.y"
+            {yyval.tam = ttActual->tipos[yyvsp[-1].tipo].tamano; 
+    yyval.tipo = ttActual->tipos[yyvsp[-1].tipo].tipoBase;
+      yyval.atributos.dbase = yyvsp[-2].dir; int tmp= nuevaTemp(yyvsp[-2].lexema, yyvsp[-2].fila, yyvsp[-2].col); yyval.trad= "mov #0 " + to_string(tmp) + "\n"; yyval.dir= tmp;}
+#line 1933 "plp5.tab.c"
     break;
 
   case 50:
-#line 344 "plp5.y"
-                                                                                                                                                                                                                                                   {if(yyvsp[-3].tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,yyvsp[-3].lexema,yyvsp[-3].fila,yyvsp[-3].col);}
-#line 1932 "plp5.tab.c"
+#line 350 "plp5.y"
+                                                                                                                                                         {if(esArray(yyvsp[0].tipo)) errorSemantico(ERR_FALTAN, yyvsp[0].lexema, yyvsp[0].fila, yyvsp[0].col); }
+#line 1939 "plp5.tab.c"
     break;
 
   case 51:
-#line 344 "plp5.y"
-                                                                                                                                                                                                                                                                                                                                            {
+#line 350 "plp5.y"
+                                                                                                                                                                                                                                        {
         int tmp = nuevaTemp(yyvsp[-6].lexema, yyvsp[-6].fila, yyvsp[-6].col); 
         yyval.dir = tmp; 
         yyval.trad = yyvsp[-2].trad + "mov" + to_string(yyvsp[-2].dir) + " A\n" + "muli" + "#" + to_string(yyvsp[-2].tam) + "\naddi #" + to_string(yyvsp[-2].atributos.dbase) + "\n" + "mov @A" + to_string(tmp); 
         yyval.tipo = yyvsp[-2].tipo; 
    }
-#line 1943 "plp5.tab.c"
+#line 1950 "plp5.tab.c"
     break;
 
   case 52:
-#line 351 "plp5.y"
-                   {
-        if(yyvsp[0].tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,yyvsp[0].lexema,yyvsp[0].fila,yyvsp[0].col);
-        yyval.tipo = yyvsp[-3].tipo; 
-        yyval.atributos.dbase = yyvsp[-3].atributos.dbase; 
-        int tmp = nuevaTemp(yyvsp[-2].lexema , yyvsp[-2].fila, yyvsp[-2].col); 
-        yyval.dir = tmp;
-        yyval.trad = yyvsp[-3].trad + yyvsp[0].trad + "mov " + to_string(yyvsp[-3].dir) + " A\n" + "muli" + "#" + to_string(yyvsp[-3].tam) + "\naddi " + to_string( yyvsp[0].dir)  + "\n" + "mov A " + to_string(tmp); 
-    }
+#line 357 "plp5.y"
+                  {yyval.tipo = yyvsp[-1].tipo; if(!esArray(yyvsp[-1].tipo))errorSemantico(ERR_SOBRAN, yyvsp[0].lexema, yyvsp[0].fila, yyvsp[0].col );}
 #line 1956 "plp5.tab.c"
     break;
 
   case 53:
-#line 359 "plp5.y"
+#line 357 "plp5.y"
+                                                                                                                      {
+        
+        if(yyvsp[0].tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,yyvsp[-1].lexema,yyvsp[-1].fila,yyvsp[-1].col);
+        
+        yyval.tipo = ttActual->tipos[yyvsp[-3].tipo].tipoBase;
+        
+        yyval.atributos.dbase = yyvsp[-4].atributos.dbase; 
+        int tmp = nuevaTemp(yyvsp[-3].lexema , yyvsp[-3].fila, yyvsp[-3].col); 
+        yyval.dir = tmp;
+        yyval.trad = yyvsp[-4].trad + yyvsp[-1].trad + "mov " + to_string(yyvsp[-4].dir) + " A\n" + "muli" + "#" + to_string(yyvsp[-4].tam) + "\naddi " + to_string( yyvsp[-1].dir)  + "\n" + "mov A " + to_string(tmp); 
+    }
+#line 1972 "plp5.tab.c"
+    break;
+
+  case 54:
+#line 368 "plp5.y"
         {
         if(yyvsp[0].tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,yyvsp[0].lexema,yyvsp[0].fila,yyvsp[0].col);
         yyval.trad = yyvsp[0].trad; 
-        yyval.tipo = yyvsp[0].tipo; 
+        yyval.tipo = yyvsp[-1].tipo; 
+         
         yyval.dir = yyvsp[0].dir; 
     }
-#line 1967 "plp5.tab.c"
+#line 1984 "plp5.tab.c"
     break;
 
 
-#line 1971 "plp5.tab.c"
+#line 1988 "plp5.tab.c"
 
       default: break;
     }
@@ -2199,9 +2216,21 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 366 "plp5.y"
+#line 376 "plp5.y"
 
 
+bool esArray(unsigned tipo ){
+    if(tipo != ENTERO  && tipo != REAL ) return true; 
+    return false;
+}
+
+/*
+//Funcion para ir bajando en la tabla de tipos hasta conseguir el total de dimensiones
+int devuelveDim(unsigned tipo){
+    int contador =0;
+    //int tipo == ttActual->tipos[tipo].tipoBase; 
+    return 0; 
+}*/
 
 
 
