@@ -11,3 +11,4 @@ jz L7
 addjmp L6
 L7:
 wrr 16059 wrl
+/nhalt

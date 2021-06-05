@@ -1,0 +1,13 @@
+L1:
+mov 0 16011
+mov16011 0
+mov 0 16026
+mov16026 0
+mov 0 16043
+mov16043 0
+mov 0 16060
+mov16060 0
+mov 0 16077
+mov16077 0
+wrr 16132 wrl
+/nhalt

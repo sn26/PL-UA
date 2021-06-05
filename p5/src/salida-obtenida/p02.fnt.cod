@@ -1,0 +1,26 @@
+L5:
+mov 0 16003
+mov16003 0
+mov 0 16006
+mov16006 0
+L1:
+mov #1016007
+mov 0 16008
+mov 16007 Aaddi 16008mov A 16009mov 16009 A
+jz L2
+addjmp L1
+L2:
+mov 0 16027
+mov16027 0
+mov 0 16030
+mov16030 0
+L3:
+mov #1016031
+mov 0 16032
+mov 16031 Aaddi 16032mov A 16033mov 16033 A
+jz L4
+addjmp L3
+L4:
+wri 16046 wrl
+wrr 16047 wrl
+/nhalt

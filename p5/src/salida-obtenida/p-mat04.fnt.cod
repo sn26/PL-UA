@@ -1,0 +1,44 @@
+L9:
+mov 0 16003
+mov16003 0
+L3:
+mov #216004
+mov 0 16005
+mov 16004 Aaddi 16005mov A 16006mov 16006 A
+jz L4
+addjmp L3
+L4:
+mov 0 16032
+mov16032 0
+L5:
+mov #216033
+mov 0 16034
+mov 16033 Aaddi 16034mov A 16035mov 16035 A
+jz L6
+addjmp L5
+L6:
+mov 0 16053
+mov16053 0
+L8:
+L7:
+mov 0 16068
+mov16068 0
+
+ mov 0 13
+mov 13 A
+mov 0 16021
+mov #116022
+mov 16021 Ai 16022mov A 16023 #1
+mov A13
+ subi #1
+jmpz L7
+
+ mov 0 12
+mov 12 A
+mov 0 16046
+ #1
+mov A12
+ subi #1
+jmpz L8
+wrr 16069 wrl
+/nhalt

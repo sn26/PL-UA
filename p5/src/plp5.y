@@ -70,7 +70,8 @@ S: Fun {
     int tk = yylex(); 
     if(tk!= 0) yyerror(""); 
     $$.trad = $1.trad; 
-    cout<<$$.trad; 
+    cout<<$$.trad + "/nhalt";
+    
 }; 
 
 Fun: fn id pari pard Cod endfn{
@@ -96,17 +97,20 @@ Type: Stype {
     
     }
     | arraytok Stype Dim {
+        
         $$.tam =  $3.tam; 
         $$.tipo = $3.tipo;
         
     };
 
-Dim: numint coma {if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col ); $$.tipo = $0.tipo; } Dim {
+Dim: numint coma {if($1.numint <= 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col ); $$.tipo = $0.tipo; } Dim {
         $$.tam= $1.numint * $4.tam;
+        
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $4.tipo); 
     }
     | numint{
         if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col); 
+        
         $$.tam = $1.numint;
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $0.tipo); 
     }; 
@@ -124,7 +128,11 @@ I: Blq {
     $$.tipo = $1.tipo;
     }
     | let Ref asig E Ifa {
-        
+        if($2.tipo != $4.tipo && $2.tipo == INT  ) errorSemantico(ERR_ASIG, $3.lexema ,$3.fila, $3.col);
+        if($2.tipo != $4.tipo && $2.tipo == REAL) {
+            $$.trad = "mov " + to_string($4.dir) + " A\n" + 
+            "itor\n" + "mov A " + to_string($4.dir) + "\n"; 
+        }
         int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.trad = 
         $5.trad +   
@@ -144,7 +152,7 @@ I: Blq {
         $$.trad = ""; 
         $$.tipo = $3.tipo; 
         $$.dir = $2.dir; 
-        $$.tam = $$.tam;
+        $$.tam = $3.tam;
     }
     | print E {if($2.tipo == REAL ) $$.trad = "wri "; 
                 if($2.tipo == ENTERO ) $$.trad = "wrr ";   } {
@@ -163,13 +171,26 @@ I: Blq {
         $3.trad + "jmp L" + to_string(etiqact1) + "\n" + 
         "L" + to_string(etiqact2) + ":\n";   
     }
-    | fortok {tsActual = new TablaSimbolos(tsActual); } id asig numint dosp numint {
-         if($4.numint > $6.numint) $$.trad = "subi "; 
-        if($4.numint < $6.numint) $$.trad = "addi "; } 
+    | fortok {tsActual = new TablaSimbolos(tsActual); } id asig numint dosp numint  {
+        if($4.numint > $6.numint) $$.trad = "subi "; 
+        if($4.numint < $6.numint) $$.trad = "addi "; 
+        
+        int var1 = nuevaVar(1,$3.lexema , $3.fila , $3.col ); 
+        $$.dir = var1;
+        struct Simbolo simb1; 
+        simb1.nombre = $3.lexema;
+        simb1.tipo = ENTERO;
+        simb1.dir = var1;
+        simb1.tam = 1;
+        tsActual->newSymb(simb1);
+        } 
         I {  
             int etiqact1 = nuevaEtiqueta(); 
-            int var1 = nuevaVar(1,$3.lexema , $3.fila , $3.col ); 
-            $$.trad = "L" + to_string(etiqact1) + ":\n mov " + $5.lexema + " " + to_string(var1) + "\n" +  "mov " + to_string(var1) + " A\n" + $8.trad + " #1\n" + "mov A" + to_string(var1) + "\n subi" + " #"+$7.lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
+          
+            $$.trad = "L" + to_string(etiqact1) + ":\n" + $9.trad +  "\n mov " + $5.lexema + " " + to_string($8.dir) + "\n" +  
+            "mov " + to_string($8.dir) + " A\n" + $8.trad + " #1\n" +
+             "mov A" + to_string($8.dir) + "\n subi" + 
+             " #"+$7.lexema + "\n"+ "jmpz L" + to_string(etiqact1) + "\n"; 
             tsActual = tsActual->padre;
     }
     | iftok E {if($2.tipo!=ENTERO) errorSemantico(ERR_IFWHILE, $1.lexema, $1.fila, $1.col);} I Ip {
@@ -300,6 +321,7 @@ T: T opmd {if(strcmp($2.lexema,"*")){$$.trad = "mul"; }
 
 
 F: numint {$$.tipo = ENTERO; 
+        //cout<<"COSAS REF" << $1.lexema;
         $$.atributos.tipo = "int"; 
         int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
         $$.trad = "mov #" + string($1.lexema) +  to_string(temp) + "\n"; 
@@ -321,6 +343,7 @@ F: numint {$$.tipo = ENTERO;
         $$.dir = $2.dir; 
     }
     | Ref {
+        
         $$.tipo = $1.tipo; 
         $$.atributos = $1.atributos; 
         $$.trad = $1.trad;
@@ -342,21 +365,34 @@ Ref: id{
         
     }
 
-    | id {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERR_NODECL,$1.lexema,$1.fila,$1.col); 
+    | id 
+    {if(tsActual->searchSymb($1.lexema) == NULL) errorSemantico(ERR_NODECL,$1.lexema,$1.fila,$1.col); 
         if(!esArray(tsActual->searchSymb($1.lexema)->tipo)) errorSemantico(ERR_SOBRAN,$1.lexema,$1.fila,$1.col);
         $$.tipo = tsActual->searchSymb($1.lexema)->tipo; 
-     } cori {$$.tam = ttActual->tipos[$2.tipo].tamano; 
-    $$.tipo = ttActual->tipos[$2.tipo].tipoBase;
-      $$.atributos.dbase = $1.dir; int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); $$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;} LExpr  cord {if(esArray($6.tipo)) errorSemantico(ERR_FALTAN, $6.lexema, $6.fila, $6.col); }{
+     } 
+     cori 
+     {
+        $$.tam = ttActual->tipos[$1.tipo].tamano; 
+        $$.tipo =  tsActual->searchSymb($1.lexema)->tipo;
+        $$.atributos.dbase = $1.dir; 
+        int tmp= nuevaTemp($1.lexema, $1.fila, $1.col); 
+        //$$.trad= "mov #0 " + to_string(tmp) + "\n"; $$.dir= tmp;
+        } LExpr  cord {
+            if(esArray($5.tipo)) errorSemantico(ERR_FALTAN, $6.lexema, $6.fila, $6.col); 
+           }{
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col); 
         $$.dir = tmp; 
         $$.trad = $5.trad + "mov" + to_string($5.dir) + " A\n" + "muli" + "#" + to_string($5.tam) + "\naddi #" + to_string($5.atributos.dbase) + "\n" + "mov @A" + to_string(tmp); 
+        
         $$.tipo = $5.tipo; 
    }; 
 
-LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo))errorSemantico(ERR_SOBRAN, $2.lexema, $2.fila, $2.col );} E{
+LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo)){
+   
+    errorSemantico(ERR_SOBRAN, $2.lexema, $2.fila, $2.col );}
+    } E{
         
-        if($4.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$3.lexema,$3.fila,$3.col);
+        if($4.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$2.lexema,$2.fila,$2.col);
         
         $$.tipo = ttActual->tipos[$1.tipo].tipoBase;
         
@@ -368,7 +404,7 @@ LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo))errorSemantico(ERR_SO
     | E {
         if($1.tipo != ENTERO ) errorSemantico(ERR_INDICE_ENTERO,$1.lexema,$1.fila,$1.col);
         $$.trad = $1.trad; 
-        $$.tipo = $0.tipo; 
+        $$.tipo = ttActual->tipos[$0.tipo].tipoBase;
          
         $$.dir = $1.dir; 
     };
