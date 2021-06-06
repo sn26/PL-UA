@@ -1,3 +1,2 @@
 
-ERROR(m2r) al leer un valor de la posicion de memoria 37 sin haberlo
-inicializado, en la instrucción 1
+ERROR(m2r): Acceso incorrecto a memoria en la instrucción 22 (dir 16505)

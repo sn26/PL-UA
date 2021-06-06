@@ -104,21 +104,22 @@ Type: Stype {
     };
 
 Dim: numint coma {if($1.numint <= 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col ); $$.tipo = $0.tipo; } Dim {
-        $$.tam= $1.numint * $4.tam;
+        $$.tam= $1.numint * ttActual->tipos[$4.tipo].tamano;
         
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $4.tipo); 
     }
     | numint{
-        if($1.numint == 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col); 
+        if($1.numint <= 0 ) errorSemantico(ERR_DIM, $1.lexema, $1.fila, $1.col); 
         
-        $$.tam = $1.numint;
+        $$.tam = $1.numint * ttActual->tipos[$0.tipo].tamano;
         $$.tipo = ttActual->nuevoTipoArray($$.tam , $0.tipo); 
     }; 
 
-Cod: Cod {$$.tam = ctemp; } pyc I {ctemp = $2.tam;} {
-    $$.trad = $1.trad + $4.trad;
+Cod: Cod {$$.tam = ctemp; } pyc I  {
+    $$.trad = $1.trad  + $4.trad;
+    ctemp = $2.tam;
     }
-    | {$$.tam= ctemp;} I {ctemp = $2.tam;} {
+    | {$$.tam= ctemp;} I {ctemp = $1.tam;} {
         $$.trad = $2.trad;
     };
 
@@ -127,21 +128,34 @@ I: Blq {
     }
     | let Ref asig E Ifa {
        
-        $$.trad = $2.trad + $4.trad;
+        $$.trad =  $2.trad  + $4.trad;
         //cout<<"TRAD ANTERIOR"<<$4.trad<<endl; 
         //cout<<"*******TERMINADO******"<<endl;
-        if($2.tipo != $4.tipo && $2.tipo == INT  ) errorSemantico(ERR_ASIG, $3.lexema ,$3.fila, $3.col);
+        if($2.tipo != $4.tipo && $2.tipo == ENTERO  ) errorSemantico(ERR_ASIG, $3.lexema ,$3.fila, $3.col);
         if($2.tipo != $4.tipo && $2.tipo == REAL) {
-            $$.trad = $$.trad +  "mov " + to_string($4.dir) + " A\n" + 
-            "itor\n" + "mov A " + to_string($4.dir) + "\n"; 
+           int temp = nuevaTemp($1.lexema, $1.fila, $1.col); 
+            $$.trad = $$.trad +  "mov " + to_string(temp) + " A\n" + 
+            "itor\n" + "mov A " + to_string(temp) + "\n"; 
+        }if(!esArray($2.tipo)){
+            int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+            //cout<<"LA DIR DESDE LET PARA "<<$2.lexema<<" es "<<$2.atributos.dbase<<endl;
+            //cout<<"EL VALOR PARA "<<$2.lexema<<" es "<<$4.trad<<endl;
+            $$.trad = 
+            $5.trad +  $$.trad +
+            "mov " + to_string($2.dir) + " A" + "\n" +
+            "mov " + to_string($4.dir) + " @A" +  "\n"  +
+            $5.atributos.etiqueta + "\n";
+            $$.dir = $2.dir;
+        }else{ //ESTAMOS VIENDO UN ARRAY
+            int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+            $$.trad 
+            = $5.trad + $$.trad + "mov " + to_string($4.dir) + " " + to_string(temp) + "\n" +
+            "\nmov " + to_string($2.dir) +" A" + "\n" +
+            "addi #" + to_string($2.atributos.dbase)  +"\nmov " + 
+            to_string(temp) + " @A\n" + $5.atributos.etiqueta;
+            $$.dir = $2.dir;
+            
         }
-        int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
-       
-        $$.trad = 
-        $5.trad +  $$.trad +
-        "mov " + to_string($4.dir) + " " + to_string(temp) + "\n" +
-        "mov " + to_string(temp) + " " + to_string($2.dir) + "\n" +  
-        $5.atributos.etiqueta;
         //cout<<"LA TRAD ES "<<$$.trad<<endl;
         //cout<<"NEGRO"<<endl;
         
@@ -151,19 +165,15 @@ I: Blq {
         simb1.nombre = $2.lexema;
         simb1.tipo = $3.tipo;
         $$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
+        //cout<<"LA DIR DESDE VAR PARA "<<$2.lexema<<" es "<<$$.dir<<endl;
         simb1.dir = $$.dir;
         simb1.tam = $3.tam;
         if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,$2.lexema,$2.fila,$2.col);
-        //$$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
-        $$.trad = ""; 
-        $$.tipo = $3.tipo; 
-        $$.dir = $2.dir; 
-        $$.tam = $3.tam;
     }
     | print E {if($2.tipo == REAL ) $$.trad = "wrr "; 
-                if($2.tipo == ENTERO ) $$.trad = "wri";   } {
+                if($2.tipo == ENTERO ) $$.trad = "wri ";   } {
         
-        $$.trad = $2.trad +  $3.trad  + to_string($2.dir)+ "\nwrl\n";   
+        $$.trad = $2.trad +  $3.trad  + " "+ to_string($2.dir)+ "\nwrl\n";   
     }
     | readtok Ref {if($2.tipo == ENTERO ) $$.trad = "rdi "; 
                 if($2.tipo == REAL) $$.trad = "rdr ";  } {
@@ -219,6 +229,7 @@ I: Blq {
 
 Ip: elsetok I fi {
     $$.trad = $2.trad; 
+    $$.dir = $2.dir; 
     }
     | fi {
         $$.trad = ""; 
@@ -266,8 +277,8 @@ E: E opas {
     if(strcmp($2.lexema, "-")== 0){$$.trad = "sub";}
             } 
     T {
-        int tmp = nuevaTemp($1.lexema, $1.fila, $1.col);
-            $$.dir = tmp; 
+    int tmp = nuevaTemp($1.lexema, $1.fila, $1.col);
+    $$.dir = tmp; 
     if($1.tipo == ENTERO && $4.tipo == ENTERO ){
        
         $$.trad = $1.trad 
@@ -288,7 +299,7 @@ E: E opas {
         int tmpcp; 
         tmpcp = nuevaTemp($1.lexema, $1.fila, $1.col);
         $$.trad = $1.trad + $4.trad + "mov " + to_string($4.dir) + " A\n"+"itor\n" + "mov A " + to_string(tmpcp) + "\n" 
-        + "mov " + to_string($1.dir) + " A" + "\n" + $3.trad + "r " + to_string($4.dir) + "\nmov A " + to_string(tmp) + "\n"; 
+        + "mov " + to_string($1.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp) + "\n"; 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float"; 
     }else if ($1.tipo == REAL && $4.tipo == REAL){
@@ -296,6 +307,13 @@ E: E opas {
         $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n" + $3.trad + "r " + to_string($4.dir) + "\nmov A " + to_string(tmp) + "\n"; 
         $$.tipo = REAL; 
         $$.atributos.tipo = "float";  
+    }else if($1.tipo == ENTERO && $4.tipo == REAL){
+        int tmpcp; 
+        tmpcp = nuevaTemp($1.lexema, $1.fila, $1.col);
+        $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n"+"itor\n" + "mov A " + to_string(tmpcp) + "\n" 
+        + "mov " + to_string($4.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp) + "\n"; 
+        $$.tipo = REAL; 
+        $$.atributos.tipo = "float"; 
     }
 
     //cout<<"SOY E Y MI TRAD FINAL ES " <<$$.trad<<endl;
@@ -318,6 +336,9 @@ E: E opas {
         $$.atributos.tipo = $1.atributos.tipo; 
         $$.tipo = $1.tipo; 
         $$.trad = $1.trad; 
+        $$.dir = $1.dir;
+        $$.atributos.dbase = $1.atributos.dbase;
+        $$.lexema = $1.lexema;
         //cout<<"NUESTRA TRAD ES "<<$$.trad<<endl;
     };
 
@@ -339,6 +360,12 @@ T: T opmd {if(strcmp($2.lexema,"*") == 0 ){$$.trad = "mul"; }
             + "mov " + to_string($1.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp) + "\n"; 
             $$.tipo = REAL; 
             $$.atributos.tipo = "float"; 
+        }else if($1.tipo == ENTERO && $4.tipo == REAL){
+            int tmpcp = nuevaTemp($1.lexema, $1.fila, $1.col);
+            $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n"+"itor\n" + "mov A " + to_string(tmpcp) + "\n" 
+            + "mov " + to_string($4.dir) + " A" + "\n" + $3.trad + "r " + to_string(tmpcp) + "\nmov A " + to_string(tmp) + "\n"; 
+            $$.tipo = REAL; 
+            $$.atributos.tipo = "float"; 
         }else if ($1.tipo == REAL && $4.tipo == REAL){
             
             $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A\n" + $3.trad + "r " + to_string($4.dir) + "\nmov A " + to_string(tmp) + "\n"; 
@@ -350,6 +377,9 @@ T: T opmd {if(strcmp($2.lexema,"*") == 0 ){$$.trad = "mul"; }
         //cout<<"TRAMPOLLALABUENA1"<<endl;
         $$.tipo = $1.tipo;
         $$.trad = $1.trad;
+        $$.dir = $1.dir;
+        $$.atributos.dbase = $1.atributos.dbase;
+        $$.lexema = $1.lexema;
         //cout<<"LA POLLA ES "<<endl; 
         //cout<<$$.trad<<endl; 
         //cout<<"*****FINAL******"<<endl;
@@ -359,19 +389,25 @@ T: T opmd {if(strcmp($2.lexema,"*") == 0 ){$$.trad = "mul"; }
 F: numint {$$.tipo = ENTERO; 
         //cout<<"COSAS REF" << $1.lexema;
         $$.atributos.tipo = "int"; 
-        int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+        unsigned temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
 
-        $$.trad = "mov #" + string($1.lexema) + " " +  to_string(temp) + "\n"; 
-        //cout<<"ESTOY PASANDO CON "<<$1.lexema<<endl;
+        $$.trad =  "mov #" + string($1.lexema) + " " +  to_string(temp) + "\n"; 
+        //cout<<"ESTOY PASANDO CON "<<temp<<endl;
         $$.dir = temp; 
+        $$.tipo = ENTERO;
+        $$.numint = $1.numint; 
+        $$.atributos.dbase = temp; 
         }
 
     | numreal {
         $$.tipo = REAL; 
         $$.atributos.tipo = "real"; 
+        
         int temp = nuevaTemp($1.lexema , $1.fila, $1.col); 
+        $$.atributos.dbase = temp; 
         $$.trad = "mov $" + string($1.lexema) + " " +  to_string(temp) + "\n";
         $$.dir = temp; 
+
 
     }
     | pari E pard {
@@ -388,7 +424,11 @@ F: numint {$$.tipo = ENTERO;
         $$.tipo = $1.tipo; 
         $$.atributos = $1.atributos; 
         $$.trad = $1.trad;
-        $$.dir = $1.dir; 
+        $$.dir = $1.dir;
+        $$.atributos.dbase = $1.atributos.dbase; 
+        
+        $$.lexema = $1.lexema;
+          
     }; 
 
 Ref: id{ 
@@ -401,10 +441,11 @@ Ref: id{
         if($$.tipo == ENTERO) $$.atributos.tipo = "int";
         if($$.tipo == REAL) $$.atributos.tipo = "float"; 
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col );
-        $$.dir =  tsActual->searchSymb($1.lexema)->dir;
-        //cout<<"TRAMPOLLALABUENA3"<<endl;
-        $$.trad = "mov  " + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
-        $$.atributos.dbase =  tsActual->searchSymb($1.lexema)->dir;
+        $$.dir =  tmp;
+        $$.atributos.dbase = tsActual->searchSymb($1.lexema)->dir;
+        
+        $$.trad = "mov #"  + to_string(tsActual->searchSymb($1.lexema)->dir) + " "+ to_string(tmp) + "\n";
+        $$.lexema = $1.lexema; 
         //cout<<$$.trad<<endl;
     }
 
@@ -444,7 +485,8 @@ LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo)){
         $$.dir = tmp;
         //cout<<"MI TRAD A "<<$0.trad<<endl;
         //cout<<"MI TRAD 2 "<<$3.trad<<endl;
-        $$.trad = $1.trad +  $4.trad + "\nmov " + to_string($1.dir) + " A\n" + "muli " + "#" + to_string($1.tam)
+        $$.trad = $1.trad +  $4.trad + "\nmov " + to_string($1.dir) +
+         " A\n" + "muli " + "#" + to_string($1.tam)
          + "\naddi " + to_string( $4.dir)  
         + "\n" + "mov A " + to_string(tmp) + "\n"; 
         //cout<<"AAAAAAA "<<$0.trad<<endl<<"HIJOS DE PUTA"<<endl;
@@ -458,7 +500,8 @@ LExpr: LExpr coma {$$.tipo = $1.tipo; if(!esArray($1.tipo)){
         
         $$.tipo = ttActual->tipos[$0.tipo].tipoBase;
         $$.atributos.dbase = ttActual->tipos[$0.tipo].tipoBase;
-        $$.dir = tmp; 
+        $$.dir = tmp;
+        $$.atributos.dbase = $0.dir; 
         //cout<<"UUUUU "<<$$.trad<<endl<<"HIJOS DE PUTA"<<endl;
     };
 
@@ -501,7 +544,9 @@ string tipoShake(string type1,  string type2){
 
 ///Manejar temporales (16000 - 16383)
 int nuevaTemp(char *lexema, int fila, int columna ){
-    ctemp +=1; 
+    //cout<<"ESTOY PASANDO CON CTEMP "<<ctemp;
+    ctemp = ctemp + 1; 
+    
     if(ctemp > 16383) errorSemantico(ERR_MAXTEMP, lexema, fila, columna ); 
     return ctemp; 
 }

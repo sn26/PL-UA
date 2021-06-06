@@ -1,28 +1,31 @@
 L9
-mov  2 2
-mov #7 3
-mov 3 4
-mov 4 2
-mov  1 2
-mov  2 3
-mov 2 A
+mov #2 16001
+mov #7 16002
+mov 16001 A
+mov 16002 @A
+
+mov #1 16001
+mov #2 16002
+mov 16003 A
 itor
-mov A 2
-mov 2 4
-mov 4 1
-mov  1 2
-wrr 1
+mov A 16003
+mov 16001 A
+mov 16002 @A
+
+mov #1 16001
+wrr  16001
 wrl
-mov  3 2
-mov  2 3
-mov 2 4
-mov 4 3
-mov  3 2
-wri3
+mov #3 16001
+mov #2 16002
+mov 16001 A
+mov 16002 @A
+
+mov #3 16001
+wri  16001
 wrl
 L1
-mov  4 2
-wri4
+mov #4 16001
+wri  16001
 wrl
 
 mov #0 4
@@ -31,118 +34,145 @@ addi  #1
 mov A 4
 subi #9
 jz L1
-mov $77.77 2
-wrr 2
+mov $77.77 16001
+wrr  16001
 wrl
-mov  6 2
-mov #0 3
-mov 3 4
-mov 4 6
-mov  5 2
-mov #0 3
-mov 3 4
-mov 4 5
+mov #6 16001
+mov #0 16002
+mov 16001 A
+mov 16002 @A
+
+mov #5 16001
+mov #0 16002
+mov 16001 A
+mov 16002 @A
+
 L2
-mov #10 2
+mov #10 16001
 
-mov  5 3
+mov #5 16002
 
-mov 2 A
-subi 5
-mov A 4
-mov 4 A
+mov 16001 A
+subi 16002
+mov A 16003
+mov 16003 A
 jz L3
-mov  5 5
-wri5
+mov #5 16004
+wri  16004
 wrl
-mov  5 11
-mov  5 12
+mov #5 16004
+mov #5 16005
 
-mov #1 13
+mov #1 16006
 
-mov 5 A
-addi 13
-mov A 14
-mov 14 15
-mov 15 5
-mov  7 11
-mov  6 12
+mov 16005 A
+addi 16006
+mov A 16007
+mov 16004 A
+mov 16007 @A
 
-mov  5 13
+mov #7 16004
+mov #6 16005
 
-mov 6 A
-addi 5
-mov A 14
-mov 14 15
-mov 15 7
-mov  6 11
-mov  7 12
-mov 7 13
-mov 13 6
+mov #5 16006
+
+mov 16005 A
+addi 16006
+mov A 16007
+mov 16004 A
+mov 16007 @A
+
+mov #6 16004
+mov #7 16005
+mov 16004 A
+mov 16005 @A
+
 jmp L2
 L3
-mov  6 2
-mov #2 3
+mov #6 16001
+mov #2 16002
 
-mov #4 4
+mov #4 16003
 
-mov 3 A
-addi 4
-mov A 5
+mov 16002 A
+addi 16003
+mov A 16004
 
-mov #1 6
+mov #1 16005
 
-mov 5 A
-subi 6
-mov A 7
+mov 16004 A
+subi 16005
+mov A 16006
 
-mov 6 A
-divi 7
-mov A 8
-wri8
+mov 16001 A
+divi 16006
+mov A 16007
+wri  16007
 wrl
-mov  6 2
+mov #6 16001
 
-mov #55 3
+mov #55 16002
 
-mov 6 A
-subi 3
-mov A 4
-mov 4 A
+mov 16001 A
+subi 16002
+mov A 16003
+mov 16003 A
 jz L6
-mov  6 5
-wri7
+mov #6 16004
+mov $10.0 16005
+mov 16004 A
+itor
+mov A 16007
+mov 16005 A
+mulr 16007
+mov A 16006
+wrr  16006
 wrl
 jmp L7
 L6
-mov  6 8
+mov #6 16008
 
-mov #55 9
+mov #55 16009
 
-mov 6 A
-subi 9
-mov A 10
-mov 10 A
+mov 16008 A
+subi 16009
+mov A 16010
+mov 16010 A
 jz L4
-mov  6 11
-wri13
+mov #6 16011
+mov $100.0 16012
+mov 16011 A
+itor
+mov A 16014
+mov 16012 A
+mulr 16014
+mov A 16013
+wrr  16013
 wrl
 jmp L5
 L4
-mov  6 14
-wri16
+mov #6 16015
+mov $1000.0 16016
+mov 16015 A
+itor
+mov A 16018
+mov 16016 A
+mulr 16018
+mov A 16017
+wrr  16017
 wrl
 L5
 L7
-mov 6 A
+mov 16003 A
 jz L8
-mov  2 2
-mov #787 3
-mov 3 5
-mov 5 2
+mov #2 16001
+mov #787 16002
+mov 16001 A
+mov 16002 @A
 L8
-mov  2 2
-wri2
+
+mov #2 16001
+wri  16001
 wrl
 
 halt
