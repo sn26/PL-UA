@@ -1,0 +1,177 @@
+L1
+mov #1 16001
+mov #5 16002
+mov 16002 A
+mov A 16003
+mov #1 A
+mov 16002 @A
+
+mov #1 16001
+mov #1 16002
+mov 16002 A
+mov @A 16003
+mov #0 A 
+subi 16003
+ mov A 16004
+mov 16004 A
+mov A 16005
+mov #1 A
+mov 16004 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov #1 16001
+mov #1 16002
+mov 16002 A
+mov @A 16003
+mov #0 A 
+subi 16003
+ mov A 16004
+mov 16004 A
+mov A 16005
+mov #1 A
+mov 16004 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov #2 16001
+mov $9.0 16002
+mov 16002 A
+mov A 16003
+mov #2 A
+mov 16002 @A
+
+mov #2 16001
+mov #2 16002
+mov 16002 A
+mov @A 16003
+mov $0 A
+subr 16003
+ mov A 16004
+mov 16004 A
+mov A 16005
+mov #2 A
+mov 16004 @A
+
+mov #2 16001
+mov 16001 A
+mov @A 16002
+wrr  16002
+wrl
+mov #2 16001
+mov #2 16002
+mov 16002 A
+mov @A 16003
+mov $0 A
+subr 16003
+ mov A 16004
+mov 16004 A
+mov A 16005
+mov #2 A
+mov 16004 @A
+
+mov #2 16001
+mov 16001 A
+mov @A 16002
+wrr  16002
+wrl
+mov #1 16001
+mov #1 16002
+mov 16002 A
+mov @A 16003
+
+mov #5 16004
+mov #0 A 
+subi 16004
+ mov A 16005
+
+mov 16003 A
+muli 16005
+mov A 16006
+mov #0 A 
+subi 16006
+ mov A 16007
+mov #0 A 
+subi 16007
+ mov A 16008
+
+mov #3 16009
+
+mov #1 16010
+mov 16010 A
+mov @A 16011
+mov #0 A 
+subi 16011
+ mov A 16012
+
+mov 16009 A
+muli 16012
+mov A 16013
+
+mov 16008 A
+addi 16013
+mov A 16014
+mov 16014 A
+mov A 16015
+mov #1 A
+mov 16014 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov #2 16001
+mov #2 16002
+mov 16002 A
+mov @A 16003
+mov #5 16004
+mov #0 A 
+subi 16004
+ mov A 16005
+mov 16005 A
+itor
+mov A 16007
+mov 16003 A
+mulr 16007
+mov A 16006
+mov $0 A
+subr 16006
+ mov A 16008
+mov $0 A
+subr 16008
+ mov A 16009
+mov #3 16010
+mov #2 16011
+mov 16011 A
+mov @A 16012
+mov $0 A
+subr 16012
+ mov A 16013
+mov 16010 A
+itor
+mov A 16015
+mov 16013 A
+mulr 16015
+mov A 16014
+mov 16009 A
+addr 16014
+mov A 16016
+mov 16016 A
+mov A 16017
+mov #2 A
+mov 16016 @A
+
+mov #2 16001
+mov 16001 A
+mov @A 16002
+wrr  16002
+wrl
+
+halt

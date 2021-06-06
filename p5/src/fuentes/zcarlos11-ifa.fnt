@@ -1,0 +1,37 @@
+fn temp()
+	var a:int;
+	let a = 1;
+
+	var b:int;
+	let b = 10;
+
+	let a = 25 if 5; /* true */
+	print a; /* prints 25 */
+
+	let a = 3 if 0; /* false */
+	print a; /* prints 25 */
+
+	let a = 3 if b-b; /* false */
+	print a; /* prints 25 */
+
+	let a = 3 if b-b+a; /* true */
+	print a; /* prints 3 */
+
+	let a = 30 if b-b+a*a; /* true */
+	print a; /* prints 30 */
+
+	let a = 0 if b/b-1; /* false */
+	print a; /* prints 30 */
+
+	let a = 9 if b/b-a; /* true */
+	print a; /* prints 9 */
+
+	let a = 19 if -a; /* true */
+	print a; /* prints 19 */
+
+	let a = 197 if a; /* true */
+	print a; /* prints 197 */
+
+	let a = 20 if -a*(4+3)*0; /* false */
+	print a /* prints 197 */
+endfn

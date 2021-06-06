@@ -1,0 +1,7 @@
+fn mat2()
+  blq
+    var a;
+    let a = 70 * 5 * 3;
+    print a
+  fblq
+endfn

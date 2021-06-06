@@ -1,0 +1,10 @@
+fn main()
+
+var a:array int 2,2; 
+let a[1,0 ] = 1337; 
+let a[0,1] = 17; 
+
+print a[1,0]; 
+print a[0,1]
+
+endfn

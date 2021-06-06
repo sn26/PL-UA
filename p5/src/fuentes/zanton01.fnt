@@ -1,0 +1,9 @@
+fn main()
+
+  var v : array int 10;
+  let v[2] = 5;
+  print v[2]
+
+  /*let i = suma + v[i];*/
+
+endfn

@@ -1,0 +1,7 @@
+fn mat2()
+  blq
+    var a:real;
+    let a = 70.0 * 5.0 * 3.0;
+    print a
+  fblq
+endfn

@@ -1,0 +1,6 @@
+fn mat2()
+  var a;
+  let a = 789;
+  print 789;
+  print 0
+endfn

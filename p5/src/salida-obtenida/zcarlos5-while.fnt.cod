@@ -1,0 +1,44 @@
+L3
+mov #1 16001
+mov #6 16002
+mov 16002 A
+mov A 16003
+mov #1 A
+mov 16002 @A
+
+L1
+mov #1 16001
+mov 16001 A
+mov @A 16002
+
+mov #2 16003
+
+mov 16002 A
+subi 16003
+mov A 16004
+mov 16004 A
+jz L2
+mov #1 16005
+mov #1 16006
+mov 16006 A
+mov @A 16007
+
+mov #2 16008
+
+mov 16007 A
+subi 16008
+mov A 16009
+mov 16009 A
+mov A 16010
+mov #1 A
+mov 16009 @A
+
+jmp L1
+L2
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+
+halt

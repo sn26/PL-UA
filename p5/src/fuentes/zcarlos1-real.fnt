@@ -1,0 +1,7 @@
+fn mat2()
+  blq
+    var a:real;
+    let a = 789.0;
+    print a
+  fblq
+endfn

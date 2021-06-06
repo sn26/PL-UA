@@ -1,0 +1,19 @@
+fn mat2()
+  /*
+    Este test comprueba que se ignore el signo + al poner
+    +numero como +5, +3 en la regla E: opas T, ya que de traducirse
+    " muli #+1 ", el interprete de m2r daría error por el +
+  */
+  var a:int;
+  let a = +5;
+
+  var b:real;
+  let b = +9.0;
+
+  let a = -(-a * (-5)) + (+3) * (-a);
+  print a; /* -(-5x-5) + 3x-5 = -(25) - 15 = -40 */
+
+  let b = -(-b * (-5)) + (+3) * (-b);
+  print b /* -(-9x-5) + 3x-9 = -(45) - 27 = -72.000 */
+
+endfn

@@ -1,0 +1,16 @@
+fn primos()
+
+  var i; let i = 10;
+  var EsPrimo : int; let EsPrimo = 1;
+
+  while EsPrimo * i * (i-1)  /*  EsPrimo && (i>1) */
+    if i
+      let i = i-1
+    else
+      let EsPrimo = 0
+    fi;
+
+  print i;           /* debe salir "1" */
+  print EsPrimo      /* debe salir "1" */
+
+endfn

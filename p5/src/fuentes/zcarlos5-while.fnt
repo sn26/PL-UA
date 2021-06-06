@@ -1,0 +1,30 @@
+fn mat2()
+  var a;
+  let a = 6;
+  while a-2
+    blq
+      let a = a - 2
+    fblq;
+  print a
+endfn
+
+
+/*
+mov #5 tmp1
+mov tmp1 a
+mov tmp1 A
+jz L1
+L2
+mov a tmp2
+mov #1 tmp3
+mov tmp2 A
+subi tmp3
+mov tmp3 a
+mov a tmp4
+mov tmp4 A
+jnz L2
+
+L1:
+wri a
+halt
+*/

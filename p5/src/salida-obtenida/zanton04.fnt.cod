@@ -1,0 +1,93 @@
+L5
+mov #1 16001
+mov #7 16002
+mov 16002 A
+mov A 16003
+mov #1 A
+mov 16002 @A
+
+mov #2 16001
+mov #8 16002
+mov 16002 A
+mov A 16003
+mov #2 A
+mov 16002 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+
+mov #2 16003
+mov 16003 A
+mov @A 16004
+
+mov #1 16005
+
+mov 16004 A
+muli 16005
+mov A 16006
+
+mov 16002 A
+subi 16006
+mov A 16007
+
+mov #1 16008
+
+mov 16007 A
+addi 16008
+mov A 16009
+mov 16009 A
+jz L3
+mov #1 16012
+mov 16012 A
+mov @A 16013
+
+mov #0 16014
+
+mov 16013 A
+muli 16014
+mov A 16015
+mov 16015 A
+jz L1
+mov #1 16010
+mov #10 16011
+mov 16011 A
+mov A 16016
+mov #1 A
+mov 16011 @A
+L1
+
+jmp L4
+L3
+mov #1 16019
+mov 16019 A
+mov @A 16020
+
+mov #0 16021
+
+mov 16020 A
+muli 16021
+mov A 16022
+mov 16022 A
+jz L2
+mov #2 16017
+mov #10 16018
+mov 16018 A
+mov A 16023
+mov #2 A
+mov 16018 @A
+L2
+
+L4
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov #2 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+
+halt

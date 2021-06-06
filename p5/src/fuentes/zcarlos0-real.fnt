@@ -1,0 +1,6 @@
+fn mat2()
+  var a:real;
+  let a = 789.0;
+  print 789.0;
+  print 0.0
+endfn

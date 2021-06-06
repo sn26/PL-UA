@@ -1,0 +1,45 @@
+fn mat2()
+  for i=0:3
+    print i;
+
+  for i=3:0
+    print i;
+
+  for i=15:15
+    print i
+endfn
+
+
+/*
+mov #left ilef
+mov #right iright
+
+L1
+mov ilef tmp1
+mov iright A
+subi tmp1
+lssi #0
+jz L2
+mov ileft tmp2
+wri tmp2
+mov ileft A
+addi #1
+jmp L1
+
+L2
+
+L3
+mov ileft tmp3
+mov iright A
+subi tmp3
+gtri #0
+jz L4
+mov ileft tmp4
+wri tmp4
+mov ileft A
+subi #1
+jmp L4
+
+L4
+halt
+*/

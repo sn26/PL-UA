@@ -39,18 +39,20 @@ wri  16002
 wrl
 mov #0 4
 L1
-mov #4 16002
-mov 16002 A
-mov @A 16003
-wri  16003
+mov #4 16001
+mov 16001 A
+mov @A 16002
+wri  16002
 wrl
-mov 16002 A
-wri A
+mov 4 A
 addi #1
-mov A 16002
-mov 16002 A
+mov A 4
+mov 4 A
 
-subi #9
+gtri  #9
+jnz L2
+jmp L1
+L2
 mov $77.77 16001
 wrr  16001
 wrl
@@ -131,6 +133,7 @@ L4
 mov #6 16001
 mov 16001 A
 mov @A 16002
+
 mov #2 16003
 
 mov #4 16004
@@ -214,6 +217,9 @@ wrr  16022
 wrl
 L6
 L8
+mov #6 16003
+mov 16003 A
+mov @A 16004
 mov 16004 A
 jz L9
 mov #2 16001

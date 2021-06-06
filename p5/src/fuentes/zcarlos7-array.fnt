@@ -1,0 +1,61 @@
+fn mat2()
+  /* ARRAYS ENTEROS */
+  var ai:array int 5; /* tam = 5 */
+  var bi:array int 5, 3; /* tam = 5x3 = 15 */
+  var ci:array int 5, 3, 6; /* tam = 5x3x6 = 90 */
+
+  let ai[1] = 5; /* indice = 1*/
+  print ai[1];
+
+  let bi[1, 2] = 6; /* indice = 1x3 + 2 = 5 + 5 - 1 = 9*/
+  print bi[1, 2];
+
+  let ci[1, 2, 3] = 7; /* indice = ((0x5+1)x3+2)x6+3) + dir(cr) = (1x3+2)x6 + 3 + (5+15-1) = 52 */
+  print ci[1, 2, 3];
+
+  /* ARRAYS REALES */
+  var ar:array real 25;
+  var br:array real 25, 30;
+  var cr:array real 25, 30, 6;
+
+  let ar[1] = 5.0;
+  print ar[1];
+
+  let br[1, 2] = 6.0;
+  print br[1, 2];
+
+  let cr[1, 2, 3] = 7.0;
+  print cr[1, 2, 3];
+
+  let cr[ai[1], 2, bi[1, 2] - 3] = 90.0;
+  print cr[ai[1], 2, bi[1, 2] - 3]  /* cr[5, 2, 6 - 3] */
+endfn
+
+
+/*
+; indice 1
+mov tam1 tmp2
+mov #0 A
+muli tmp2
+mov #1 tmp3
+addi tmp3
+mov A tmp1
+
+; indice 2
+mov tam2 tmp2
+mov tmp1 A
+muli tmp2
+mov #2 tmp3
+addi tmp3
+mov A tmp1
+
+; indice 3
+mov tam3 tmp2
+mov tmp1 A
+muli tmp2
+mov #3 tmp3
+addi tmp3
+mov A tmp1
+
+
+*/

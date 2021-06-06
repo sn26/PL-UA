@@ -1,0 +1,194 @@
+L7
+mov #181 16001
+mov #2 16002
+mov 16002 A
+mov A 16003
+mov #181 A
+mov 16002 @A
+
+mov #0 182
+L1
+mov #182 16001
+mov 16001 A
+mov @A 16002
+mov 16002 16003
+mov #182 16004
+mov 16004 A
+mov @A 16005
+
+mov 16003 A
+muli #18
+addi 16005
+mov A 16006
+mov #182 16007
+mov 16007 A
+mov @A 16008
+
+mov 16006 A
+muli #6
+addi 16008
+mov A 16009
+
+mov 16009 A
+
+addi #16009
+mov A 16010
+mov #182 16011
+mov 16011 A
+mov @A 16012
+
+mov #181 16013
+mov 16013 A
+mov @A 16014
+
+mov 16012 A
+muli 16014
+mov A 16015
+
+mov #1 16016
+
+mov 16015 A
+addi 16016
+mov A 16017
+mov 16017 A
+mov A 16018
+mov #0 A
+mov 16017 @A
+
+mov 182 A
+addi #1
+mov A 182
+mov 182 A
+
+gtri  #3
+jnz L2
+jmp L1
+L2
+mov #0 183
+L3
+mov #183 16001
+mov 16001 A
+mov @A 16002
+mov 16002 16003
+mov #183 16004
+mov 16004 A
+mov @A 16005
+
+mov 16003 A
+muli #18
+addi 16005
+mov A 16006
+mov #183 16007
+mov 16007 A
+mov @A 16008
+
+mov 16006 A
+muli #6
+addi 16008
+mov A 16009
+
+mov 16009 A
+
+addi #16009
+mov A 16010
+mov #183 16011
+mov 16011 A
+mov @A 16012
+mov #0 A 
+subi 16012
+ mov A 16013
+mov 16013 A
+mov A 16014
+mov #0 A
+mov 16013 @A
+
+mov 183 A
+addi #1
+mov A 183
+mov 183 A
+
+gtri  #3
+jnz L4
+jmp L3
+L4
+mov #0 184
+L5
+mov #184 16001
+mov 16001 A
+mov @A 16002
+mov 16002 16003
+mov #184 16004
+mov 16004 A
+mov @A 16005
+
+mov 16003 A
+muli #18
+addi 16005
+mov A 16006
+mov #184 16007
+mov 16007 A
+mov @A 16008
+
+mov 16006 A
+muli #6
+addi 16008
+mov A 16009
+
+mov 16009 A
+
+addi #16009
+mov A 16010
+mov 16010 A
+mov @A 16011
+
+mov #184 16012
+mov 16012 A
+mov @A 16013
+mov 16013 16014
+mov #184 16015
+mov 16015 A
+mov @A 16016
+
+mov 16014 A
+muli #18
+addi 16016
+mov A 16017
+mov #184 16018
+mov 16018 A
+mov @A 16019
+
+mov 16017 A
+muli #6
+addi 16019
+mov A 16020
+
+mov 16020 A
+
+addi #16020
+mov A 16021
+mov 16021 A
+mov @A 16022
+
+mov 16011 A
+muli 16022
+mov A 16023
+mov $1.0 16024
+mov 16023 A
+itor
+mov A 16026
+mov 16024 A
+addr 16026
+mov A 16025
+wrr  16025
+wrl
+mov 184 A
+addi #1
+mov A 184
+mov 184 A
+
+gtri  #3
+jnz L6
+jmp L5
+L6
+
+halt

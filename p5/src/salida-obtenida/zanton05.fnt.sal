@@ -1,0 +1,4 @@
+   1.000
+
+ERROR(m2r) al leer un valor de la posicion de memoria 16124 sin haberlo
+inicializado, en la instrucción 115

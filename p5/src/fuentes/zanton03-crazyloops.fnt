@@ -1,0 +1,18 @@
+fn main()
+    var a;
+    let a = -1;
+
+    while a
+      blq
+        var i:real;
+        let i = 1.5;
+
+        for i=10:5
+          if i-5
+            print i
+          else
+            let a = 0
+          fi
+      fblq;
+      print a
+endfn

@@ -1,0 +1,15 @@
+fn mat2()
+  var a;
+  let a = 5;
+  if 6-a
+    print 1
+  else
+    print 0
+  fi;
+
+  if 0
+    print 1
+  else
+    print 0
+  fi
+endfn

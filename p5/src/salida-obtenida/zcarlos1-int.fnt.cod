@@ -1,0 +1,15 @@
+L1
+mov #1 16001
+mov #789 16002
+mov 16002 A
+mov A 16003
+mov #1 A
+mov 16002 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+
+halt

@@ -1,0 +1,7 @@
+fn mat2()
+  blq
+    var a;
+    let a = 789;
+    print a
+  fblq
+endfn

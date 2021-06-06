@@ -1,0 +1,27 @@
+L1
+mov #2 16001
+mov 16001 16002
+
+mov 16002 A
+
+addi #16002
+mov A 16003
+mov #5 16004
+mov 16004 A
+mov A 16005
+mov #0 A
+mov 16004 @A
+
+mov #2 16001
+mov 16001 16002
+
+mov 16002 A
+
+addi #16002
+mov A 16003
+mov 16003 A
+mov @A 16004
+wri  16004
+wrl
+
+halt

@@ -1,0 +1,46 @@
+L7
+mov #0 1
+L1
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov 1 A
+addi #1
+mov A 1
+mov 1 A
+
+gtri  #3
+jnz L2
+jmp L1
+L2
+mov #3 2
+L3
+mov #2 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov 2 A
+subi #1
+mov A 2
+mov 2 A
+
+lssi  #0
+jnz L4
+jmp L3
+L4
+mov #15 3
+L5
+mov #3 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov 3 A
+mov A 3
+mov 3 A
+
+
+halt

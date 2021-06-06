@@ -1,0 +1,23 @@
+fn mat2()
+  var a:int;
+  let a = 5;
+  let a = -a;
+  print a; /* -5 */
+  let a = -a;
+  print a; /* 5 */
+
+  var b:real;
+  let b = 9.0;
+  let b = -b;
+  print b; /* -9.0 */
+  let b = -b;
+  print b; /* 9.0 */
+
+
+  let a = -(-a * (-5)) + 3 * (-a);
+  print a; /* -(-5x-5) + 3x-5 = -(25) - 15 = -40 */
+
+  let b = -(-b * (-5)) + 3 * (-b);
+  print b /* -(-9x-5) + 3x-9 = -(45) - 27 = -72.000 */
+
+endfn

@@ -136,7 +136,7 @@ mov 16006 16007
 mov #1 16008
 
 mov 16007 A
-muli #0
+muli #2
 addi 16008
 mov A 16009
 
@@ -173,77 +173,81 @@ mov #0 12
 L9
 mov #0 13
 L7
-mov #11 16003
-mov #11 16004
+mov #11 16001
+mov #11 16002
+mov 16002 A
+mov @A 16003
+
+mov #12 16004
 mov 16004 A
 mov @A 16005
+mov 16005 16006
+mov #13 16007
+mov 16007 A
+mov @A 16008
 
-mov #12 16006
 mov 16006 A
-mov @A 16007
-mov 16007 16008
-mov #13 16009
+muli #2
+addi 16008
+mov A 16009
+
 mov 16009 A
-mov @A 16010
 
-mov 16008 A
-muli #1
-addi 16010
-mov A 16011
+addi #16009
+mov A 16010
+mov 16010 A
+mov @A 16011
 
-mov 16011 A
-
-addi #16011
-mov A 16012
+mov #13 16012
 mov 16012 A
 mov @A 16013
+mov 16013 16014
+mov #12 16015
+mov 16015 A
+mov @A 16016
 
-mov #13 16014
 mov 16014 A
-mov @A 16015
-mov 16015 16016
-mov #12 16017
+muli #2
+addi 16016
+mov A 16017
+
 mov 16017 A
-mov @A 16018
 
-mov 16016 A
-muli #1
-addi 16018
-mov A 16019
+addi #16017
+mov A 16018
+mov 16018 A
+mov @A 16019
 
-mov 16019 A
-
-addi #16019
+mov 16011 A
+subi 16019
 mov A 16020
-mov 16020 A
-mov @A 16021
 
-mov 16013 A
-subi 16021
+mov 16003 A
+addi 16020
+mov A 16021
+mov 16021 A
 mov A 16022
-
-mov 16005 A
-addi 16022
-mov A 16023
-mov 16023 A
-mov A 16024
 mov #11 A
-mov 16023 @A
+mov 16021 @A
 
-mov 16005 A
-wri A
+mov 13 A
 addi #1
-mov A 16005
-mov 16005 A
+mov A 13
+mov 13 A
 
-subi #1
-mov 16001 A
-wri A
+gtri  #1
+jnz L8
+jmp L7
+L8
+mov 12 A
 addi #1
-mov A 16001
-mov 16001 A
+mov A 12
+mov 12 A
 
-subi #1
+gtri  #1
+jnz L10
+jmp L9
+L10
 mov #11 16001
 mov 16001 A
 mov @A 16002
