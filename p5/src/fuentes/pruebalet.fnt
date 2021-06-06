@@ -1,10 +1,14 @@
 fn main()
 
-  blq
-    var a;
-    let a = 789;
-    print a
-  fblq
+ var a : real;
+ var b : int;
+ let b = 7;
+ let a = b;
+ print a;
+ var c;
+ let c = b; 
+ print c;
 
-  
+ for i=0:9
+    let a = b
 endfn

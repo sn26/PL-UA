@@ -1,11 +1,62 @@
-L1
-mov #1 16001
-mov #789 16002
-mov 16001 A
+L3
+mov #2 16001
+mov #7 16002
+mov 16002 A
+mov A 16003
+mov #2 A
 mov 16002 @A
 
 mov #1 16001
-wri  16001
+mov #2 16002
+mov 16002 A
+mov @A 16003
+mov 16003 A
+mov A 16004
+mov 16003 A
+itor
+mov A 16003
+mov #1 A
+mov 16003 @A
+
+mov #1 16001
+mov 16001 A
+mov @A 16002
+wrr  16002
 wrl
+mov #3 16001
+mov #2 16002
+mov 16002 A
+mov @A 16003
+mov 16003 A
+mov A 16004
+mov #3 A
+mov 16003 @A
+
+mov #3 16001
+mov 16001 A
+mov @A 16002
+wri  16002
+wrl
+mov #0 4
+L1
+mov #1 16002
+mov #2 16003
+mov 16003 A
+mov @A 16004
+mov 16004 A
+mov A 16005
+mov 16004 A
+itor
+mov A 16004
+mov #1 A
+mov 16004 @A
+
+mov 16002 A
+wri A
+addi #1
+mov A 16002
+mov 16002 A
+
+subi #9
 
 halt

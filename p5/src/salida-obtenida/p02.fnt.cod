@@ -1,115 +1,159 @@
 L5
 mov #11 16001
 mov #0 16002
-mov 16001 A
+mov 16002 A
+mov A 16003
+mov #11 A
 mov 16002 @A
 
 mov #12 16001
 mov #0 16002
-mov 16001 A
+mov 16002 A
+mov A 16003
+mov #12 A
 mov 16002 @A
 
 L1
 mov #10 16001
 
 mov #12 16002
+mov 16002 A
+mov @A 16003
 
 mov 16001 A
-subi 16002
-mov A 16003
-mov 16003 A
+subi 16003
+mov A 16004
+mov 16004 A
 jz L2
-mov #12 16004
-mov 16004 16005
-
-mov 16005 A
-
-addi #16005
-mov A 16006
-mov #12 16007
-mov 16008 A
-itor
-mov A 16008
-mov 16006 A
-mov 16007 @A
-
-mov #11 16004
-mov #11 16005
-
-mov #12 16006
-
-mov 16005 A
-addi 16006
-mov A 16007
-mov 16004 A
-mov 16007 @A
-
-mov #12 16004
 mov #12 16005
-
-mov #1 16006
-
 mov 16005 A
-addi 16006
-mov A 16007
-mov 16004 A
-mov 16007 @A
-
-jmp L1
-L2
-mov #13 16001
-mov $0.0 16002
-mov 16001 A
-mov 16002 @A
-
-mov #12 16001
-mov #0 16002
-mov 16001 A
-mov 16002 @A
-
-L3
-mov #10 16001
-
-mov #12 16002
-
-mov 16001 A
-subi 16002
-mov A 16003
-mov 16003 A
-jz L4
-mov #13 16004
-mov #13 16005
-mov #12 16006
+mov @A 16006
 mov 16006 16007
 
 mov 16007 A
 
 addi #16007
 mov A 16008
-mov 16005 A
-addr 16008
+mov #12 16009
+mov 16009 A
+mov @A 16010
+mov 16010 A
+mov A 16011
+mov 16010 A
+itor
+mov A 16010
+mov #0 A
+mov 16010 @A
+
+mov #11 16005
+mov #11 16006
+mov 16006 A
+mov @A 16007
+
+mov #12 16008
+mov 16008 A
+mov @A 16009
+
+mov 16007 A
+addi 16009
+mov A 16010
+mov 16010 A
+mov A 16011
+mov #11 A
+mov 16010 @A
+
+mov #12 16005
+mov #12 16006
+mov 16006 A
+mov @A 16007
+
+mov #1 16008
+
+mov 16007 A
+addi 16008
 mov A 16009
-mov 16004 A
+mov 16009 A
+mov A 16010
+mov #12 A
 mov 16009 @A
 
-mov #12 16004
-mov #12 16005
+jmp L1
+L2
+mov #13 16001
+mov $0.0 16002
+mov 16002 A
+mov A 16003
+mov #13 A
+mov 16002 @A
 
-mov #1 16006
+mov #12 16001
+mov #0 16002
+mov 16002 A
+mov A 16003
+mov #12 A
+mov 16002 @A
 
-mov 16005 A
-addi 16006
-mov A 16007
+L3
+mov #10 16001
+
+mov #12 16002
+mov 16002 A
+mov @A 16003
+
+mov 16001 A
+subi 16003
+mov A 16004
 mov 16004 A
-mov 16007 @A
+jz L4
+mov #13 16005
+mov #13 16006
+mov 16006 A
+mov @A 16007
+mov #12 16008
+mov 16008 A
+mov @A 16009
+mov 16009 16010
+
+mov 16010 A
+
+addi #16010
+mov A 16011
+mov 16011 A
+mov @A 16012
+mov 16007 A
+addr 16012
+mov A 16013
+mov 16013 A
+mov A 16014
+mov #13 A
+mov 16013 @A
+
+mov #12 16005
+mov #12 16006
+mov 16006 A
+mov @A 16007
+
+mov #1 16008
+
+mov 16007 A
+addi 16008
+mov A 16009
+mov 16009 A
+mov A 16010
+mov #12 A
+mov 16009 @A
 
 jmp L3
 L4
 mov #13 16001
-wrr  16001
+mov 16001 A
+mov @A 16002
+wrr  16002
 wrl
 mov #11 16001
-wri  16001
+mov 16001 A
+mov @A 16002
+wri  16002
 wrl
 
 halt
