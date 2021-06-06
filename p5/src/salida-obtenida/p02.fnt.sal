@@ -1,1 +1,1 @@
-ERROR(m2r) en la instrucción 1: la instruccion no comienza por letra
+ERROR(m2r) en instruccion 31: el primer operando de 'addi' debe ser entero.

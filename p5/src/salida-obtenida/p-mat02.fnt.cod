@@ -1,57 +1,134 @@
-L7:
-mov 0 16003
-mov16003 0
-L3:
-L2:
-L1:
+L7
+mov #0 37
+mov #0 38
+mov 38 39
+mov 39 0
+L3
+L2
+L1
+mov #38 37
+mov 38 38
+mov #39 39
 
- mov 000 40
-mov 40 A
- #1
-mov A40
- subi #00003
-jmpz L1
-
- mov 0 39
-mov 39 A
- #1
-mov A39
- subi #2
-jmpz L2
-
- mov 0 38
 mov 38 A
- #1
-mov A38
- subi #2
-jmpz L3
-mov 0 16020
-mov16020 0
-L6:
-L5:
-L4:
-mov 0 16035
-mov16035 0
+muli #3
+addi 39
+mov A 40
+mov #40 41
 
- mov 100000 43
-mov 43 A
- #1
-mov A43
- subi #100003
-jmpz L4
+mov 40 A
+muli #3
+addi 40
+mov A 42
 
- mov 0 42
 mov 42 A
- #1
-mov A42
- subi #2
-jmpz L5
 
- mov 100 41
+addi #42
+mov A 43
+mov #0 44
+mov 0 45
+mov 45 43
+mov #0 4
+mov #0 5
+
+mov #1 6
+
+mov 0 A
+addi 6
+mov A 7
+mov 7 8
+mov 8 0
+
+mov #000 40
+mov 40 A
+addi  #1
+mov A 40
+subi #00003
+jz L1
+
+mov #0 39
+mov 39 A
+addi  #1
+mov A 39
+subi #2
+jz L2
+
+mov #0 38
+mov 38 A
+addi  #1
+mov A 38
+subi #2
+jz L3
+mov #0 37
+mov #0 38
+mov 38 39
+mov 39 0
+L6
+L5
+L4
+mov #0 37
+mov #0 38
+
+mov #41 39
+
+mov #100 40
+
 mov 41 A
- #1
-mov A41
- subi #102
-jmpz L6
-wrr 16036 wrl
-/nhalt
+subi 40
+mov A 41
+mov 41 42
+mov #42 43
+
+mov 42 A
+muli #100003
+addi 42
+mov A 44
+mov #43 45
+
+mov #100000 46
+
+mov 43 A
+subi 46
+mov A 47
+
+mov 44 A
+muli #100003
+addi 47
+mov A 48
+
+mov 48 A
+
+addi #48
+mov A 49
+
+mov 0 A
+addi 49
+mov A 50
+mov 50 51
+mov 51 0
+
+mov #100000 43
+mov 43 A
+addi  #1
+mov A 43
+subi #100003
+jz L4
+
+mov #0 42
+mov 42 A
+addi  #1
+mov A 42
+subi #2
+jz L5
+
+mov #100 41
+mov 41 A
+addi  #1
+mov A 41
+subi #102
+jz L6
+mov #0 37
+wrr 0
+wrl
+
+halt

@@ -1,13 +1,364 @@
-L1:
-mov 0 16011
-mov16011 0
-mov 0 16026
-mov16026 0
-mov 0 16043
-mov16043 0
-mov 0 16060
-mov16060 0
-mov 0 16077
-mov16077 0
-wrr 16132 wrl
-/nhalt
+L1
+mov #0 5
+mov #1 6
+
+mov #3 7
+
+mov 6 A
+subi 7
+mov A 8
+
+mov #2 9
+mov #5 10
+mov 9 Amuli 10mov A 11mov #4 12
+mov 11 Adivi 12mov A 13
+mov 8 A
+addi 13
+mov A 14
+mov 14 15
+mov 15 0
+mov #0 5
+mov 5 6
+mov #1 7
+
+mov 6 A
+muli #0
+addi 7
+mov A 8
+mov #0 9
+
+mov 8 A
+muli #0
+addi 9
+mov A 10
+mov #0 11
+
+mov 10 A
+muli #0
+addi 11
+mov A 12
+mov #1 13
+
+mov 12 A
+muli #0
+addi 13
+mov A 14
+mov #0 15
+
+mov 14 A
+muli #0
+addi 15
+mov A 16
+
+mov 16 A
+
+addi #16
+mov A 17
+mov #0 18
+mov 0 19
+mov 19 17
+mov #0 5
+mov 5 6
+mov #0 7
+
+mov 6 A
+muli #0
+addi 7
+mov A 8
+mov #0 9
+
+mov 8 A
+muli #0
+addi 9
+mov A 10
+mov #0 11
+
+mov 10 A
+muli #0
+addi 11
+mov A 12
+mov #0 13
+
+mov 12 A
+muli #0
+addi 13
+mov A 14
+mov #0 15
+
+mov 14 A
+muli #0
+addi 15
+mov A 16
+
+mov 16 A
+
+addi #16
+mov A 17
+mov #0 18
+
+mov #1 19
+
+mov 0 A
+addi 19
+mov A 20
+mov 20 21
+mov 21 17
+mov #0 5
+mov 5 6
+mov #1 7
+
+mov 6 A
+muli #0
+addi 7
+mov A 8
+mov #0 9
+
+mov 8 A
+muli #0
+addi 9
+mov A 10
+mov #0 11
+
+mov 10 A
+muli #0
+addi 11
+mov A 12
+mov #0 13
+
+mov 12 A
+muli #0
+addi 13
+mov A 14
+mov #0 15
+
+mov 14 A
+muli #0
+addi 15
+mov A 16
+
+mov 16 A
+
+addi #16
+mov A 17
+mov #0 18
+
+mov #2 19
+
+mov 0 A
+addi 19
+mov A 20
+mov 20 21
+mov 21 17
+mov #0 5
+mov 5 6
+mov #0 7
+
+mov 6 A
+muli #0
+addi 7
+mov A 8
+mov #0 9
+
+mov 8 A
+muli #0
+addi 9
+mov A 10
+mov #0 11
+
+mov 10 A
+muli #0
+addi 11
+mov A 12
+mov #1 13
+
+mov 12 A
+muli #0
+addi 13
+mov A 14
+mov #0 15
+
+mov 14 A
+muli #0
+addi 15
+mov A 16
+
+mov 16 A
+
+addi #16
+mov A 17
+mov #0 18
+
+mov #3 19
+
+mov 0 A
+addi 19
+mov A 20
+mov 20 21
+mov 21 17
+mov #0 5
+mov 5 6
+mov #1 7
+
+mov 6 A
+muli #0
+addi 7
+mov A 8
+mov #0 9
+
+mov 8 A
+muli #0
+addi 9
+mov A 10
+mov #0 11
+
+mov 10 A
+muli #0
+addi 11
+mov A 12
+mov #1 13
+
+mov 12 A
+muli #0
+addi 13
+mov A 14
+mov #0 15
+
+mov 14 A
+muli #0
+addi 15
+mov A 16
+
+mov 16 A
+
+addi #16
+mov A 17
+
+mov #0 18
+mov 18 19
+mov #0 20
+
+mov 19 A
+muli #0
+addi 20
+mov A 21
+mov #0 22
+
+mov 21 A
+muli #0
+addi 22
+mov A 23
+mov #0 24
+
+mov 23 A
+muli #0
+addi 24
+mov A 25
+mov #0 26
+
+mov 25 A
+muli #0
+addi 26
+mov A 27
+mov #0 28
+
+mov 27 A
+muli #0
+addi 28
+mov A 29
+
+mov 29 A
+
+addi #29
+mov A 30
+
+mov 17 A
+addi 30
+mov A 31
+
+mov #0 32
+mov 32 33
+mov #1 34
+
+mov 33 A
+muli #0
+addi 34
+mov A 35
+mov #0 36
+
+mov 35 A
+muli #0
+addi 36
+mov A 37
+mov #0 38
+
+mov 37 A
+muli #0
+addi 38
+mov A 39
+mov #0 40
+
+mov 39 A
+muli #0
+addi 40
+mov A 41
+mov #0 42
+
+mov 41 A
+muli #0
+addi 42
+mov A 43
+
+mov 43 A
+
+addi #43
+mov A 44
+
+mov 31 A
+addi 44
+mov A 45
+
+mov #0 46
+mov 46 47
+mov #0 48
+
+mov 47 A
+muli #0
+addi 48
+mov A 49
+mov #0 50
+
+mov 49 A
+muli #0
+addi 50
+mov A 51
+mov #0 52
+
+mov 51 A
+muli #0
+addi 52
+mov A 53
+mov #1 54
+
+mov 53 A
+muli #0
+addi 54
+mov A 55
+mov #0 56
+
+mov 55 A
+muli #0
+addi 56
+mov A 57
+
+mov 57 A
+
+addi #57
+mov A 58
+
+mov 45 A
+addi 58
+mov A 59
+wrr 59
+wrl
+
+halt

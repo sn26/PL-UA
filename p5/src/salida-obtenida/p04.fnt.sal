@@ -1,1 +1,9 @@
-ERROR(m2r) en la instrucción 1: la instruccion no comienza por letra
+AVISO (6.6): caracter 'm' inesperado o falta ';' para comentario
+ (la instrucción 'rdi' debe tener 1 argumentos)
+AVISO (31.8): caracter 'm' inesperado o falta ';' para comentario
+ (la instrucción 'mov' debe tener 2 argumentos)
+AVISO (36.8): caracter 'm' inesperado o falta ';' para comentario
+ (la instrucción 'mov' debe tener 2 argumentos)
+AVISO (41.8): caracter 'd' inesperado o falta ';' para comentario
+ (la instrucción 'mov' debe tener 2 argumentos)
+ERROR(m2r) en linea 56: nombre de instruccion incorrecto (jmpL)

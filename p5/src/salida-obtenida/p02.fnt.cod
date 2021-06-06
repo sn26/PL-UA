@@ -1,26 +1,106 @@
-L5:
-mov 0 16003
-mov16003 0
-mov 0 16006
-mov16006 0
-L1:
-mov #1016007
-mov 0 16008
-mov 16007 Aaddi 16008mov A 16009mov 16009 A
+L5
+mov #0 11
+mov #0 12
+mov 12 13
+mov 13 0
+mov #0 11
+mov #0 12
+mov 12 13
+mov 13 0
+L1
+mov #10 11
+
+mov #0 12
+
+mov 11 A
+subi 0
+mov A 13
+mov 13 A
 jz L2
-addjmp L1
-L2:
-mov 0 16027
-mov16027 0
-mov 0 16030
-mov16030 0
-L3:
-mov #1016031
-mov 0 16032
-mov 16031 Aaddi 16032mov A 16033mov 16033 A
+mov #0 14
+mov 0 15
+
+mov 15 A
+
+addi #15
+mov A 16
+mov #0 17
+mov 0 A
+itor
+mov A 0
+mov 0 18
+mov 18 16
+mov #0 11
+mov #0 12
+
+mov #0 13
+
+mov 0 A
+addi 0
+mov A 14
+mov 14 15
+mov 15 0
+mov #0 11
+mov #0 12
+
+mov #1 13
+
+mov 0 A
+addi 13
+mov A 14
+mov 14 15
+mov 15 0
+jmp L1
+L2
+mov #0 11
+mov $0.0 12
+mov 12 13
+mov 13 0
+mov #0 11
+mov #0 12
+mov 12 13
+mov 13 0
+L3
+mov #10 11
+
+mov #0 12
+
+mov 11 A
+subi 0
+mov A 13
+mov 13 A
 jz L4
-addjmp L3
-L4:
-wri 16046 wrl
-wrr 16047 wrl
-/nhalt
+mov #0 14
+mov #0 15
+mov #0 16
+mov 0 17
+
+mov 17 A
+
+addi #17
+mov A 18
+mov 0 A
+addr 18
+mov A 19
+mov 19 20
+mov 20 0
+mov #0 11
+mov #0 12
+
+mov #1 13
+
+mov 0 A
+addi 13
+mov A 14
+mov 14 15
+mov 15 0
+jmp L3
+L4
+mov #0 11
+wri 0
+wrl
+mov #0 11
+wrr 0
+wrl
+
+halt

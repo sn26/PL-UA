@@ -1,29 +1,35 @@
+EL T TRAD ES mov #0 3
+
+EL T TRAD ES mov #0 4
+
+EL T TRAD ES mov #1 8
+
 L5
 mov #0 2
 mov #0 3
 mov 3 4
-mov 4 0
+mov 4 2
 L3
 mov #2 2
 
 mov #0 3
 
 mov 2 A
-subi 0
+subi 3
 mov A 4
 mov 4 A
 jz L4
 mov #0 5
 mov #0 6
 mov 6 7
-mov 7 0
+mov 7 5
 L1
 mov #2 3
 
 mov #0 4
 
 mov 3 A
-subi 0
+subi 4
 mov A 5
 mov 5 A
 jz L2
@@ -32,11 +38,11 @@ mov #0 7
 
 mov #1 8
 
-mov 0 A
+mov 7 A
 addi 8
 mov A 9
 mov 9 10
-mov 10 0
+mov 10 6
 jmp L1
 L2
 jmp L3
@@ -44,9 +50,9 @@ L4
 mov #0 2
 mov #0 3
 mov 3 4
-mov 4 0
+mov 4 2
 mov #0 2
-wrr 0
+wrr 2
 wrl
 
 halt
