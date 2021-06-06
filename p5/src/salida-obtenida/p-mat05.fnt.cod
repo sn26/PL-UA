@@ -1,5 +1,5 @@
 L1
-mov #0 5
+mov  #5 5
 mov #1 6
 
 mov #3 7
@@ -10,13 +10,21 @@ mov A 8
 
 mov #2 9
 mov #5 10
-mov 9 Amuli 10mov A 11mov #4 12
-mov 11 Adivi 12mov A 13
+
+mov 9 A
+muli 10
+mov A 11
+mov #4 12
+
+mov 11 A
+divi 12
+mov A 13
+
 mov 8 A
 addi 13
 mov A 14
 mov 14 15
-mov 15 0
+mov 15 5
 mov #0 5
 mov 5 6
 mov #1 7
@@ -54,8 +62,8 @@ mov 16 A
 
 addi #16
 mov A 17
-mov #0 18
-mov 0 19
+mov  #5 18
+mov 5 19
 mov 19 17
 mov #0 5
 mov 5 6
@@ -94,11 +102,11 @@ mov 16 A
 
 addi #16
 mov A 17
-mov #0 18
+mov  #5 18
 
 mov #1 19
 
-mov 0 A
+mov 5 A
 addi 19
 mov A 20
 mov 20 21
@@ -140,11 +148,11 @@ mov 16 A
 
 addi #16
 mov A 17
-mov #0 18
+mov  #5 18
 
 mov #2 19
 
-mov 0 A
+mov 5 A
 addi 19
 mov A 20
 mov 20 21
@@ -186,11 +194,11 @@ mov 16 A
 
 addi #16
 mov A 17
-mov #0 18
+mov  #5 18
 
 mov #3 19
 
-mov 0 A
+mov 5 A
 addi 19
 mov A 20
 mov 20 21
@@ -358,7 +366,7 @@ mov A 58
 mov 45 A
 addi 58
 mov A 59
-wrr 59
+wri 59
 wrl
 
 halt

@@ -150,22 +150,24 @@ I: Blq {
         struct Simbolo simb1; 
         simb1.nombre = $2.lexema;
         simb1.tipo = $3.tipo;
-        simb1.dir = $2.dir;
+        $$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
+        simb1.dir =$$.dir ;
         simb1.tam = $3.tam;
         if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,$2.lexema,$2.fila,$2.col);
-        $$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
+        //$$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
         $$.trad = ""; 
         $$.tipo = $3.tipo; 
         $$.dir = $2.dir; 
         $$.tam = $3.tam;
     }
-    | print E {if($2.tipo == REAL ) $$.trad = "wri "; 
-                if($2.tipo == ENTERO ) $$.trad = "wrr ";   } {
-        $$.trad = $2.trad +  $3.trad  + to_string( $2.dir) + "\nwrl\n";   
+    | print E {if($2.tipo == REAL ) $$.trad = "wrr "; 
+                if($2.tipo == ENTERO ) $$.trad = "wri ";   } {
+        
+        $$.trad = $2.trad +  $3.trad  + to_string($2.dir)+ "\nwrl\n";   
     }
     | readtok Ref {if($2.tipo == ENTERO ) $$.trad = "rdi "; 
                 if($2.tipo == REAL) $$.trad = "rdr ";  } {
-        $$.trad = $2.trad + $3.trad + to_string($2.dir); 
+        $$.trad = $2.trad + $3.trad + to_string($2.dir) + "\n"; 
     }
     | whiletok E {
         if($2.tipo != ENTERO) errorSemantico(ERR_IFWHILE,$1.lexema , $1.fila, $1.col );     
@@ -208,7 +210,7 @@ I: Blq {
         "mov " + to_string($2.dir) + " A\n" +
          "jz L" + to_string(etiqact1) + "\n" 
          + $4.trad 
-         + "jmpL" + to_string(etiqact2) + "\n" +
+         + "jmp L" + to_string(etiqact2) + "\n" +
          + 
          "L" + to_string(etiqact1)+"\n"
          +$5.trad +
@@ -247,7 +249,7 @@ Ifa: iftok E{
     );
 
     int etiq = nuevaEtiqueta();
-    $$.trad = "mov " + to_string($2.dir) + " A\n" + "jz" + "L" + to_string(etiq) + "\n";
+    $$.trad = "mov " + to_string($2.dir) + " A\n" + "jz " + "L" + to_string(etiq) + "\n";
     $$.dir = $2.dir;
     $$.atributos.etiqueta = "L" + to_string(etiq) + "\n";
 
@@ -326,7 +328,7 @@ T: T opmd {if(strcmp($2.lexema,"*") == 0 ){$$.trad = "mul"; }
         $$.dir = tmp; 
         if($1.tipo == ENTERO && $4.tipo == ENTERO ){
             
-            $$.trad = $1.trad + $4.trad + "mov " + to_string($1.dir) + " A" + $3.trad +"i " + to_string($4.dir) + "mov A " + to_string(tmp) + "\n"; 
+            $$.trad = $1.trad + $4.trad + "\nmov " + to_string($1.dir) + " A\n" + $3.trad +"i " + to_string($4.dir) + "\nmov A " + to_string(tmp) + "\n"; 
             $$.tipo = ENTERO;
             $$.atributos.tipo = "int"; 
         }
@@ -399,10 +401,10 @@ Ref: id{
         if($$.tipo == ENTERO) $$.atributos.tipo = "int";
         if($$.tipo == REAL) $$.atributos.tipo = "float"; 
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col );
-        $$.dir = tsActual->searchSymb($1.lexema)->dir;
+        $$.dir =  tsActual->searchSymb($1.lexema)->dir;
         //cout<<"TRAMPOLLALABUENA3"<<endl;
-        $$.trad = "mov #" + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
-        $$.atributos.dbase =  tsActual->searchSymb($1.lexema)->dir;
+        $$.trad = "mov  #" + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
+        $$.atributos.dbase =  tmp;
         //cout<<$$.trad<<endl;
     }
 

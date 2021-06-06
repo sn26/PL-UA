@@ -1,27 +1,27 @@
 L9
-mov  #2 2
+mov #0 2
 mov #7 3
 mov 3 4
-mov 4 2
-mov  #1 2
-mov  #2 3
-mov 2 A
+mov 4 0
+mov #0 2
+mov #0 3
+mov 0 A
 itor
-mov A 2
-mov 2 4
-mov 4 1
-mov  #1 2
-wrr 1
+mov A 0
+mov 0 4
+mov 4 0
+mov #0 2
+wrr 0
 wrl
-mov  #3 2
-mov  #2 3
-mov 2 4
-mov 4 3
-mov  #3 2
-wri 3
+mov #0 2
+mov #0 3
+mov 0 4
+mov 4 0
+mov #0 2
+wri 0
 wrl
 L1
-mov  #4 2
+mov #4 2
 wri 4
 wrl
 
@@ -34,54 +34,54 @@ jz L1
 mov $77.77 2
 wrr 2
 wrl
-mov  #6 2
+mov #0 2
 mov #0 3
 mov 3 4
-mov 4 6
-mov  #5 2
+mov 4 0
+mov #0 2
 mov #0 3
 mov 3 4
-mov 4 5
+mov 4 0
 L2
 mov #10 2
 
-mov  #5 3
+mov #0 3
 
 mov 2 A
-subi 5
+subi 0
 mov A 4
 mov 4 A
 jz L3
-mov  #5 5
-wri 5
+mov #0 5
+wri 0
 wrl
-mov  #5 11
-mov  #5 12
+mov #0 11
+mov #0 12
 
 mov #1 13
 
-mov 5 A
+mov 0 A
 addi 13
 mov A 14
 mov 14 15
-mov 15 5
-mov  #7 11
-mov  #6 12
+mov 15 0
+mov #0 11
+mov #0 12
 
-mov  #5 13
+mov #0 13
 
-mov 6 A
-addi 5
+mov 0 A
+addi 0
 mov A 14
 mov 14 15
-mov 15 7
-mov  #6 11
-mov  #7 12
-mov 7 13
-mov 13 6
+mov 15 0
+mov #0 11
+mov #0 12
+mov 0 13
+mov 13 0
 jmp L2
 L3
-mov  #6 2
+mov #0 2
 mov #2 3
 
 mov #4 4
@@ -96,53 +96,53 @@ mov 5 A
 subi 6
 mov A 7
 
-mov 6 A
+mov 0 A
 divi 7
 mov A 8
 wri 8
 wrl
-mov  #6 2
+mov #0 2
 
 mov #55 3
 
-mov 6 A
+mov 0 A
 subi 3
 mov A 4
 mov 4 A
 jz L6
-mov  #6 5
+mov #0 5
 wri 7
 wrl
 jmp L7
 L6
-mov  #6 8
+mov #0 8
 
 mov #55 9
 
-mov 6 A
+mov 0 A
 subi 9
 mov A 10
 mov 10 A
 jz L4
-mov  #6 11
+mov #0 11
 wri 13
 wrl
 jmp L5
 L4
-mov  #6 14
+mov #0 14
 wri 16
 wrl
 L5
 L7
-mov 6 A
+mov 0 A
 jz L8
-mov  #2 2
+mov #0 2
 mov #787 3
 mov 3 5
-mov 5 2
+mov 5 0
 L8
-mov  #2 2
-wri 2
+mov #0 2
+wri 0
 wrl
 
 halt

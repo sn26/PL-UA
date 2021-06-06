@@ -1,7 +1,1 @@
-AVISO (9.8): caracter 'm' inesperado o falta ';' para comentario
- (la instrucción 'mov' debe tener 2 argumentos)
-AVISO (10.9): caracter 'd' inesperado o falta ';' para comentario
- (la instrucción 'mov' debe tener 2 argumentos)
-
-ERROR(m2r) al leer un valor de la posicion de memoria 11 sin haberlo
-inicializado, en la instrucción 10
+145
