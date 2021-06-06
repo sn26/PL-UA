@@ -1588,7 +1588,7 @@ yyreduce:
         simb1.nombre = yyvsp[-1].lexema;
         simb1.tipo = yyvsp[0].tipo;
         yyval.dir = nuevaVar(yyvsp[0].tam , yyvsp[-1].lexema, yyvsp[-1].fila, yyvsp[-1].col); 
-        simb1.dir =yyval.dir ;
+        simb1.dir = yyval.dir;
         simb1.tam = yyvsp[0].tam;
         if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,yyvsp[-1].lexema,yyvsp[-1].fila,yyvsp[-1].col);
         //$$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
@@ -1603,13 +1603,13 @@ yyreduce:
   case 20:
 #line 163 "plp5.y"
               {if(yyvsp[0].tipo == REAL ) yyval.trad = "wrr "; 
-                if(yyvsp[0].tipo == ENTERO ) yyval.trad = "wri ";   }
+                if(yyvsp[0].tipo == ENTERO ) yyval.trad = "wri";   }
 #line 1608 "plp5.tab.c"
     break;
 
   case 21:
 #line 164 "plp5.y"
-                                                             {
+                                                            {
         
         yyval.trad = yyvsp[-1].trad +  yyvsp[0].trad  + to_string(yyvsp[-1].dir)+ "\nwrl\n";   
     }
@@ -2001,8 +2001,8 @@ yyreduce:
         int tmp = nuevaTemp(yyvsp[0].lexema, yyvsp[0].fila, yyvsp[0].col );
         yyval.dir =  tsActual->searchSymb(yyvsp[0].lexema)->dir;
         //cout<<"TRAMPOLLALABUENA3"<<endl;
-        yyval.trad = "mov  #" + to_string(tsActual->searchSymb(yyvsp[0].lexema)->dir) + " " + to_string(tmp) + "\n";
-        yyval.atributos.dbase =  tmp;
+        yyval.trad = "mov  " + to_string(tsActual->searchSymb(yyvsp[0].lexema)->dir) + " " + to_string(tmp) + "\n";
+        yyval.atributos.dbase =  tsActual->searchSymb(yyvsp[0].lexema)->dir;
         //cout<<$$.trad<<endl;
     }
 #line 2009 "plp5.tab.c"

@@ -1,47 +1,47 @@
 L5
-mov  #11 11
+mov  11 11
 mov #0 12
 mov 12 13
 mov 13 11
-mov  #12 11
+mov  12 11
 mov #0 12
 mov 12 13
 mov 13 12
 L1
 mov #10 11
 
-mov  #12 12
+mov  12 12
 
 mov 11 A
 subi 12
 mov A 13
 mov 13 A
 jz L2
-mov  #12 14
+mov  12 14
 mov 12 15
 
 mov 15 A
 
 addi #15
 mov A 16
-mov  #12 17
+mov  12 17
 mov 12 A
 itor
 mov A 12
 mov 12 18
 mov 18 16
-mov  #11 11
-mov  #11 12
+mov  11 11
+mov  11 12
 
-mov  #12 13
+mov  12 13
 
 mov 11 A
 addi 12
 mov A 14
 mov 14 15
 mov 15 11
-mov  #12 11
-mov  #12 12
+mov  12 11
+mov  12 12
 
 mov #1 13
 
@@ -52,27 +52,27 @@ mov 14 15
 mov 15 12
 jmp L1
 L2
-mov  #13 11
+mov  13 11
 mov $0.0 12
 mov 12 13
 mov 13 13
-mov  #12 11
+mov  12 11
 mov #0 12
 mov 12 13
 mov 13 12
 L3
 mov #10 11
 
-mov  #12 12
+mov  12 12
 
 mov 11 A
 subi 12
 mov A 13
 mov 13 A
 jz L4
-mov  #13 14
-mov  #13 15
-mov  #12 16
+mov  13 14
+mov  13 15
+mov  12 16
 mov 12 17
 
 mov 17 A
@@ -84,8 +84,8 @@ addr 18
 mov A 19
 mov 19 20
 mov 20 13
-mov  #12 11
-mov  #12 12
+mov  12 11
+mov  12 12
 
 mov #1 13
 
@@ -96,11 +96,11 @@ mov 14 15
 mov 15 12
 jmp L3
 L4
-mov  #13 11
+mov  13 11
 wrr 13
 wrl
-mov  #11 11
-wri 11
+mov  11 11
+wri11
 wrl
 
 halt

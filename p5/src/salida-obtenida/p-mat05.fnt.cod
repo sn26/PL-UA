@@ -1,5 +1,5 @@
 L1
-mov  #5 5
+mov  5 5
 mov #1 6
 
 mov #3 7
@@ -62,7 +62,7 @@ mov 16 A
 
 addi #16
 mov A 17
-mov  #5 18
+mov  5 18
 mov 5 19
 mov 19 17
 mov #0 5
@@ -102,7 +102,7 @@ mov 16 A
 
 addi #16
 mov A 17
-mov  #5 18
+mov  5 18
 
 mov #1 19
 
@@ -148,7 +148,7 @@ mov 16 A
 
 addi #16
 mov A 17
-mov  #5 18
+mov  5 18
 
 mov #2 19
 
@@ -194,7 +194,7 @@ mov 16 A
 
 addi #16
 mov A 17
-mov  #5 18
+mov  5 18
 
 mov #3 19
 
@@ -366,7 +366,7 @@ mov A 58
 mov 45 A
 addi 58
 mov A 59
-wri 59
+wri59
 wrl
 
 halt

@@ -151,7 +151,7 @@ I: Blq {
         simb1.nombre = $2.lexema;
         simb1.tipo = $3.tipo;
         $$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
-        simb1.dir =$$.dir ;
+        simb1.dir = $$.dir;
         simb1.tam = $3.tam;
         if(!tsActual->newSymb(simb1))  errorSemantico(ERR_YADECL,$2.lexema,$2.fila,$2.col);
         //$$.dir = nuevaVar($3.tam , $2.lexema, $2.fila, $2.col); 
@@ -161,7 +161,7 @@ I: Blq {
         $$.tam = $3.tam;
     }
     | print E {if($2.tipo == REAL ) $$.trad = "wrr "; 
-                if($2.tipo == ENTERO ) $$.trad = "wri ";   } {
+                if($2.tipo == ENTERO ) $$.trad = "wri";   } {
         
         $$.trad = $2.trad +  $3.trad  + to_string($2.dir)+ "\nwrl\n";   
     }
@@ -403,8 +403,8 @@ Ref: id{
         int tmp = nuevaTemp($1.lexema, $1.fila, $1.col );
         $$.dir =  tsActual->searchSymb($1.lexema)->dir;
         //cout<<"TRAMPOLLALABUENA3"<<endl;
-        $$.trad = "mov  #" + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
-        $$.atributos.dbase =  tmp;
+        $$.trad = "mov  " + to_string(tsActual->searchSymb($1.lexema)->dir) + " " + to_string(tmp) + "\n";
+        $$.atributos.dbase =  tsActual->searchSymb($1.lexema)->dir;
         //cout<<$$.trad<<endl;
     }
 
